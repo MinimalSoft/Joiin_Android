@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_Home" android:icon="@android:drawable/ic_menu_camera"
+            android:title="@string/Home_Item" />
+
+        <item android:id="@+id/nav_Bar" android:icon="@android:drawable/ic_menu_gallery"
+            android:title="@string/Bar_Item" />
+
+        <item android:id="@+id/nav_Fod" android:icon="@android:drawable/ic_menu_slideshow"
+            android:title="@string/Fod_Item" />
+
+        <item android:id="@+id/nav_Gym" android:icon="@android:drawable/ic_menu_manage"
+            android:title="@string/Gym_Item" />
+
+        <item android:id="@+id/nav_Work" android:icon="@android:drawable/ic_menu_manage"
+            android:title="@string/Work_Item" />
+
+        <item android:id="@+id/nav_Rent" android:icon="@android:drawable/ic_menu_manage"
+            android:title="@string/Rent_Item" />
+
+        <item android:id="@+id/nav_Promo" android:icon="@android:drawable/ic_menu_manage"
+            android:title="@string/Promo_Item" />
+    </group>
+
+    <item android:title="Ajustes">
+        <menu>
+            <item android:id="@+id/nav_Settings" android:icon="@android:drawable/ic_menu_share"
+                android:title="@string/Settings_Item" />
+        </menu>
+    </item>
+
+</menu>

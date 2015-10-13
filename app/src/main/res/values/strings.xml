@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Brujula Universitaria</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="Home_Item">Inicio</string>
+    <string name="Bar_Item">Bares</string>
+    <string name="Fod_Item">Comida</string>
+    <string name="Gym_Item">Gimnasios</string>
+    <string name="Work_Item">Trabajos</string>
+    <string name="Rent_Item">Rentas</string>
+    <string name="Promo_Item">Promociones</string>
+
+    <string name="Settings_Item">Ajustes</string>
+
+
+</resources>
