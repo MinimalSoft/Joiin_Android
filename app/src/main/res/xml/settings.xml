@@ -1,0 +1,61 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- AJUSTES DE NOTIFICACIONES -->
+    <PreferenceCategory
+        android:key="notifications_pref"
+        android:title="@string/pref_notifications">
+        <!-- Recibir notificaciones -->
+        <CheckBoxPreference
+            android:key="get_notifications"
+            android:title="@string/pref_get_notifications"
+            android:defaultValue="true" />
+            <SwitchPreference
+                android:dependency="get_notifications"
+                android:key="get_bars"
+                android:title="@string/pref_bars"
+                android:defaultValue="true" />
+            <SwitchPreference
+                android:dependency="get_notifications"
+                android:key="get_food"
+                android:title="@string/pref_food"
+                android:defaultValue="true" />
+            <SwitchPreference
+                android:dependency="get_notifications"
+                android:key="get_gyms"
+                android:title="@string/pref_gyms"
+                android:defaultValue="true" />
+            <SwitchPreference
+                android:dependency="get_notifications"
+                android:key="get_work"
+                android:title="@string/pref_work"
+                android:defaultValue="true" />
+            <SwitchPreference
+                android:dependency="get_notifications"
+                android:key="get_rent"
+                android:title="@string/pref_rent"
+                android:defaultValue="true" />
+            <SwitchPreference
+                android:dependency="get_notifications"
+                android:key="get_promos"
+                android:title="@string/pref_promos"
+                android:defaultValue="true" />
+
+        <!-- Frecuencia de las notificaciones -->
+        <ListPreference
+            android:key="notifications_freq"
+            android:title="@string/pref_notification_freq_tittle"
+            android:defaultValue="Todas"
+            android:entries="@array/pref_notifications_freq"
+            android:entryValues="@array/pref_notifications_freq_vlaues"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_facebook"
+        android:title="@string/pref_facebook">
+
+        <Preference
+            android:key="pref_logOut"
+            android:title="@string/pref_logOut_facebook" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

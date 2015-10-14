@@ -1,6 +1,7 @@
 package com.MinimalSoft.BrujulaUniversitaria;
 
 import android.app.AlertDialog;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationManager;
@@ -88,6 +89,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_Settings) {
             setTitle("Ajustes");
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
 
         }
 
@@ -107,8 +110,8 @@ public class MainActivity extends AppCompatActivity
             alertDialogBuilder.setMessage("El GPS esta desactivado. \n Desea activarlo?")
                     .setCancelable(false)
                     .setPositiveButton("Activar",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
+                            new DialogInterface.OnClickListener(){
+                                public void onClick(DialogInterface dialog, int id){
                                     Intent callGPSSettingIntent = new Intent(
                                             android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                                     startActivity(callGPSSettingIntent);

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Nombre Actividad Ajustes-->
+    <string name="title_activity_setting">Ajustes</string>
+
+    <!-- Titulos de Grupos-->
+    <string name="pref_notifications">Notificaciones</string>
+    <string name="pref_facebook">Facebook</string>
+
+    <!-- NOTIFICACIONES -->
+    <!-- Preferencia Miniaturas -->
+    <string name="pref_get_notifications">Recibir Notificaciones</string>
+    <string name="pref_bars">Bares</string>
+    <string name="pref_food">Comida</string>
+    <string name="pref_gyms">Gimnasios</string>
+    <string name="pref_work">Trabajos</string>
+    <string name="pref_rent">Rentas</string>
+    <string name="pref_promos">Promos</string>
+
+    <!-- Preferencia Número de Articulos -->
+    <string name="pref_notification_freq_tittle">Frecuencia de las Notificaciones</string>
+
+    <string-array name="pref_notifications_freq">
+        <item>Ninguna</item>
+        <item>Pocas</item>
+        <item>La Mayoria</item>
+        <item>Todas</item>
+    </string-array>
+
+    <string-array name="pref_notifications_freq_vlaues">
+        <item>0</item>
+        <item>1</item>
+        <item>4</item>
+        <item>7</item>
+    </string-array>
+
+    <string name="pref_freq_summary"></string>
+
+    <!-- FACEBOOK -->
+    <string name="pref_logOut_facebook">Cerrar Sesion</string>
+</resources>
