@@ -2,31 +2,47 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_Home" android:icon="@mipmap/inicio"
+        <item
+            android:id="@+id/nav_Home"
+            android:icon="@mipmap/inicio"
             android:title="@string/Home_Item" />
 
-        <item android:id="@+id/nav_Bar" android:icon="@mipmap/bar"
+        <item
+            android:id="@+id/nav_Bar"
+            android:icon="@mipmap/bar"
             android:title="@string/Bar_Item" />
 
-        <item android:id="@+id/nav_Fod" android:icon="@mipmap/comida"
+        <item
+            android:id="@+id/nav_Fod"
+            android:icon="@mipmap/comida"
             android:title="@string/Fod_Item" />
 
-        <item android:id="@+id/nav_Gym" android:icon="@mipmap/gym"
+        <item
+            android:id="@+id/nav_Gym"
+            android:icon="@mipmap/gym"
             android:title="@string/Gym_Item" />
 
-        <item android:id="@+id/nav_Work" android:icon="@mipmap/trabajos"
+        <item
+            android:id="@+id/nav_Work"
+            android:icon="@mipmap/trabajos"
             android:title="@string/Work_Item" />
 
-        <item android:id="@+id/nav_Rent" android:icon="@mipmap/renta"
+        <item
+            android:id="@+id/nav_Rent"
+            android:icon="@mipmap/renta"
             android:title="@string/Rent_Item" />
 
-        <item android:id="@+id/nav_Promo" android:icon="@mipmap/promociones"
+        <item
+            android:id="@+id/nav_Promo"
+            android:icon="@mipmap/promociones"
             android:title="@string/Promo_Item" />
     </group>
 
     <item android:title="Ajustes">
         <menu>
-            <item android:id="@+id/nav_Settings" android:icon="@mipmap/materiales"
+            <item
+                android:id="@+id/nav_Settings"
+                android:icon="@mipmap/materiales"
                 android:title="@string/Settings_Item" />
         </menu>
     </item>
