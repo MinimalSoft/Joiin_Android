@@ -67,21 +67,27 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_Home) {
             setTitle("Inicio");
-            // Handle the camera action
+
         } else if (id == R.id.nav_Bar) {
             setTitle("Bares");
 
         } else if (id == R.id.nav_Fod) {
+            setTitle("Comida");
 
         } else if (id == R.id.nav_Gym) {
+            setTitle("Gimnasios");
 
         } else if (id == R.id.nav_Work) {
+            setTitle("Trabajos");
 
         } else if (id == R.id.nav_Rent) {
+            setTitle("Rentas");
 
         } else if (id == R.id.nav_Promo) {
+            setTitle("Promociones");
 
         } else if (id == R.id.nav_Settings) {
+            setTitle("Ajustes");
 
         }
 
@@ -101,8 +107,8 @@ public class MainActivity extends AppCompatActivity
             alertDialogBuilder.setMessage("El GPS esta desactivado. \n Desea activarlo?")
                     .setCancelable(false)
                     .setPositiveButton("Activar",
-                            new DialogInterface.OnClickListener(){
-                                public void onClick(DialogInterface dialog, int id){
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
                                     Intent callGPSSettingIntent = new Intent(
                                             android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                                     startActivity(callGPSSettingIntent);
