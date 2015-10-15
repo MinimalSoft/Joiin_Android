@@ -4,12 +4,16 @@ import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,6 +23,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.MinimalSoft.BrujulaUniversitaria.Maps.Bars_Map;
+import com.facebook.appevents.AppEventsLogger;
+
+import java.io.InputStream;
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +51,13 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         CheckGPSStatus();
+        getUserPic("10207438192853912");
+
+        //SharedPreferences settings = getSharedPreferences("facebook_pref", 0);
+
+
+        //TextView texto = (TextView) findViewById(R.id.Text1);
+        //texto.setText(settings.getString("userId", "NA"));
     }
 
     @Override
@@ -53,15 +71,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-
-        return true;
-    }
-
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
@@ -71,9 +80,29 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_Bar) {
             setTitle("Bares");
+            Bundle args = new Bundle();
+            args.putString(Bars_Map.ARG_SECTION_TITLE, "Bares");
+            Fragment fragment = Bars_Map.newInstance("Bares");
+            fragment.setArguments(args);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            CheckGPSStatus();
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.main_content, fragment)
+                    .commit();
 
         } else if (id == R.id.nav_Fod) {
             setTitle("Comida");
+            Bundle args = new Bundle();
+            args.putString(Bars_Map.ARG_SECTION_TITLE, "Comida");
+            Fragment fragment = Bars_Map.newInstance("Comida");
+            fragment.setArguments(args);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            CheckGPSStatus();
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.main_content, fragment)
+                    .commit();
 
         } else if (id == R.id.nav_Gym) {
             setTitle("Gimnasios");
@@ -86,9 +115,10 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_Promo) {
             setTitle("Promociones");
+            Intent intent = new Intent(this, StartActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_Settings) {
-            setTitle("Ajustes");
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
 
@@ -98,6 +128,22 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    public Bitmap getUserPic(String userID) {
+        String imageURL;
+        Bitmap bitmap = null;
+        Log.d("Imagen", "Loading Picture");
+        imageURL = "https://graph.facebook.com/"+userID+"/picture?type=small";
+        try {
+            bitmap = BitmapFactory.decodeStream((InputStream) new URL(imageURL).getContent());
+        } catch (Exception e) {
+            Log.d("TAG", "Loading Picture FAILED");
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
 
     public void CheckGPSStatus() {
 

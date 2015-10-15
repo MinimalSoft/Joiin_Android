@@ -16,4 +16,9 @@
     <string name="title_activity_settings">Ajustes</string>
 
 
+    <string name="google_maps_key">AIzaSyBDU2JdP2pj258_SLAPR5vK6yjSdoZIwr4</string>
+    <string name="facebook_app_id">916058378464973</string>
+
+
+
 </resources>

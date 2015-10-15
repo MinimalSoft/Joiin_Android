@@ -4,37 +4,37 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_Home"
-            android:icon="@mipmap/inicio"
+            android:icon="@drawable/home"
             android:title="@string/Home_Item" />
 
         <item
             android:id="@+id/nav_Bar"
-            android:icon="@mipmap/bar"
+            android:icon="@drawable/bar"
             android:title="@string/Bar_Item" />
 
         <item
             android:id="@+id/nav_Fod"
-            android:icon="@mipmap/comida"
+            android:icon="@drawable/food"
             android:title="@string/Fod_Item" />
 
         <item
             android:id="@+id/nav_Gym"
-            android:icon="@mipmap/gym"
+            android:icon="@drawable/gym"
             android:title="@string/Gym_Item" />
 
         <item
             android:id="@+id/nav_Work"
-            android:icon="@mipmap/trabajos"
+            android:icon="@drawable/work"
             android:title="@string/Work_Item" />
 
         <item
             android:id="@+id/nav_Rent"
-            android:icon="@mipmap/renta"
+            android:icon="@drawable/rent"
             android:title="@string/Rent_Item" />
 
         <item
             android:id="@+id/nav_Promo"
-            android:icon="@mipmap/promociones"
+            android:icon="@drawable/promo"
             android:title="@string/Promo_Item" />
     </group>
 
@@ -42,7 +42,7 @@
         <menu>
             <item
                 android:id="@+id/nav_Settings"
-                android:icon="@mipmap/materiales"
+                android:icon="@drawable/settings"
                 android:title="@string/Settings_Item" />
         </menu>
     </item>

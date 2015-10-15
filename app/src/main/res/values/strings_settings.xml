@@ -34,8 +34,6 @@
         <item>7</item>
     </string-array>
 
-    <string name="pref_freq_summary"></string>
-
     <!-- FACEBOOK -->
     <string name="pref_logOut_facebook">Cerrar Sesion</string>
 </resources>
