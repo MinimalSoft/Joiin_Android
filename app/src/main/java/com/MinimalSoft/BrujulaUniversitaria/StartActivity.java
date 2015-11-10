@@ -1,14 +1,13 @@
 package com.MinimalSoft.BrujulaUniversitaria;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.VideoView;
@@ -40,7 +39,15 @@ public class StartActivity extends AppCompatActivity {
         setFacebook();
 
     }
+
     //TODO:agregar OnResume para volver a iniciar el video cuando pierde el focus
+    @Override
+    protected void onResume ()
+    {
+        super.onResume();
+        setVideo();
+    }
+
     public void setFacebook()
     {
 
@@ -79,6 +86,7 @@ public class StartActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     protected void setColor ()
     {
         Window window = this.getWindow();

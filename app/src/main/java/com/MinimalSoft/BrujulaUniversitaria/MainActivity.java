@@ -1,38 +1,36 @@
 package com.MinimalSoft.BrujulaUniversitaria;
 
 import android.app.AlertDialog;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.MinimalSoft.BrujulaUniversitaria.Maps.Bars_Map;
-import com.facebook.appevents.AppEventsLogger;
+import com.MinimalSoft.BrujulaUniversitaria.Maps.Food_Map;
+import com.MinimalSoft.BrujulaUniversitaria.Maps.Gym_Map;
+import com.MinimalSoft.BrujulaUniversitaria.Maps.Rent_Map;
+import com.MinimalSoft.BrujulaUniversitaria.Maps.Work_Map;
 
 import java.io.InputStream;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    android.support.v7.app.ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +50,13 @@ public class MainActivity extends AppCompatActivity
 
         CheckGPSStatus();
         getUserPic("10207438192853912");
+
+        actionBar = getSupportActionBar();
+        actionBar.setCustomView(R.layout.actionbar_home);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
 
         //SharedPreferences settings = getSharedPreferences("facebook_pref", 0);
 
@@ -76,14 +81,21 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_Home) {
-            setTitle("Inicio");
+            actionBar = getSupportActionBar();
+            actionBar.setCustomView(R.layout.actionbar_home);
 
-        } else if (id == R.id.nav_Bar) {
-            setTitle("Bares");
-            Bundle args = new Bundle();
-            args.putString(Bars_Map.ARG_SECTION_TITLE, "Bares");
+            Fragment fragment = HomeFragment.newInstance();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.main_content, fragment)
+                    .commit();
+
+        }else if(id==R.id.nav_Bar) {
+            actionBar = getSupportActionBar();
+            actionBar.setCustomView(R.layout.actionbar_bar);
+
             Fragment fragment = Bars_Map.newInstance("Bares");
-            fragment.setArguments(args);
             FragmentManager fragmentManager = getSupportFragmentManager();
             CheckGPSStatus();
             fragmentManager
@@ -92,11 +104,10 @@ public class MainActivity extends AppCompatActivity
                     .commit();
 
         } else if (id == R.id.nav_Fod) {
-            setTitle("Comida");
-            Bundle args = new Bundle();
-            args.putString(Bars_Map.ARG_SECTION_TITLE, "Comida");
-            Fragment fragment = Bars_Map.newInstance("Comida");
-            fragment.setArguments(args);
+            actionBar = getSupportActionBar();
+            actionBar.setCustomView(R.layout.actionbar_food);
+
+            Fragment fragment = Food_Map.newInstance("Comida");
             FragmentManager fragmentManager = getSupportFragmentManager();
             CheckGPSStatus();
             fragmentManager
@@ -105,18 +116,52 @@ public class MainActivity extends AppCompatActivity
                     .commit();
 
         } else if (id == R.id.nav_Gym) {
-            setTitle("Gimnasios");
+            actionBar = getSupportActionBar();
+            actionBar.setCustomView(R.layout.actionbar_gym);
+
+            Fragment fragment = Gym_Map.newInstance("Gimnasios");
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            CheckGPSStatus();
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.main_content, fragment)
+                    .commit();
 
         } else if (id == R.id.nav_Work) {
-            setTitle("Trabajos");
+            actionBar = getSupportActionBar();
+            actionBar.setCustomView(R.layout.actionbar_work);
+
+            Fragment fragment = Work_Map.newInstance("Trabajos");
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            CheckGPSStatus();
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.main_content, fragment)
+                    .commit();
 
         } else if (id == R.id.nav_Rent) {
-            setTitle("Rentas");
+            actionBar = getSupportActionBar();
+            actionBar.setCustomView(R.layout.actionbar_rent);
+
+            Fragment fragment = Rent_Map.newInstance("Rentas");
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            CheckGPSStatus();
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.main_content, fragment)
+                    .commit();
 
         } else if (id == R.id.nav_Promo) {
-            setTitle("Promociones");
-            Intent intent = new Intent(this, StartActivity.class);
-            startActivity(intent);
+            actionBar = getSupportActionBar();
+            actionBar.setCustomView(R.layout.actionbar_promo);
+
+            Fragment fragment = PromosFragment.newInstance();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            CheckGPSStatus();
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.main_content, fragment)
+                    .commit();
 
         } else if (id == R.id.nav_Settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
@@ -173,4 +218,5 @@ public class MainActivity extends AppCompatActivity
             alert.show();
         }
     } // CHECAR GPS STATUS
+
 }

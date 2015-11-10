@@ -1,0 +1,41 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.MinimalSoft.BrujulaUniversitaria.PromosFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|top">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/Promo_Bar"
+            android:src="@drawable/promo_bar"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center_horizontal" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/Promo_Food"
+            android:src="@drawable/promo_food"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center_horizontal" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:layout_weight="1"
+            android:id="@+id/Promo_Gym"
+            android:src="@drawable/promo_gym"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+</FrameLayout>

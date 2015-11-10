@@ -19,7 +19,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class Bars_Map extends Fragment implements GoogleMap.OnMyLocationChangeListener{
+public class Rent_Map extends Fragment implements GoogleMap.OnMyLocationChangeListener{
     MapView mMapView;
     private GoogleMap googleMap;
 
@@ -31,20 +31,20 @@ public class Bars_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
 
     private ImageView imgMyLocation;
     /**
-     * Crea una instancia prefabricada de {@link Bars_Map}
+     * Crea una instancia prefabricada de {@link Rent_Map}
      *
      * @param sectionTitle Título usado en el contenido
      * @return Instancia del fragmento
      */
-    public static Bars_Map newInstance(String sectionTitle) {
-        Bars_Map fragment = new Bars_Map();
+    public static Rent_Map newInstance(String sectionTitle) {
+        Rent_Map fragment = new Rent_Map();
         Bundle args = new Bundle();
         args.putString(ARG_SECTION_TITLE, sectionTitle);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public Bars_Map() {
+    public Rent_Map() {
     }
 
     @Override

@@ -30,7 +30,7 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:text="Francisco David Morales Torres"
+        android:text="David Morales"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
