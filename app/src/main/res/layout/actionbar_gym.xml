@@ -6,13 +6,35 @@
     android:orientation="horizontal" >
 
     <ImageView
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="35dp"
+        android:layout_weight="1"
+        android:background="#9e2c32"/>
+
+    <ImageView
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="35dp"
+        android:layout_weight="1"
+        android:background="#9e2c32"/>
+
+    <ImageView
         android:id="@+id/actionBarLogo1"
-        android:layout_width="wrap_content"
+        android:layout_width="?attr/actionBarSize"
         android:layout_height="35dp"
         android:clickable="false"
         android:focusable="false"
+        android:layout_weight="1"
         android:longClickable="false"
-        android:layout_marginLeft="360px"
         android:src="@drawable/toolgym" />
+    <ImageView
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="35dp"
+        android:layout_weight="1"
+        android:background="#9e2c32"/>
+    <ImageView
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="35dp"
+        android:layout_weight="1"
+        android:background="#9e2c32"/>
 
 </LinearLayout>

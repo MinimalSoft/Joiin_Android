@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity
 
         CheckGPSStatus();
 
-        //getFB();
+        getFB();
 
         setName();
 
