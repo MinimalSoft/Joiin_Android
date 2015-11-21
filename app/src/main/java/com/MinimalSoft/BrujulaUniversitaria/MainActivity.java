@@ -3,10 +3,13 @@ package com.MinimalSoft.BrujulaUniversitaria;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,17 +18,29 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.MinimalSoft.BrujulaUniversitaria.Maps.Bars_Map;
 import com.MinimalSoft.BrujulaUniversitaria.Maps.Food_Map;
 import com.MinimalSoft.BrujulaUniversitaria.Maps.Gym_Map;
 import com.MinimalSoft.BrujulaUniversitaria.Maps.Rent_Map;
 import com.MinimalSoft.BrujulaUniversitaria.Maps.Work_Map;
+import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,6 +49,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -47,9 +67,14 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
 
         CheckGPSStatus();
-        getUserPic("10207438192853912");
+
+        //getFB();
+
+        setName();
+
 
         actionBar = getSupportActionBar();
         actionBar.setCustomView(R.layout.actionbar_home);
@@ -58,11 +83,17 @@ public class MainActivity extends AppCompatActivity
         actionBar.setDisplayUseLogoEnabled(false);
         actionBar.setDisplayShowHomeEnabled(false);
 
-        //SharedPreferences settings = getSharedPreferences("facebook_pref", 0);
+        /**
 
+        ImageView settings = (ImageView) findViewById(R.id.settingsImage);
+        settings.setOnClickListener(new View.OnClickListener() {
 
-        //TextView texto = (TextView) findViewById(R.id.Text1);
-        //texto.setText(settings.getString("userId", "NA"));
+            @Override
+            public void onClick(View v) {
+                startSettings();
+            }
+        });
+        **/
     }
 
     @Override
@@ -166,29 +197,65 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_Settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
-
-        }
+           }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    private void getFB(){
+        new Thread(new Runnable() {
 
-    public Bitmap getUserPic(String userID) {
-        String imageURL;
-        Bitmap bitmap = null;
-        Log.d("Imagen", "Loading Picture");
-        imageURL = "https://graph.facebook.com/"+userID+"/picture?type=small";
-        try {
-            bitmap = BitmapFactory.decodeStream((InputStream) new URL(imageURL).getContent());
-        } catch (Exception e) {
-            Log.d("TAG", "Loading Picture FAILED");
-            e.printStackTrace();
-        }
-        return bitmap;
+            @Override
+            public void run() {
+
+                GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+
+                        JSONObject json = response.getJSONObject();
+                        try {
+                            if (json != null) {
+
+                                String profileURL = json.getJSONObject("picture").getJSONObject("data").getString("url");
+                                InputStream profileIn = new URL(profileURL).openStream();
+                                Bitmap profile = BitmapFactory.decodeStream(profileIn);
+
+                                String coverURL = json.getJSONObject("cover").getString("source");
+                                InputStream coverIn = new URL(coverURL).openStream();
+                                Bitmap cover = BitmapFactory.decodeStream(coverIn);
+
+                                LinearLayout coverPic = (LinearLayout) findViewById(R.id.header_background);
+                                BitmapDrawable background = new BitmapDrawable(cover);
+
+                                Bitmap blurredBitmap = AsyncBlur.blur( getApplicationContext(), cover );
+                                coverPic.setBackgroundDrawable( new BitmapDrawable( getResources(), blurredBitmap ) );
+
+                                CircleImageView profilePic = (CircleImageView) findViewById(R.id.circle_userPicture);
+                                profilePic.setImageBitmap(profile);
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,picture.type(large),cover");
+                request.setParameters(parameters);
+                request.executeAsync();
+
+            }
+        }).start();
+
+
     }
-
 
     public void CheckGPSStatus() {
 
@@ -219,4 +286,21 @@ public class MainActivity extends AppCompatActivity
         }
     } // CHECAR GPS STATUS
 
+    private void setName() {
+
+        SharedPreferences settings = getSharedPreferences("facebook_pref", 0);
+        TextView name = (TextView) findViewById(R.id.Name);
+        TextView email = (TextView) findViewById(R.id.Email);
+
+        name.setText(settings.getString("userName", "NA"));
+        email.setText(settings.getString("userEmail", "NA"));
+
+    }
+
+
+
 }
+
+
+
+

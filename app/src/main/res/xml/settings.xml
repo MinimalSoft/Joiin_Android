@@ -11,21 +11,6 @@
             android:defaultValue="true" />
             <SwitchPreference
                 android:dependency="get_notifications"
-                android:key="get_bars"
-                android:title="@string/pref_bars"
-                android:defaultValue="true" />
-            <SwitchPreference
-                android:dependency="get_notifications"
-                android:key="get_food"
-                android:title="@string/pref_food"
-                android:defaultValue="true" />
-            <SwitchPreference
-                android:dependency="get_notifications"
-                android:key="get_gyms"
-                android:title="@string/pref_gyms"
-                android:defaultValue="true" />
-            <SwitchPreference
-                android:dependency="get_notifications"
                 android:key="get_work"
                 android:title="@string/pref_work"
                 android:defaultValue="true" />
@@ -42,9 +27,10 @@
 
         <!-- Frecuencia de las notificaciones -->
         <ListPreference
+            android:dependency="get_notifications"
             android:key="notifications_freq"
             android:title="@string/pref_notification_freq_tittle"
-            android:defaultValue="Todas"
+            android:defaultValue="7"
             android:entries="@array/pref_notifications_freq"
             android:entryValues="@array/pref_notifications_freq_vlaues"/>
     </PreferenceCategory>
@@ -56,6 +42,15 @@
         <Preference
             android:key="pref_logOut"
             android:title="@string/pref_logOut_facebook" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_about"
+        android:title="@string/pref_about">
+
+        <Preference
+            android:title="@string/pref_version"
+            android:summary="BU v 1.0"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

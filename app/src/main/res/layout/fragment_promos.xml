@@ -3,8 +3,6 @@
     android:layout_height="match_parent"
     tools:context="com.MinimalSoft.BrujulaUniversitaria.PromosFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -37,5 +35,6 @@
             android:id="@+id/Promo_Gym"
             android:src="@drawable/promo_gym"
             android:layout_gravity="center_horizontal" />
+
     </LinearLayout>
 </FrameLayout>
