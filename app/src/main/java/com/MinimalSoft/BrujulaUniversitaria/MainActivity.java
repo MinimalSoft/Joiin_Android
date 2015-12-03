@@ -73,9 +73,6 @@ public class MainActivity extends AppCompatActivity
 
         getFB();
 
-        setName();
-
-
         actionBar = getSupportActionBar();
         actionBar.setCustomView(R.layout.actionbar_home);
         actionBar.setDisplayShowTitleEnabled(false);
@@ -235,6 +232,8 @@ public class MainActivity extends AppCompatActivity
                                 CircleImageView profilePic = (CircleImageView) findViewById(R.id.circle_userPicture);
                                 profilePic.setImageBitmap(profile);
 
+                                setName();
+
                             }
 
                         } catch (JSONException e) {
@@ -296,9 +295,6 @@ public class MainActivity extends AppCompatActivity
         email.setText(settings.getString("userEmail", "NA"));
 
     }
-
-
-
 }
 
 

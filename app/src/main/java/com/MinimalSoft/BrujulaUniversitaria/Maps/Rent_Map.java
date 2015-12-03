@@ -1,13 +1,17 @@
 package com.MinimalSoft.BrujulaUniversitaria.Maps;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.MinimalSoft.BrujulaUniversitaria.DetailsActivity;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -88,16 +92,38 @@ public class Rent_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
             }
             private void getMyLocation() {
 
-                Location location = googleMap.getMyLocation();
+                try {
+                    Location location = googleMap.getMyLocation();
 
-                LatLng target = new LatLng(location.getLatitude(), location.getLongitude());
-                CameraPosition position = googleMap.getCameraPosition();
+                    LatLng target = new LatLng(location.getLatitude(), location.getLongitude());
+                    CameraPosition position = googleMap.getCameraPosition();
 
-                CameraPosition.Builder builder = new CameraPosition.Builder();
-                builder.zoom(15);
-                builder.target(target);
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
+                    CameraPosition.Builder builder = new CameraPosition.Builder();
+                    builder.zoom(15);
+                    builder.target(target);
+                    googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
+                }
+                catch (NullPointerException ex)
+                {
 
+                }
+
+            }
+        });
+
+        Fragment summaryFragment = new Summary();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.add(R.id.container, summaryFragment).commit();
+
+        FrameLayout frame = (FrameLayout) v.findViewById (R.id.container);
+
+        frame.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getContext(), DetailsActivity.class);
+                startActivity(intent);
             }
         });
 
