@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.MinimalSoft.BrujulaUniversitaria.DetailsActivity;
 import com.MinimalSoft.BrujulaUniversitaria.R;
@@ -21,6 +22,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class Rent_Map extends Fragment implements GoogleMap.OnMyLocationChangeListener{
@@ -135,22 +137,73 @@ public class Rent_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
     private void Marks (){
 
         MarkerOptions marker = new MarkerOptions().position(
-                new LatLng(19.323504, -99.130752)).title("EJEMPLO 1").snippet("Bar No.1 Informacion adicional")
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.bar));
+                new LatLng(19.323504, -99.130752)).title("Renta de Departamento").snippet("Xola 1413, Narvarte Poniente.")
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.renta));
 
         MarkerOptions marker1 = new MarkerOptions().position(
-                new LatLng(19.339878, -99.129834)).title("EJEMPLO 2").snippet("Bar No.2")
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.bar));
+                new LatLng(19.339878, -99.129834)).title("Renta de Departamento").snippet("Mérida 105, Roma Nte.")
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.renta));
 
         MarkerOptions marker3 = new MarkerOptions().position(
-                new LatLng(19.326105, -99.139122)).title("EJEMPLO 3").snippet("Bar No.3")
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.bar));
+                new LatLng(19.326105, -99.139122)).title("Renta de Cuarto").snippet("Francisco Márquez 125, Condesa.")
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.renta));
+
+        MarkerOptions marker4 = new MarkerOptions().position(
+                new LatLng(19.412344, -99.161900)).title("Renta de Cuarto").snippet("Río Balsas 40, Cuauhtémoc.")
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.renta));
 
 
         googleMap.addMarker(marker);
         googleMap.addMarker(marker1);
         googleMap.addMarker(marker3);
-    } //Accedemos a Marks (BARES)
+        googleMap.addMarker(marker4);
+
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+            @Override
+            public boolean onMarkerClick(Marker mark) {
+
+                FrameLayout frame = (FrameLayout) getView().findViewById(R.id.container);
+                frame.setVisibility(View.VISIBLE);
+
+                ImageView imagen = (ImageView) getView().findViewById(R.id.summary_image);
+                TextView titulo = (TextView) getView().findViewById(R.id.summary_tittle);
+                TextView direccion = (TextView) getView().findViewById(R.id.summary_address);
+
+                switch (mark.getSnippet()) {
+                    case "Xola 1413, Narvarte Poniente.":
+                        titulo.setText("Renta de Departamento");
+                        direccion.setText("Xola 1413, Narvarte Poniente.");
+                        imagen.setImageResource(R.drawable.depa1);
+                        mark.showInfoWindow();
+                        break;
+
+                    case "Mérida 105, Roma Nte.":
+                        titulo.setText("Renta de Departamento");
+                        direccion.setText("Mérida 105, Roma Nte.");
+                        imagen.setImageResource(R.drawable.depa2);
+                        mark.showInfoWindow();
+                        break;
+
+                    case "Francisco Márquez 125, Condesa.":
+                        titulo.setText("Renta de Cuarto");
+                        direccion.setText("Francisco Márquez 125, Condesa.");
+                        imagen.setImageResource(R.drawable.cuarto1);
+                        mark.showInfoWindow();
+                        break;
+
+                    case "Río Balsas 40, Cuauhtémoc.":
+                        titulo.setText("Renta de Cuarto");
+                        direccion.setText("Río Balsas 40, Cuauhtémoc.");
+                        imagen.setImageResource(R.drawable.cuarto2);
+                        mark.showInfoWindow();
+                        break;
+                }
+                return true;
+            }
+        });
+
+    }
 
     public void onMyLocationChange(Location lastKnownLocation) {
         //Latitud : 21.0345 Longitud : -100.8694 DF

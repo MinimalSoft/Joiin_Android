@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="El Califa"
+                android:text="El Califa Insurgentes"
                 android:id="@+id/summary_tittle"
                 android:gravity="center"
                 android:layout_marginTop="20dp"
@@ -46,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Jacarandas 17, coyoacan."
+                android:gravity="center"
                 android:id="@+id/summary_address"
                 android:layout_below="@+id/summary_tittle"
                 android:layout_centerHorizontal="true" />

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.MinimalSoft.BrujulaUniversitaria.DetailsActivity;
 import com.MinimalSoft.BrujulaUniversitaria.R;
@@ -21,6 +22,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class Food_Map extends Fragment implements GoogleMap.OnMyLocationChangeListener{
@@ -135,21 +137,61 @@ public class Food_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
     private void Marks (){
 
         MarkerOptions marker = new MarkerOptions().position(
-                new LatLng(19.323504, -99.130752)).title("EJEMPLO 1").snippet("Bar No.1 Informacion adicional")
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.bar));
+                new LatLng(19.323504, -99.130752)).title("El Califa Insurgentes").snippet("Av de los Insurgentes Sur 1217, Benito Juarez.")
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.comida));
 
         MarkerOptions marker1 = new MarkerOptions().position(
-                new LatLng(19.339878, -99.129834)).title("EJEMPLO 2").snippet("Bar No.2")
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.bar));
+                new LatLng(19.339878, -99.129834)).title("Matisse Polanco").snippet("Anatole France 115, Miguel Hidalgo.")
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.comida));
 
         MarkerOptions marker3 = new MarkerOptions().position(
-                new LatLng(19.326105, -99.139122)).title("EJEMPLO 3").snippet("Bar No.3")
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.bar));
+                new LatLng(19.326105, -99.139122)).title("Tennessee Condesa").snippet("Tamaulipas 80, Cuauhtémoc.")
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.comida));
 
 
         googleMap.addMarker(marker);
         googleMap.addMarker(marker1);
         googleMap.addMarker(marker3);
+
+
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+            @Override
+            public boolean onMarkerClick(Marker mark) {
+
+                FrameLayout frame = (FrameLayout) getView().findViewById(R.id.container);
+                frame.setVisibility(View.VISIBLE);
+
+                ImageView imagen = (ImageView) getView().findViewById(R.id.summary_image);
+                TextView titulo = (TextView) getView().findViewById(R.id.summary_tittle);
+                TextView direccion = (TextView) getView().findViewById(R.id.summary_address);
+
+                switch (mark.getTitle()) {
+                    case "El Califa Insurgentes":
+                        titulo.setText("El Califa Insurgentes");
+                        direccion.setText("Av de los Insurgentes Sur 1217, Benito Juarez.");
+                        imagen.setImageResource(R.drawable.califa);
+                        mark.showInfoWindow();
+                        break;
+
+                    case "Matisse Polanco":
+                        titulo.setText("Matisse Polanco");
+                        direccion.setText("Anatole France 115, Miguel Hidalgo.");
+                        imagen.setImageResource(R.drawable.matisse);
+                        mark.showInfoWindow();
+                        break;
+
+                    case "Tennessee Condesa":
+                        titulo.setText("Tennessee Condesa");
+                        direccion.setText("Tamaulipas 80, Cuauhtémoc.");
+                        imagen.setImageResource(R.drawable.tennessee);
+                        mark.showInfoWindow();
+                        break;
+                }
+                return true;
+            }
+        });
+
     } //Accedemos a Marks (BARES)
 
     public void onMyLocationChange(Location lastKnownLocation) {

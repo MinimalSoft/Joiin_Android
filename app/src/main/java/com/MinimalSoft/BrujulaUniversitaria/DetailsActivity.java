@@ -41,8 +41,7 @@ public class DetailsActivity extends AppCompatActivity {
          actionBar.setDisplayShowHomeEnabled(true);
          */
 
-        setUber ();
-
+        setUber();
 
     }
 
@@ -138,7 +137,7 @@ public class DetailsActivity extends AppCompatActivity {
                     startActivity(intent);
                 } catch (PackageManager.NameNotFoundException e) {
                     // No Uber app! Open mobile website.
-                    String url = "https://m.uber.com/sign-up?client_id=YOUR_CLIENT_ID";
+                    String url = "https://m.uber.com/sign-up?client_id=gAuO_Frn53koJyRJLkGyL8pqgV0399_J";
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse(url));
                     startActivity(i);
@@ -148,6 +147,13 @@ public class DetailsActivity extends AppCompatActivity {
         });
     }
 
+    public void onClick(View v) {
+
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
+        startActivity(intent);
+
+    }
 }
 
 

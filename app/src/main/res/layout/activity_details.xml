@@ -82,6 +82,8 @@ Nuestra especialidad es la elaboración y venta de tacos, distinguidos por servi
 
                     <TextView
                         android:layout_width="match_parent"
+                        android:id="@+id/address_txt1"
+                        android:onClick="onClick"
                         android:layout_height="wrap_content"
                         android:text="\nJacarandas 17, Coyoacan"
                         android:paddingBottom="20dp"

@@ -1,20 +1,150 @@
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.MinimalSoft.BrujulaUniversitaria.HomeFragment">
-    android:background="#B5CBC5"
+    android:layout_height="wrap_content"
+    android:background="@color/uber_white_80"
+    tools:context="com.MinimalSoft.BrujulaUniversitaria.HomeFragment"
+    android:layout_marginBottom="2dp">
 
+
+    <ImageView
+        android:id="@+id/entry_foto"
+        android:src="@drawable/post1"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_height="200dp" />
+
+    <View
+        android:id="@+id/gradient"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/gradient" />
 
     <TextView
+        android:id="@+id/entry_titulo"
         android:layout_width="wrap_content"
-        android:id="@+id/Text1"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="60sp"
-        android:textColor="#FFFFFF"
-        android:text="Comming Soon"
-        android:layout_alignParentTop="true"
+        android:text="El Dilema de la Universidad"
+        android:textSize="@dimen/home_text_size"
+        android:textColor="@color/com_facebook_share_button_text_color"
+        android:layout_alignBottom="@+id/gradient"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="192dp" />
+        android:layout_alignParentStart="true" />
+
+
+    <ImageView
+        android:layout_marginTop="2dp"
+        android:layout_below="@id/gradient"
+        android:id="@+id/entry_foto1"
+        android:src="@drawable/post2"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_height="200dp" />
+
+    <View
+        android:layout_alignBottom="@+id/entry_foto1"
+        android:id="@+id/gradient1"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/gradient" />
+
+    <TextView
+        android:id="@+id/entry_titulo1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Galeria"
+        android:textSize="@dimen/home_text_size"
+        android:textColor="@color/com_facebook_share_button_text_color"
+        android:layout_alignBottom="@+id/entry_foto1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_marginTop="2dp"
+        android:layout_below="@id/gradient1"
+        android:id="@+id/entry_foto2"
+        android:src="@drawable/post3"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_height="200dp" />
+
+    <View
+        android:layout_alignBottom="@+id/entry_foto2"
+        android:id="@+id/gradient2"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/gradient" />
+
+    <TextView
+        android:id="@+id/entry_titulo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¡Alcanza tu meta!"
+        android:textSize="@dimen/home_text_size"
+        android:textColor="@color/com_facebook_share_button_text_color"
+        android:layout_alignBottom="@+id/entry_foto2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_marginTop="2dp"
+        android:layout_below="@id/gradient2"
+        android:id="@+id/entry_foto3"
+        android:src="@drawable/post4"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_height="200dp" />
+
+    <View
+        android:layout_alignBottom="@+id/entry_foto3"
+        android:id="@+id/gradient3"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/gradient" />
+
+    <TextView
+        android:id="@+id/entry_titulo3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¡Viajar es vivir!"
+        android:textSize="@dimen/home_text_size"
+        android:textColor="@color/com_facebook_share_button_text_color"
+        android:layout_alignBottom="@+id/entry_foto3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_marginTop="2dp"
+        android:layout_below="@id/gradient3"
+        android:id="@+id/entry_foto4"
+        android:src="@drawable/post5"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_height="200dp" />
+
+    <View
+        android:layout_alignBottom="@+id/entry_foto4"
+        android:id="@+id/gradient4"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/gradient" />
+
+    <TextView
+        android:id="@+id/entry_titulo4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="La cultura del autentico Citadino"
+        android:textSize="@dimen/home_text_size"
+        android:textColor="@color/com_facebook_share_button_text_color"
+        android:layout_alignBottom="@+id/entry_foto4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
 </RelativeLayout>
+
+</ScrollView>
