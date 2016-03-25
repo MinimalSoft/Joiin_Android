@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class Rent_Map extends Fragment implements GoogleMap.OnMyLocationChangeListener{
     MapView mMapView;
     private GoogleMap googleMap;
+    String ArgTitle = null;
 
     /**
      * Este argumento del fragmento representa el título de cada
@@ -125,6 +126,9 @@ public class Rent_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
             public void onClick(View v) {
 
                 Intent intent = new Intent(getContext(), DetailsActivity.class);
+                Bundle b = new Bundle();
+                b.putString("Titulo", ArgTitle);
+                intent.putExtras(b); //Put your id to your next Intent
                 startActivity(intent);
             }
         });
@@ -176,6 +180,7 @@ public class Rent_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
                         direccion.setText("Xola 1413, Narvarte Poniente.");
                         imagen.setImageResource(R.drawable.depa1);
                         mark.showInfoWindow();
+                        ArgTitle=mark.getSnippet();
                         break;
 
                     case "Mérida 105, Roma Nte.":
@@ -183,6 +188,7 @@ public class Rent_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
                         direccion.setText("Mérida 105, Roma Nte.");
                         imagen.setImageResource(R.drawable.depa2);
                         mark.showInfoWindow();
+                        ArgTitle=mark.getSnippet();
                         break;
 
                     case "Francisco Márquez 125, Condesa.":
@@ -190,6 +196,7 @@ public class Rent_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
                         direccion.setText("Francisco Márquez 125, Condesa.");
                         imagen.setImageResource(R.drawable.cuarto1);
                         mark.showInfoWindow();
+                        ArgTitle=mark.getSnippet();
                         break;
 
                     case "Río Balsas 40, Cuauhtémoc.":
@@ -197,6 +204,7 @@ public class Rent_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
                         direccion.setText("Río Balsas 40, Cuauhtémoc.");
                         imagen.setImageResource(R.drawable.cuarto2);
                         mark.showInfoWindow();
+                        ArgTitle=mark.getSnippet();
                         break;
                 }
                 return true;

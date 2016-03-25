@@ -14,7 +14,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.MinimalSoft.BrujulaUniversitaria.AddPlaceActivity;
 import com.MinimalSoft.BrujulaUniversitaria.DetailsActivity;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.google.android.gms.maps.CameraUpdate;
@@ -44,6 +43,7 @@ public class Bars_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
 
     private ImageView imgMyLocation;
     private Marker tempMarker;
+    String ArgTitle = null;
     /**
      * Crea una instancia prefabricada de {@link Bars_Map}
      *
@@ -132,6 +132,9 @@ public class Bars_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
             public void onClick(View v) {
 
                 Intent intent = new Intent(getContext(), DetailsActivity.class);
+                Bundle b = new Bundle();
+                b.putString("Titulo", ArgTitle);
+                intent.putExtras(b); //Put your id to your next Intent
                 startActivity(intent);
             }
         });
@@ -241,6 +244,7 @@ public class Bars_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
                         direccion.setText("Tamaulipas 37-A, Cuauhtemoc.");
                         imagen.setImageResource(R.drawable.quintin);
                         mark.showInfoWindow();
+                        ArgTitle=mark.getTitle();
                         break;
 
                     case "El Pata Negra":
@@ -248,6 +252,7 @@ public class Bars_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
                         direccion.setText("Tamaulipas 30, Cuauhtemoc.");
                         imagen.setImageResource(R.drawable.patanegra);
                         mark.showInfoWindow();
+                        ArgTitle=mark.getTitle();
                         break;
 
                     case "Brooklyn Rooftop":
@@ -255,6 +260,7 @@ public class Bars_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
                         direccion.setText("San Jerónimo 263, Álvaro Obregón.");
                         imagen.setImageResource(R.drawable.broklin);
                         mark.showInfoWindow();
+                        ArgTitle=mark.getTitle();
                         break;
                 }
                 return true;

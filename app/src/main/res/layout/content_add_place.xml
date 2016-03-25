@@ -9,7 +9,7 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_place"
-    tools:context="com.MinimalSoft.BrujulaUniversitaria.AddPlaceActivity">
+    tools:context="com.MinimalSoft.BrujulaUniversitaria.Maps.AddPlaceActivity">
 
 
     <TextView
@@ -35,7 +35,7 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:padding="6dp"
-            android:src="@drawable/user"
+            android:src="@drawable/nombre"
             android:tint="@color/com_facebook_likeboxcountview_text_color"/>
 
         <android.support.design.widget.TextInputLayout

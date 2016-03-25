@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class Work_Map extends Fragment implements GoogleMap.OnMyLocationChangeListener{
     MapView mMapView;
     private GoogleMap googleMap;
+    String ArgTitle = null;
 
     /**
      * Este argumento del fragmento representa el título de cada
@@ -125,6 +126,9 @@ public class Work_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
             public void onClick(View v) {
 
                 Intent intent = new Intent(getContext(), DetailsActivity.class);
+                Bundle b = new Bundle();
+                b.putString("Titulo", ArgTitle);
+                intent.putExtras(b); //Put your id to your next Intent
                 startActivity(intent);
             }
         });
@@ -141,7 +145,7 @@ public class Work_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.trabajos));
 
         MarkerOptions marker1 = new MarkerOptions().position(
-                new LatLng(19.339878, -99.129834)).title("Cajero").snippet("Chiapas 47, Cuauhtémoc.")
+                new LatLng(19.339878, -99.129834)).title("Auxiliar administrativo").snippet("Chiapas 47, Cuauhtémoc.")
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.trabajos));
 
         MarkerOptions marker3 = new MarkerOptions().position(
@@ -171,13 +175,15 @@ public class Work_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
                         direccion.setText("Av Nuevo León 94, Condesa, Cuauhtémoc.");
                         imagen.setImageResource(R.drawable.logo1);
                         mark.showInfoWindow();
+                        ArgTitle=mark.getTitle();
                         break;
 
-                    case "Cajero":
-                        titulo.setText("Cajero");
+                    case "Auxiliar administrativo":
+                        titulo.setText("Auxiliar administrativo");
                         direccion.setText("Chiapas 47, Cuauhtémoc.");
                         imagen.setImageResource(R.drawable.logo2);
                         mark.showInfoWindow();
+                        ArgTitle=mark.getTitle();
                         break;
 
                     case "Vendedor":
@@ -185,6 +191,7 @@ public class Work_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
                         direccion.setText("Luz Saviñón 1027, Benito Juárez.");
                         imagen.setImageResource(R.drawable.logo3);
                         mark.showInfoWindow();
+                        ArgTitle=mark.getTitle();
                         break;
                 }
                 return true;

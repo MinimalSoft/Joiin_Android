@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class Food_Map extends Fragment implements GoogleMap.OnMyLocationChangeListener{
     MapView mMapView;
     private GoogleMap googleMap;
+    String ArgTitle = null;
 
     /**
      * Este argumento del fragmento representa el título de cada
@@ -125,6 +126,9 @@ public class Food_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
             public void onClick(View v) {
 
                 Intent intent = new Intent(getContext(), DetailsActivity.class);
+                Bundle b = new Bundle();
+                b.putString("Titulo", ArgTitle);
+                intent.putExtras(b); //Put your id to your next Intent
                 startActivity(intent);
             }
         });
@@ -172,6 +176,7 @@ public class Food_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
                         direccion.setText("Av de los Insurgentes Sur 1217, Benito Juarez.");
                         imagen.setImageResource(R.drawable.califa);
                         mark.showInfoWindow();
+                        ArgTitle=mark.getTitle();
                         break;
 
                     case "Matisse Polanco":
@@ -179,6 +184,7 @@ public class Food_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
                         direccion.setText("Anatole France 115, Miguel Hidalgo.");
                         imagen.setImageResource(R.drawable.matisse);
                         mark.showInfoWindow();
+                        ArgTitle=mark.getTitle();
                         break;
 
                     case "Tennessee Condesa":
@@ -186,6 +192,7 @@ public class Food_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
                         direccion.setText("Tamaulipas 80, Cuauhtémoc.");
                         imagen.setImageResource(R.drawable.tennessee);
                         mark.showInfoWindow();
+                        ArgTitle=mark.getTitle();
                         break;
                 }
                 return true;

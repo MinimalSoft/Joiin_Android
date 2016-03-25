@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.MinimalSoft.BrujulaUniversitaria.PromosFragment">
+    tools:context="com.MinimalSoft.BrujulaUniversitaria.Promos.PromosFragment">
 
     <LinearLayout
         android:orientation="vertical"
@@ -28,6 +28,7 @@
             android:src="@drawable/promo_food"
             android:scaleType="centerCrop"
             android:layout_marginBottom="1dp"
+            android:onClick="PromoComida"
             android:layout_gravity="center_horizontal" />
 
         <ImageView
@@ -38,6 +39,7 @@
             android:id="@+id/Promo_Gym"
             android:src="@drawable/promo_gym"
             android:layout_marginBottom="1dp"
+            android:onClick="PromoGyms"
             android:layout_gravity="center_horizontal" />
 
     </LinearLayout>

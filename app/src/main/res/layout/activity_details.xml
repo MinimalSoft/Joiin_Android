@@ -40,6 +40,7 @@ android:fitsSystemWindows="true">
                 <!--Texto de ejemplo-->
                 <TextView
                     android:layout_width="match_parent"
+                    android:id="@+id/details_about"
                     android:layout_height="wrap_content"
                     android:text="\nHace 20 años El Califa dio un giro al concepto tradicional de las taquerías en México creando una atmósfera joven y contemporánea, con productos de calidad y un trato personalizado.
 Nuestra especialidad es la elaboración y venta de tacos, distinguidos por servirse con la carne completa y tortillas hechas en el momento." />
@@ -82,8 +83,8 @@ Nuestra especialidad es la elaboración y venta de tacos, distinguidos por servi
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:id="@+id/address_txt1"
-                        android:onClick="onClick"
+                        android:id="@+id/details_address"
+                        android:onClick="Navigate"
                         android:layout_height="wrap_content"
                         android:text="\nJacarandas 17, Coyoacan"
                         android:paddingBottom="20dp"
@@ -106,6 +107,8 @@ Nuestra especialidad es la elaboración y venta de tacos, distinguidos por servi
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/details_phone"
+                        android:onClick="Call"
                         android:text="\n55 2948 3927"
                         android:paddingBottom="20dp"
                         />
@@ -139,7 +142,7 @@ Nuestra especialidad es la elaboración y venta de tacos, distinguidos por servi
 
         <!-- Imagen del detalle -->
         <ImageView
-            android:id="@+id/image_paralax"
+            android:id="@+id/details_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"

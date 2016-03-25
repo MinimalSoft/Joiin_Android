@@ -29,7 +29,7 @@
                 android:value="com.MinimalSoft.BrujulaUniversitaria.MainActivity" />
         </activity>
         <activity
-            android:name=".FBStartActivity"
+            android:name=".Start.FBStartActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
@@ -53,16 +53,18 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name=".AnimationStartActivity"
+            android:name=".Start.AnimationStartActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".DetailsActivity"
@@ -70,13 +72,20 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".AddPlaceActivity"
+            android:name=".Maps.AddPlaceActivity"
             android:label="@string/title_activity_place"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".Promos.PromoBares"
-            android:label="@string/title_activity_promo_bares"
+            android:name=".Promos.Bars_Promo"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".Promos.Gyms_Promo"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".Promos.Food_Promo"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>

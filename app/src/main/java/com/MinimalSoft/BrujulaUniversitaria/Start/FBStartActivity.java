@@ -1,4 +1,4 @@
-package com.MinimalSoft.BrujulaUniversitaria;
+package com.MinimalSoft.BrujulaUniversitaria.Start;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -13,6 +13,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.VideoView;
 
+import com.MinimalSoft.BrujulaUniversitaria.MainActivity;
+import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;

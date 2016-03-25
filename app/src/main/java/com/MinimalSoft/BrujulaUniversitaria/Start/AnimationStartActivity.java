@@ -1,4 +1,4 @@
-package com.MinimalSoft.BrujulaUniversitaria;
+package com.MinimalSoft.BrujulaUniversitaria.Start;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+
+import com.MinimalSoft.BrujulaUniversitaria.MainActivity;
+import com.MinimalSoft.BrujulaUniversitaria.R;
 
 public class AnimationStartActivity extends AppCompatActivity {
 

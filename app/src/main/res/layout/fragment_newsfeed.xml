@@ -1,0 +1,93 @@
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/colorWhite"
+    tools:context="com.MinimalSoft.BrujulaUniversitaria.Tabs.Articles"
+    android:layout_marginBottom="2dp">
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+            <ImageView
+                android:id="@+id/entry_p"
+                android:src="@drawable/publicidad"
+                android:layout_width="match_parent"
+                android:scaleType="centerCrop"
+                android:layout_height="200dp" />
+
+            <View
+                android:id="@+id/gradientp"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/gradient" />
+
+            <TextView
+                android:id="@+id/entry_titulop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IZettle"
+                android:textSize="@dimen/home_text_size"
+                android:textColor="@color/colorWhite"
+                android:layout_alignBottom="@+id/entry_p"
+                android:layout_marginLeft="7dp"/>
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+            <ImageView
+                android:id="@+id/entry_foto"
+                android:src="@drawable/post1"
+                android:layout_width="match_parent"
+                android:scaleType="centerCrop"
+                android:layout_height="200dp" />
+
+            <View
+                android:id="@+id/gradient"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/gradient" />
+
+            <TextView
+                android:id="@+id/entry_titulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="El Dilema de la Universidad"
+                android:layout_marginLeft="7dp"
+                android:textSize="@dimen/home_text_size"
+                android:textColor="@color/colorWhite"
+                android:layout_alignBottom="@+id/gradient"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+
+</LinearLayout>
+
+</ScrollView>

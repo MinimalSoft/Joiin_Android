@@ -1,4 +1,4 @@
-package com.MinimalSoft.BrujulaUniversitaria;
+package com.MinimalSoft.BrujulaUniversitaria.Tabs;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,14 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.MinimalSoft.BrujulaUniversitaria.R;
 
-public class HomeFragment extends Fragment {
-    public static HomeFragment newInstance() {
-        HomeFragment fragment = new HomeFragment();
+
+public class Articles extends Fragment {
+    public static Articles newInstance() {
+        Articles fragment = new Articles();
         return fragment;
     }
 
-    public HomeFragment() {
+    public Articles() {
         // Required empty public constructor
     }
 
@@ -27,6 +29,6 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_articles, container, false);
     }
 }

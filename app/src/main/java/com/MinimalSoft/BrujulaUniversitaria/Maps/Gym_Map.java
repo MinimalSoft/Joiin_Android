@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class Gym_Map extends Fragment implements GoogleMap.OnMyLocationChangeListener{
     MapView mMapView;
     private GoogleMap googleMap;
+    String ArgTitle = null;
 
     /**
      * Este argumento del fragmento representa el título de cada
@@ -125,6 +126,9 @@ public class Gym_Map extends Fragment implements GoogleMap.OnMyLocationChangeLis
             public void onClick(View v) {
 
                 Intent intent = new Intent(getContext(), DetailsActivity.class);
+                Bundle b = new Bundle();
+                b.putString("Titulo", ArgTitle);
+                intent.putExtras(b); //Put your id to your next Intent
                 startActivity(intent);
             }
         });
@@ -171,12 +175,14 @@ public class Gym_Map extends Fragment implements GoogleMap.OnMyLocationChangeLis
                         direccion.setText("Av Nuevo León 94, Cuauhtémoc.");
                         imagen.setImageResource(R.drawable.gym24);
                         mark.showInfoWindow();
+                        ArgTitle=mark.getTitle();
                         break;
 
                     case "Sports World San Angel":
                         titulo.setText("Sports World San Angel");
                         direccion.setText("Fernando M. Villalpando 98,Álvaro Obregón.");
                         imagen.setImageResource(R.drawable.sports);
+                        ArgTitle=mark.getTitle();
                         mark.showInfoWindow();
                         break;
 
@@ -184,6 +190,7 @@ public class Gym_Map extends Fragment implements GoogleMap.OnMyLocationChangeLis
                         titulo.setText("Smart Fit Polanco");
                         direccion.setText("Ejército Nacional No 350 Int L-01, Miguel Hidalgo.");
                         imagen.setImageResource(R.drawable.smartfit);
+                        ArgTitle=mark.getTitle();
                         mark.showInfoWindow();
                         break;
                 }

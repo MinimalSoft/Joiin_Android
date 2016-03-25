@@ -13,6 +13,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
+import com.MinimalSoft.BrujulaUniversitaria.Start.FBStartActivity;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 
