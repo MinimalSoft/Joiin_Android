@@ -24,8 +24,7 @@
         android:clickable="false"
         android:focusable="false"
         android:layout_weight="1"
-        android:longClickable="false"
-        android:src="@drawable/tooltrabajos" />
+        android:longClickable="false"         />
     <ImageView
         android:layout_width="?attr/actionBarSize"
         android:layout_height="35dp"

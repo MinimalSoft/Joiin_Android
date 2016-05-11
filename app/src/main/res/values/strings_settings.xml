@@ -32,8 +32,4 @@
         <item>7</item>
     </string-array>
 
-    <!-- FACEBOOK -->
-    <string name="pref_logOut_facebook">Cerrar Sesión</string>
-
-    <string name="pref_version">Versión</string>
 </resources>

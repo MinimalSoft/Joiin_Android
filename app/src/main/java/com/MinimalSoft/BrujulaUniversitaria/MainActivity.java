@@ -3,7 +3,6 @@ package com.MinimalSoft.BrujulaUniversitaria;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -12,46 +11,82 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.TextView;
 
-import com.MinimalSoft.BrujulaUniversitaria.Promos.Bars_Promo;
-import com.MinimalSoft.BrujulaUniversitaria.Promos.Food_Promo;
-import com.MinimalSoft.BrujulaUniversitaria.Promos.Gyms_Promo;
 import com.MinimalSoft.BrujulaUniversitaria.Tabs.Articles;
 import com.MinimalSoft.BrujulaUniversitaria.Tabs.Categories;
-import com.MinimalSoft.BrujulaUniversitaria.Tabs.Profile;
 import com.MinimalSoft.BrujulaUniversitaria.Tabs.NewsFeed;
+import com.MinimalSoft.BrujulaUniversitaria.Tabs.Profile;
 
 public class MainActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     TabLayout tabLayout;
+    int count = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //AppBarLayout.LayoutParams toolbarLayoutParams = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
+        //toolbarLayoutParams.setScrollFlags(0);
+        //toolbar.setLayoutParams(toolbarLayoutParams);
+
+        setTitle("Novedades");
         CheckGPSStatus();
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+                switch (position) {
+                    case 0:
+                        setTitle("Novedades");
+                        break;
+                    case 1:
+                        setTitle("Explorar");
+                        break;
+                    case 2:
+                        setTitle("Categorias");
+                        break;
+                    case 3:
+                        setTitle("Perfil");
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         //mViewPager.setCurrentItem(1);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        //tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
 
     }
 
@@ -90,6 +125,21 @@ public class MainActivity extends AppCompatActivity {
             return 4;
         }
 
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "";
+                case 1:
+                    return "";
+                case 2:
+                    return "";
+                case 3:
+                    return "";
+            }
+            return null;
+        }
+
     }
 
 
@@ -121,34 +171,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setName() {
-
-        SharedPreferences settings = getSharedPreferences("facebook_pref", 0);
-        TextView name = (TextView) findViewById(R.id.Profile_Name);
-        TextView email = (TextView) findViewById(R.id.Profile_Email);
-
-        name.setText(settings.getString("userName", "NA"));
-        email.setText(settings.getString("userEmail", "NA"));
+    /**
+     * Establece la toolbar como action bar
+     */
+    private void setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        final ActionBar ab = getSupportActionBar();
+        //toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        if (ab != null) {
+            // Poner ícono del drawer toggle
+            //ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+            //ab.setDisplayHomeAsUpEnabled(true);
+        }
 
     }
 
-    public void PromoBares (View v)
-    {
-        Intent intent = new Intent(this, Bars_Promo.class);
-        startActivity(intent);
-    }
-
-    public void PromoGyms (View v)
-    {
-        Intent intent = new Intent(this, Gyms_Promo.class);
-        startActivity(intent);
-    }
-
-    public void PromoComida (View v)
-    {
-        Intent intent = new Intent(this, Food_Promo.class);
-        startActivity(intent);
-    }
 }
 
 

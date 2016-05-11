@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.MinimalSoft.BrujulaUniversitaria.Maps.AddPlaceActivity;
 import com.MinimalSoft.BrujulaUniversitaria.R;
-
-import java.util.List;
+import com.MinimalSoft.BrujulaUniversitaria.ViewerActivity;
 
 public class Categories extends Fragment {
 
@@ -44,7 +44,11 @@ public class Categories extends Fragment {
         botonBars.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Categories.this.getActivity(), List.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("Titulo", "bares");
+
+                Intent intent = new Intent(Categories.this.getActivity(), ViewerActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -53,16 +57,24 @@ public class Categories extends Fragment {
         botonFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Categories.this.getActivity(), List.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("Titulo", "comida");
+
+                Intent intent = new Intent(Categories.this.getActivity(), ViewerActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
 
-        ImageView botonGyms = (ImageView) layout.findViewById(R.id.Home_Menu_Gym);
+        ImageView botonGyms = (ImageView) layout.findViewById(R.id.Home_Menu_Gyms);
         botonGyms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Categories.this.getActivity(), List.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("Titulo", "gyms");
+
+                Intent intent = new Intent(Categories.this.getActivity(), ViewerActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -71,7 +83,11 @@ public class Categories extends Fragment {
         botonWork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Categories.this.getActivity(), List.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("Titulo", "trabajo");
+
+                Intent intent = new Intent(Categories.this.getActivity(), ViewerActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -80,7 +96,11 @@ public class Categories extends Fragment {
         botonPromos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Categories.this.getActivity(), List.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("Titulo", "promos");
+
+                Intent intent = new Intent(Categories.this.getActivity(), ViewerActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -89,7 +109,27 @@ public class Categories extends Fragment {
         botonRent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Categories.this.getActivity(), List.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("Titulo", "renta");
+
+                Intent intent = new Intent(Categories.this.getActivity(), ViewerActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+        ImageView botonFeatured = (ImageView) layout.findViewById(R.id.Home_Menu_Featured);
+        botonRent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Bundle bundle = new Bundle();
+                //bundle.putString("Titulo", "destacados");
+
+                //Intent intent = new Intent(Categories.this.getActivity(), ViewerActivity.class);
+                //intent.putExtras(bundle);
+                //startActivity(intent);
+
+                Intent intent = new Intent(getContext(), AddPlaceActivity.class);
                 startActivity(intent);
             }
         });

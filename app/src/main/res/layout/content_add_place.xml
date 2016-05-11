@@ -8,7 +8,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_place"
+    tools:showIn="@layout/activity_add_place"
     tools:context="com.MinimalSoft.BrujulaUniversitaria.Maps.AddPlaceActivity">
 
 
@@ -18,6 +18,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:text="Informacion de Contacto"
+        android:textColor="@color/colorAccentSettings"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <View
@@ -38,10 +39,6 @@
             android:src="@drawable/nombre"
             android:tint="@color/com_facebook_likeboxcountview_text_color"/>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/Nombre"
@@ -50,8 +47,8 @@
                 android:inputType="textPersonName"
                 android:lines="1"
                 android:hint="Nombre" />
+            <requestFocus />
 
-        </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
 
@@ -122,6 +119,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="20dp"
         android:text="Acerca del Lugar"
+        android:textColor="@color/colorAccentSettings"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <View

@@ -35,22 +35,4 @@
             android:entryValues="@array/pref_notifications_freq_vlaues"/>
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:key="pref_facebook"
-        android:title="@string/pref_facebook">
-
-        <Preference
-            android:key="pref_logOut"
-            android:title="@string/pref_logOut_facebook" />
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:key="pref_about"
-        android:title="@string/pref_about">
-
-        <Preference
-            android:title="@string/pref_version"
-            android:summary="BU v 1.0"/>
-    </PreferenceCategory>
-
 </PreferenceScreen>

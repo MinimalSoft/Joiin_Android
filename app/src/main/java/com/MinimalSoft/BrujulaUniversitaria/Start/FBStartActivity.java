@@ -9,8 +9,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.VideoView;
 
 import com.MinimalSoft.BrujulaUniversitaria.MainActivity;
@@ -42,10 +44,17 @@ public class FBStartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) findViewById(R.id.login_button);
+        Button fb = (Button) findViewById(R.id.Start_FB);
         loginButton.setReadPermissions("public_profile email");
 
+        fb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginButton.performClick();
+            }
+        });
         setColor();
-        setVideo();
+        //setVideo();
         setFacebook();
 
     }
@@ -54,7 +63,7 @@ public class FBStartActivity extends AppCompatActivity {
     protected void onResume ()
     {
         super.onResume();
-        setVideo();
+        //setVideo();
     }
 
     public void setFacebook()
@@ -102,6 +111,7 @@ public class FBStartActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     protected void setColor ()
     {
@@ -114,7 +124,8 @@ public class FBStartActivity extends AppCompatActivity {
 
     protected void setVideo()
     {
-        video =(VideoView)findViewById(R.id.videoView);
+        //video =(VideoView)findViewById(R.id.videoView);
+        video =null;
 
         String uriPath = "android.resource://"+getPackageName()+"/raw/video";
         Uri uri = Uri.parse(uriPath);

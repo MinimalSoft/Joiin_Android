@@ -1,6 +1,8 @@
 package com.MinimalSoft.BrujulaUniversitaria.Tabs;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -17,10 +19,12 @@ import android.widget.TextView;
 import com.MinimalSoft.BrujulaUniversitaria.AsyncBlur;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.SettingsActivity;
+import com.MinimalSoft.BrujulaUniversitaria.Start.FBStartActivity;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,9 +64,9 @@ public class Profile extends Fragment {
 
         rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         new AsyncPictures().execute("");
-        TextView settings = (TextView) getActivity().findViewById(R.id.Profile_Settings);
-        TextView disclaimer = (TextView) getActivity().findViewById(R.id.Profile_Disclaimer);
-        TextView logOut = (TextView) getActivity().findViewById(R.id.Profile_LogOut);
+        TextView settings = (TextView) rootView.findViewById(R.id.Profile_Settings);
+        TextView disclaimer = (TextView) rootView.findViewById(R.id.Profile_Disclaimer);
+        TextView logOut = (TextView) rootView.findViewById(R.id.Profile_LogOut);
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,8 +77,7 @@ public class Profile extends Fragment {
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SettingsActivity.class);
-                startActivity(intent);
+                confirmDialog();
             }
         });
         disclaimer.setOnClickListener(new View.OnClickListener() {
@@ -196,4 +199,34 @@ public class Profile extends Fragment {
         }
 
     }
+
+    private void confirmDialog ()
+    {
+
+        new AlertDialog.Builder(getActivity())
+                .setTitle("¿Serguro que deseas salir?")
+                .setMessage("Cada que alguien nos deja, nuestro  DevTeam llora")
+                .setPositiveButton("No me importa", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        SharedPreferences settings = getActivity().getSharedPreferences("facebook_pref", 0);
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putString("userId", "NA").commit();
+
+                        String id = settings.getString("userId", "NA");
+
+                        FacebookSdk.sdkInitialize(getActivity());
+                        LoginManager.getInstance().logOut();
+
+                        Intent intent = new Intent(getActivity(), FBStartActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        getActivity().finish();
+
+                    }
+                })
+                .setNegativeButton("Evitar que lloren", null).show();
+    }
+
 }

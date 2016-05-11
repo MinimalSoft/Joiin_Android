@@ -28,6 +28,7 @@
     <string name="title_activity_place"></string>
     <string name="title_activity_promo_bares">Bares</string>
     <string name="title_activity_correo">Entrada</string>
+    <string name="title_activity_viewer">ViewerActivity</string>
 
 
 
