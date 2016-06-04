@@ -47,19 +47,14 @@ public class ViewerActivity extends AppCompatActivity {
             case "promos": setFragment(new PromosFragment());
                 setTitle("Promociones");
                 break;
-
         }
-
     }
 
-
     protected void setFragment(Fragment fragment) {
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.Viewer_Container, fragment);
         fragmentTransaction.commit();
-
     }
 
     private void setToolbar() {
@@ -78,7 +73,5 @@ public class ViewerActivity extends AppCompatActivity {
                 }
             });
         }
-
     }
-
 }

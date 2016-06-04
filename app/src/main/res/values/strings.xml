@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">BU</string>
+    <string name="slogan">¡Apuntando en la direccion correcta!</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_page_0">Novedades</string>
+    <string name="title_page_1">Explorar</string>
+    <string name="title_page_2">Categorias</string>
+    <string name="title_page_3">Perfil</string>
 
     <string name="Home_Item">Inicio</string>
     <string name="Bar_Item">Bares</string>
@@ -12,9 +15,11 @@
     <string name="Rent_Item">Dónde Vivir</string>
     <string name="Promo_Item">Promociones</string>
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="Settings_Item">Ajustes</string>
     <string name="title_activity_settings">Ajustes</string>
-
 
     <string name="google_maps_key">AIzaSyBDU2JdP2pj258_SLAPR5vK6yjSdoZIwr4</string>
     <string name="facebook_app_id">916058378464973</string>

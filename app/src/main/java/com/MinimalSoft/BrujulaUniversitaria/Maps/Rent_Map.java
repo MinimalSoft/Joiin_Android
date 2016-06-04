@@ -116,9 +116,9 @@ public class Rent_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
 
         Fragment summaryFragment = new Summary();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.add(R.id.container, summaryFragment).commit();
+        transaction.add(R.id.page_view, summaryFragment).commit();
 
-        FrameLayout frame = (FrameLayout) v.findViewById (R.id.container);
+        FrameLayout frame = (FrameLayout) v.findViewById (R.id.page_view);
 
         frame.setOnClickListener(new View.OnClickListener() {
 
@@ -167,7 +167,7 @@ public class Rent_Map extends Fragment implements GoogleMap.OnMyLocationChangeLi
             @Override
             public boolean onMarkerClick(Marker mark) {
 
-                FrameLayout frame = (FrameLayout) getView().findViewById(R.id.container);
+                FrameLayout frame = (FrameLayout) getView().findViewById(R.id.page_view);
                 frame.setVisibility(View.VISIBLE);
 
                 ImageView imagen = (ImageView) getView().findViewById(R.id.summary_image);

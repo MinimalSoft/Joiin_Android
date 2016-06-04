@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.MinimalSoft.BrujulaUniversitaria.AsyncBlur;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.SettingsActivity;
-import com.MinimalSoft.BrujulaUniversitaria.Start.FBStartActivity;
+import com.MinimalSoft.BrujulaUniversitaria.Start.LoginActivity;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
@@ -219,7 +219,7 @@ public class Profile extends Fragment {
                         FacebookSdk.sdkInitialize(getActivity());
                         LoginManager.getInstance().logOut();
 
-                        Intent intent = new Intent(getActivity(), FBStartActivity.class);
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                         getActivity().finish();
