@@ -19,7 +19,6 @@ public class StartActivity extends AppCompatActivity implements Runnable {
     private AnimationDrawable animation;
     private ImageView imageView;
 
-    private SharedPreferences settings;
     private Handler handler;
     private Intent intent;
 
@@ -44,7 +43,7 @@ public class StartActivity extends AppCompatActivity implements Runnable {
 
     @Override
     public void run() {
-        settings = this.getSharedPreferences("facebook_pref", 0);
+        SharedPreferences settings = this.getSharedPreferences("facebook_pref", 0);
         String id = settings.getString("userId", "NA");
 
         if (id.equals("NA")) {
@@ -65,6 +64,7 @@ public class StartActivity extends AppCompatActivity implements Runnable {
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimaryDark));
         }

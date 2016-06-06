@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.support.v4.app.Fragment;
-import android.support.design.widget.Snackbar;
 
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.ViewerActivity;
@@ -39,33 +38,35 @@ public class Categories extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        inflatedLayout = inflater.inflate(R.layout.fragment_categories, container, false);
+        if (inflatedLayout == null) {
+            inflatedLayout = inflater.inflate(R.layout.fragment_categories, container, false);
 
-        jobsButton = (ImageView) inflatedLayout.findViewById(R.id.categories_jobs_image);
-        barsButton = (ImageView) inflatedLayout.findViewById(R.id.categories_bars_image);
-        foodButton = (ImageView) inflatedLayout.findViewById(R.id.categories_food_image);
-        gymsButton = (ImageView) inflatedLayout.findViewById(R.id.categories_gyms_image);
-        coffeeButton = (ImageView) inflatedLayout.findViewById(R.id.categories_coffee_image);
-        promosButton = (ImageView) inflatedLayout.findViewById(R.id.categories_promos_image);
-        featuredButton = (ImageView) inflatedLayout.findViewById(R.id.categories_featured_image);
-        suppliesButton = (ImageView) inflatedLayout.findViewById(R.id.categories_supplies_image);
-        residenceButton = (ImageView) inflatedLayout.findViewById(R.id.categories_residence_image);
-        topVerticalLayout = (LinearLayout) inflatedLayout.findViewById(R.id.categories_top_vertical_layout);
-        middleVerticalLayout = (LinearLayout) inflatedLayout.findViewById(R.id.categories_middle_vertical_layout);
-        bottomVerticalLayout = (LinearLayout) inflatedLayout.findViewById(R.id.categories_bottom_vertical_layout);
+            jobsButton = (ImageView) inflatedLayout.findViewById(R.id.categories_jobs_image);
+            barsButton = (ImageView) inflatedLayout.findViewById(R.id.categories_bars_image);
+            foodButton = (ImageView) inflatedLayout.findViewById(R.id.categories_food_image);
+            gymsButton = (ImageView) inflatedLayout.findViewById(R.id.categories_gyms_image);
+            coffeeButton = (ImageView) inflatedLayout.findViewById(R.id.categories_coffee_image);
+            promosButton = (ImageView) inflatedLayout.findViewById(R.id.categories_promos_image);
+            featuredButton = (ImageView) inflatedLayout.findViewById(R.id.categories_featured_image);
+            suppliesButton = (ImageView) inflatedLayout.findViewById(R.id.categories_supplies_image);
+            residenceButton = (ImageView) inflatedLayout.findViewById(R.id.categories_residence_image);
+            topVerticalLayout = (LinearLayout) inflatedLayout.findViewById(R.id.categories_top_vertical_layout);
+            middleVerticalLayout = (LinearLayout) inflatedLayout.findViewById(R.id.categories_middle_vertical_layout);
+            bottomVerticalLayout = (LinearLayout) inflatedLayout.findViewById(R.id.categories_bottom_vertical_layout);
 
-        layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        fullLayoutHeight = topVerticalLayout.getHeight() + middleVerticalLayout.getHeight() + bottomVerticalLayout.getHeight();
+            layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            fullLayoutHeight = topVerticalLayout.getHeight() + middleVerticalLayout.getHeight() + bottomVerticalLayout.getHeight();
 
-        residenceButton.setOnClickListener(this);
-        suppliesButton.setOnClickListener(this);
-        featuredButton.setOnClickListener(this);
-        promosButton.setOnClickListener(this);
-        coffeeButton.setOnClickListener(this);
-        gymsButton.setOnClickListener(this);
-        foodButton.setOnClickListener(this);
-        barsButton.setOnClickListener(this);
-        jobsButton.setOnClickListener(this);
+            residenceButton.setOnClickListener(this);
+            suppliesButton.setOnClickListener(this);
+            featuredButton.setOnClickListener(this);
+            promosButton.setOnClickListener(this);
+            coffeeButton.setOnClickListener(this);
+            gymsButton.setOnClickListener(this);
+            foodButton.setOnClickListener(this);
+            barsButton.setOnClickListener(this);
+            jobsButton.setOnClickListener(this);
+        }
 
         return inflatedLayout;
     }

@@ -3,6 +3,7 @@ package com.MinimalSoft.BrujulaUniversitaria.Main;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.app.AlertDialog;
+import android.provider.Settings;
 import android.content.Intent;
 import android.content.DialogInterface;
 import android.location.LocationManager;
@@ -16,7 +17,7 @@ import android.support.design.widget.AppBarLayout;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.Utilities.ScreenUtility;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener {
     private SectionsPagerAdapter pagerAdapter;
     private ScreenUtility screenUtility;
     private AppBarLayout appBarLayout;
@@ -38,10 +39,9 @@ public class MainActivity extends AppCompatActivity {
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
 
         this.setSupportActionBar(toolbar);
-        this.verifyGPSStatus();
 
         screenUtility = new ScreenUtility(this);
-        pagerAdapter = new SectionsPagerAdapter(this, pagerView);
+        pagerAdapter = new SectionsPagerAdapter(this);
 
         pagerView.setAdapter(pagerAdapter);
         pagerView.addOnPageChangeListener(pagerAdapter);
@@ -51,33 +51,45 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setIcon(R.drawable.explore);
         tabLayout.getTabAt(2).setIcon(R.drawable.categories);
         tabLayout.getTabAt(3).setIcon(R.drawable.profile);
+
+        //this.verifyGPSStatus();
     }
 
     public void verifyGPSStatus() {
-        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-        boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        LocationManager service = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
+        boolean isEnabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-        if (!enabled) {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        if (!isEnabled) {
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 
-            alertDialogBuilder.setMessage("El GPS esta desactivado. \n Desea activarlo?").setCancelable(false).setPositiveButton("Activar",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            Intent callGPSSettingIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                            startActivity(callGPSSettingIntent);
-                        }
-                    });
+            alertBuilder.setCancelable(false);
+            alertBuilder.setPositiveButton("Activar", this);
+            alertBuilder.setNegativeButton("Cancelar", this);
+            alertBuilder.setTitle("El GPS esta desactivado");
+            alertBuilder.setMessage("Se recomienda activar el servicio de GPS para ofrecer una óptima funcionalidad de la aplicación.");
 
-            alertDialogBuilder.setNegativeButton("Cancelar",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-
-            AlertDialog alert = alertDialogBuilder.create();
-            alert.show();
+            AlertDialog alertDialog = alertBuilder.create();
+            alertDialog.show();
         }
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        switch (which) {
+            case DialogInterface.BUTTON_POSITIVE:
+                this.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                break;
+
+            case DialogInterface.BUTTON_NEGATIVE:
+                dialog.cancel();
+                break;
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        this.verifyGPSStatus();
     }
 
     /* Establece la toolbar como action bar */

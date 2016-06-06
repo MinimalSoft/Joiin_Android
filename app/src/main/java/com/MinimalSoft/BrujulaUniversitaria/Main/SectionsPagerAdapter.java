@@ -18,17 +18,19 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter implements ViewPa
 
     private AppCompatActivity appCompatActivity;
     private Categories categoriesFragment;
+    private Profile profileFragment;
     private StringBuilder sbTittle;
     private Resources resources;
 
     private short pageSelected;
     private int toolbarOffset;
 
-    public SectionsPagerAdapter(final AppCompatActivity appCompatActivity, final ViewPager pagerView) {
+    public SectionsPagerAdapter(final AppCompatActivity appCompatActivity) {
         super(appCompatActivity.getSupportFragmentManager());
         this.appCompatActivity = appCompatActivity;
 
         categoriesFragment = new Categories();
+        profileFragment = new Profile();
         sbTittle = new StringBuilder();
         toolbarOffset = 0;
 
@@ -48,9 +50,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter implements ViewPa
             case 1:
                 return Articles.newInstance();
             case 2:
+                //return Categories.newInstance();
                 return categoriesFragment;
             case 3:
-                return Profile.newInstance();
+                //return Profile.newInstance();
+                return profileFragment;
         }
 
         return null;
@@ -107,7 +111,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter implements ViewPa
         toolbarOffset = verticalOffset;
 
         if (pageSelected == 2) {
-            categoriesFragment.modifyVerticalPosition(verticalOffset);
+            categoriesFragment.modifyVerticalPosition(toolbarOffset);
         }
     }
 }

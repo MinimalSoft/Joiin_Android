@@ -4,10 +4,7 @@
     <color name="colorPrimaryBackground">#e6e6e6</color>
     <color name="colorPrimaryDark">#8a1010</color>
     <color name="colorPrimary">#ad1414</color>
-
-    <color name="colorAccentSettings">#2c9e98</color>
-    <color name="colorAccent">#FFFF19</color>
-
+    <color name="colorAccent">#2c9e98</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorIron">#CCCCCC</color>
 
