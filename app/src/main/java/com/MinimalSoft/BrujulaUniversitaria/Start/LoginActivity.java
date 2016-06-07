@@ -15,7 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.VideoView;
 
-import com.MinimalSoft.BrujulaUniversitaria.MainActivity;
+import com.MinimalSoft.BrujulaUniversitaria.Main.MainActivity;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -30,7 +30,7 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class FBStartActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private VideoView video;
     private LoginButton loginButton;
@@ -41,10 +41,10 @@ public class FBStartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_login);
         callbackManager = CallbackManager.Factory.create();
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-        Button fb = (Button) findViewById(R.id.Start_FB);
+        loginButton = (LoginButton) findViewById(R.id.login_hidden_facebook_button);
+        Button fb = (Button) findViewById(R.id.login_facebook_button);
         loginButton.setReadPermissions("public_profile email");
 
         fb.setOnClickListener(new View.OnClickListener() {

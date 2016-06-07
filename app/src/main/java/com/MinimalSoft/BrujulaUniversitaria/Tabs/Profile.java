@@ -1,93 +1,133 @@
 package com.MinimalSoft.BrujulaUniversitaria.Tabs;
 
+import android.view.View;
+import android.os.Bundle;
+import android.os.AsyncTask;
+import android.widget.TextView;
+import android.widget.ImageView;
 import android.app.AlertDialog;
+
+import android.content.Intent;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.MinimalSoft.BrujulaUniversitaria.AsyncBlur;
-import com.MinimalSoft.BrujulaUniversitaria.R;
-import com.MinimalSoft.BrujulaUniversitaria.SettingsActivity;
-import com.MinimalSoft.BrujulaUniversitaria.Start.FBStartActivity;
+import org.json.JSONObject;
+import org.json.JSONException;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.net.URL;
 import java.io.InputStream;
+import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Profile extends Fragment {
+import com.MinimalSoft.BrujulaUniversitaria.R;
+import com.MinimalSoft.BrujulaUniversitaria.AsyncBlur;
+import com.MinimalSoft.BrujulaUniversitaria.SettingsActivity;
+import com.MinimalSoft.BrujulaUniversitaria.Start.LoginActivity;
 
-    private View rootView = null;
+public class Profile extends Fragment implements View.OnClickListener, DialogInterface.OnClickListener {
 
-    public static Profile newInstance() {
-        Profile fragment = new Profile();
-        return fragment;
-    }
+    private boolean flag;
+    private Intent intent;
+    private View inflatedView;
+    private TextView nameLabel;
+    private TextView emailLabel;
+    private ImageView coverPicture;
+    private TextView logOutButton;
+    private TextView settingsButton;
+    private TextView disclaimerButton;
+    private CircleImageView profilePicture;
 
     public Profile() {
-        // Required empty public constructor
+        flag = false;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (inflatedView == null) {
+            inflatedView = inflater.inflate(R.layout.fragment_profile, container, false);
+
+            nameLabel = (TextView) inflatedView.findViewById(R.id.profile_name_label);
+            emailLabel = (TextView) inflatedView.findViewById(R.id.profile_email_label);
+            logOutButton = (TextView) inflatedView.findViewById(R.id.profile_logout_button);
+            coverPicture = (ImageView) inflatedView.findViewById(R.id.profile_cover_image_view);
+            settingsButton = (TextView) inflatedView.findViewById(R.id.profile_settings_button);
+            disclaimerButton = (TextView) inflatedView.findViewById(R.id.profile_disclaimer_button);
+            profilePicture = (CircleImageView) inflatedView.findViewById(R.id.profile_user_image_view);
+
+            disclaimerButton.setOnClickListener(this);
+            settingsButton.setOnClickListener(this);
+            logOutButton.setOnClickListener(this);
+        }
+
+        if (!flag) {
+            new AsyncPictures().execute("");
+        }
+
+        return inflatedView;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onClick(DialogInterface dialog, int which) {
+        SharedPreferences settings = this.getActivity().getSharedPreferences("facebook_pref", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("userId", "NA").commit();
 
-        rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-        new AsyncPictures().execute("");
-        TextView settings = (TextView) rootView.findViewById(R.id.Profile_Settings);
-        TextView disclaimer = (TextView) rootView.findViewById(R.id.Profile_Disclaimer);
-        TextView logOut = (TextView) rootView.findViewById(R.id.Profile_LogOut);
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SettingsActivity.class);
-                startActivity(intent);
-            }
-        });
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                confirmDialog();
-            }
-        });
-        disclaimer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SettingsActivity.class);
-                startActivity(intent);
-            }
-        });
-        return rootView;
+        String id = settings.getString("userId", "NA");
+
+        FacebookSdk.sdkInitialize(getActivity());
+        LoginManager.getInstance().logOut();
+
+        flag = false;
+
+        intent = new Intent(getActivity(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        this.startActivity(intent);
+        this.getActivity().finish();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.profile_logout_button:
+                this.logOutConfirmDialog();
+                break;
+            case R.id.profile_settings_button:
+                intent = new Intent(this.getActivity(), SettingsActivity.class);
+                this.startActivity(intent);
+                break;
+            case R.id.profile_disclaimer_button:
+                intent = new Intent(this.getActivity(), SettingsActivity.class);
+                this.startActivity(intent);
+                break;
+        }
+    }
+
+    private void logOutConfirmDialog() {
+        AlertDialog.Builder confirmDialog = new AlertDialog.Builder(this.getActivity());
+        confirmDialog.setMessage("Cada que alguien nos deja, nuestro  DevTeam llora :'(");
+        confirmDialog.setTitle("¿Serguro que deseas salir?");
+        confirmDialog.setPositiveButton("No me importa", this);
+        confirmDialog.setNegativeButton("Evitar que lloren", null);
+        confirmDialog.show();
     }
 
     public void saveFile(Context context, Bitmap b, String picName) {
@@ -101,7 +141,6 @@ public class Profile extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public Bitmap loadBitmap(Context context, String picName) {
@@ -121,25 +160,22 @@ public class Profile extends Fragment {
     }
 
     private void setProfile(Context context) {
-
         SharedPreferences settings = context.getSharedPreferences("facebook_pref", context.MODE_PRIVATE);
-        TextView name = (TextView) this.getView().findViewById(R.id.Profile_Name);
-        TextView email = (TextView) this.getView().findViewById(R.id.Profile_Email);
 
-        name.setText(settings.getString("userName", "NA"));
-        email.setText(settings.getString("userEmail", "NA"));
+        profilePicture.setImageBitmap(loadBitmap(context, "profile"));
+        coverPicture.setImageBitmap(loadBitmap(context, "cover"));
+        emailLabel.setText(settings.getString("userEmail", "NA"));
+        nameLabel.setText(settings.getString("userName", "NA"));
 
-        CircleImageView profilePic = (CircleImageView) rootView.findViewById(R.id.Profile_ProfilePic);
-        ImageView coverPic = (ImageView) rootView.findViewById(R.id.Profile_CoverPic);
-
-        coverPic.setImageBitmap(loadBitmap(context, "cover"));
-        profilePic.setImageBitmap(loadBitmap(context, "profile"));
-
+        flag = true;
     }
 
+    /*public static Profile newInstance() {
+        Profile fragment = new Profile();
+        return fragment;
+    }*/
 
     private class AsyncPictures extends AsyncTask<String, Void, Bitmap> {
-
         public Bitmap DownloadImageBitmap() {
             FacebookSdk.sdkInitialize(getActivity());
             GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
@@ -197,36 +233,5 @@ public class Profile extends Fragment {
         protected void onPostExecute(Bitmap result) {
             setProfile(Profile.this.getContext());
         }
-
     }
-
-    private void confirmDialog ()
-    {
-
-        new AlertDialog.Builder(getActivity())
-                .setTitle("¿Serguro que deseas salir?")
-                .setMessage("Cada que alguien nos deja, nuestro  DevTeam llora")
-                .setPositiveButton("No me importa", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int whichButton) {
-
-                        SharedPreferences settings = getActivity().getSharedPreferences("facebook_pref", 0);
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.putString("userId", "NA").commit();
-
-                        String id = settings.getString("userId", "NA");
-
-                        FacebookSdk.sdkInitialize(getActivity());
-                        LoginManager.getInstance().logOut();
-
-                        Intent intent = new Intent(getActivity(), FBStartActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        getActivity().finish();
-
-                    }
-                })
-                .setNegativeButton("Evitar que lloren", null).show();
-    }
-
 }

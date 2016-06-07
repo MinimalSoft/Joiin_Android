@@ -2,27 +2,26 @@
 <resources>
 
     <!-- Base application theme. -->
-
-
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/colorPrimaryBackground</item>
+        <item name="android:windowContentOverlay">@null</item>
+
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccentSettings</item>
-        <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="windowActionBar">false</item>
+    </style>
+
+    <style name="AppTheme.ActivityStart" parent="@style/AppTheme">
+        <item name="android:windowBackground">@color/colorPrimaryLightBackground</item>
     </style>
 
     <style name="AppTheme.Settings" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccentSettings</item>
         <item name="android:windowBackground">@color/windowBackground</item>
-    </style>
-
-    <style name="AppTheme.Tabs" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
-
     </style>
 
     <style name="AppTheme.NoActionBar" parent="@style/Theme.AppCompat.Light">
