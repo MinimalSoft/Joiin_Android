@@ -21,7 +21,8 @@
     <string name="Settings_Item">Ajustes</string>
     <string name="title_activity_settings">Ajustes</string>
 
-    <string name="google_maps_key">AIzaSyBDU2JdP2pj258_SLAPR5vK6yjSdoZIwr4</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyC_s01aQ2E0ZuoVxmfjn9Ng3TdeAdRVmOk</string>
+    <!--string name="google_maps_key">AIzaSyBDU2JdP2pj258_SLAPR5vK6yjSdoZIwr4</string-->
     <string name="facebook_app_id">916058378464973</string>
 
     <string name="Details_Tittle">Detalles</string>
@@ -35,7 +36,7 @@
     <string name="title_activity_correo">Entrada</string>
     <string name="title_activity_viewer">ViewerActivity</string>
 
-
-
+    <string name="user_email_hint">username@domain</string>
+    <string name="user_name_hint">User Name</string>
 
 </resources>

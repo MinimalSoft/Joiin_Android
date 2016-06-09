@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.app.AlertDialog;
 import android.provider.Settings;
+
 import android.content.Intent;
 import android.content.DialogInterface;
 import android.location.LocationManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.TabLayout;
@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         tabLayout.getTabAt(1).setIcon(R.drawable.explore);
         tabLayout.getTabAt(2).setIcon(R.drawable.categories);
         tabLayout.getTabAt(3).setIcon(R.drawable.profile);
-
-        //this.verifyGPSStatus();
     }
 
     public void verifyGPSStatus() {

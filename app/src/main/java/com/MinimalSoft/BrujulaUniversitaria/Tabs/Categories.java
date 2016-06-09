@@ -15,7 +15,6 @@ import com.MinimalSoft.BrujulaUniversitaria.Maps.AddPlaceActivity;
 import com.MinimalSoft.BrujulaUniversitaria.Utilities.ScreenUtility;
 
 public class Categories extends Fragment implements View.OnClickListener {
-
     private int pagerViewHeight;
     private int topLayoutsMargin;
     private int fullLayoutHeight;
@@ -120,19 +119,21 @@ public class Categories extends Fragment implements View.OnClickListener {
     }
 
     public void modifyVerticalPosition(int offset) {
-        if(topVerticalLayout.getHeight() == 0) {
-            fullLayoutHeight = (int) (360 * ScreenUtility.getDensity()); // Cheater way !!
-        } else {
-            fullLayoutHeight = topVerticalLayout.getHeight() + middleVerticalLayout.getHeight() + bottomVerticalLayout.getHeight();
+        if (topVerticalLayout != null) {
+            if(topVerticalLayout.getHeight() == 0) {
+                fullLayoutHeight = (int) (360 * ScreenUtility.getDensity()); // Cheater way !!
+            } else {
+                fullLayoutHeight = topVerticalLayout.getHeight() + middleVerticalLayout.getHeight() + bottomVerticalLayout.getHeight();
+            }
+
+            pagerViewHeight = ScreenUtility.getPhysicalHeight() - (ScreenUtility.getAppBarPhysicalHeight() + offset);
+            topLayoutsMargin = (pagerViewHeight - fullLayoutHeight) / 4;
+
+            layoutParams.setMargins(0, topLayoutsMargin, 0, 0);
+            topVerticalLayout.setLayoutParams(layoutParams);
+            middleVerticalLayout.setLayoutParams(layoutParams);
+            bottomVerticalLayout.setLayoutParams(layoutParams);
         }
-
-        pagerViewHeight = ScreenUtility.getPhysicalHeight() - (ScreenUtility.getAppBarPhysicalHeight() + offset);
-        topLayoutsMargin = (pagerViewHeight - fullLayoutHeight) / 4;
-
-        layoutParams.setMargins(0, topLayoutsMargin, 0, 0);
-        topVerticalLayout.setLayoutParams(layoutParams);
-        middleVerticalLayout.setLayoutParams(layoutParams);
-        bottomVerticalLayout.setLayoutParams(layoutParams);
     }
 
     /*public static Categories newInstance() {

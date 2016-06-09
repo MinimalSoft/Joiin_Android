@@ -1,116 +1,62 @@
 package com.MinimalSoft.BrujulaUniversitaria.Start;
 
-import android.annotation.TargetApi;
-import android.app.AlertDialog;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.VideoView;
-
-import com.MinimalSoft.BrujulaUniversitaria.Main.MainActivity;
-import com.MinimalSoft.BrujulaUniversitaria.R;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
+import android.content.Intent;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginResult;
+import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
+import android.support.v7.app.AppCompatActivity;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.MinimalSoft.BrujulaUniversitaria.R;
+import com.MinimalSoft.BrujulaUniversitaria.Main.MainActivity;
+import com.MinimalSoft.BrujulaUniversitaria.Facebook.FacebookDataCollector;
 
-public class LoginActivity extends AppCompatActivity {
-
-    private VideoView video;
-    private LoginButton loginButton;
-    private CallbackManager callbackManager;
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    private CallbackManager facebookCallbackManager;
+    private LoginButton facebookLoginButton;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        setContentView(R.layout.activity_login);
-        callbackManager = CallbackManager.Factory.create();
-        loginButton = (LoginButton) findViewById(R.id.login_hidden_facebook_button);
-        Button fb = (Button) findViewById(R.id.login_facebook_button);
-        loginButton.setReadPermissions("public_profile email");
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
+        this.setContentView(R.layout.activity_login);
 
-        fb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginButton.performClick();
-            }
-        });
-        setColor();
-        //setVideo();
-        setFacebook();
+        facebookLoginButton = (LoginButton) this.findViewById(R.id.login_hidden_facebook_button);
+        Button fakeFacebookButton = (Button) this.findViewById(R.id.login_facebook_button);
+        facebookCallbackManager = CallbackManager.Factory.create();
+        FacebookDataCollector dataCollector = new FacebookDataCollector(this);
 
+        fakeFacebookButton.setOnClickListener(this);
+        facebookLoginButton.setReadPermissions("public_profile email");
+        facebookLoginButton.registerCallback(facebookCallbackManager, dataCollector);
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        facebookCallbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onClick(View view) {
+        facebookLoginButton.performClick();
+    }
+
+    public void logInWithFacebook() {
+        intent = new Intent(this.getApplicationContext(), MainActivity.class);
+        this.startActivity(intent);
+        this.finish();
+    }
+
+    /*@Override
     protected void onResume ()
     {
         super.onResume();
         //setVideo();
     }
-
-    public void setFacebook()
-    {
-        // Callback registration
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                SharedPreferences settings = getSharedPreferences("facebook_pref", 0);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putString("userId", loginResult.getAccessToken().getUserId());
-                editor.putString("userToken", loginResult.getAccessToken().getToken());
-                editor.commit();
-
-                getFB ();
-
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-
-            @Override
-            public void onCancel() {
-
-
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                confirmDialog();
-            }
-        });
-    }
-
-    private void confirmDialog ()
-    {
-        new AlertDialog.Builder(this)
-                .setTitle("Ups!")
-                .setMessage("Parece que no estas conectado internet")
-                .setPositiveButton("Aceptar", null).show();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
-
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     protected void setColor ()
@@ -119,13 +65,13 @@ public class LoginActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         if (android.os.Build.VERSION.SDK_INT >= 21)
-        window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimaryDark));
+            window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimaryDark));
     }
 
     protected void setVideo()
     {
         //video =(VideoView)findViewById(R.id.videoView);
-        video =null;
+        final VideoView video =null;
 
         String uriPath = "android.resource://"+getPackageName()+"/raw/video";
         Uri uri = Uri.parse(uriPath);
@@ -140,45 +86,5 @@ public class LoginActivity extends AppCompatActivity {
                 video.start();
             }
         });
-    }
-
-    private void getFB(){
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-
-                GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-
-                        JSONObject json = response.getJSONObject();
-                        try {
-                            if (json != null) {
-                                String name = json.getString("name");
-                                String email = json.getString("email");
-
-                                SharedPreferences settings = getSharedPreferences("facebook_pref", 0);
-                                SharedPreferences.Editor editor = settings.edit();
-                                editor.putString("userName", name);
-                                editor.putString("userEmail", email);
-                                editor.commit();
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "name,email");
-                request.setParameters(parameters);
-                request.executeAsync();
-
-            }
-        }).start();
-
-
-    }
-
+    }*/
 }

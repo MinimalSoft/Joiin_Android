@@ -1,13 +1,10 @@
-package com.MinimalSoft.BrujulaUniversitaria;
+package com.MinimalSoft.BrujulaUniversitaria.Utilities;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v8.renderscript.*;
 
-/**
- * Created by Dave Morales on 17/11/2015.
- */
-public class AsyncBlur {
+public class ImageUtility {
 
     private static final float BITMAP_SCALE = 0.4f;
     private static final float BLUR_RADIUS = 5.0f;

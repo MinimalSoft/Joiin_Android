@@ -6,7 +6,9 @@ import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+
 import android.content.Intent;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.graphics.drawable.AnimationDrawable;
@@ -16,10 +18,7 @@ import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.Main.MainActivity;
 
 public class StartActivity extends AppCompatActivity implements Runnable {
-    private AnimationDrawable animation;
-    private ImageView imageView;
 
-    private Handler handler;
     private Intent intent;
 
     @Override
@@ -27,15 +26,16 @@ public class StartActivity extends AppCompatActivity implements Runnable {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_start);
 
-        imageView = (ImageView) findViewById(R.id.animationView);
+        ImageView imageView = (ImageView) findViewById(R.id.animationView);
         imageView.setBackgroundResource(R.drawable.animation_loading);
-        animation = (AnimationDrawable) imageView.getBackground();
+
+        AnimationDrawable animation = (AnimationDrawable) imageView.getBackground();
 
         int imageDelay = this.getApplicationContext().getResources().getInteger(R.integer.image_delay);
         int imageCount = animation.getNumberOfFrames();
         int timeDelay = imageDelay * imageCount;
 
-        handler = new Handler();
+        Handler handler = new Handler();
 
         animation.start();
         handler.postDelayed(this, timeDelay);
@@ -43,8 +43,8 @@ public class StartActivity extends AppCompatActivity implements Runnable {
 
     @Override
     public void run() {
-        SharedPreferences settings = this.getSharedPreferences("facebook_pref", 0);
-        String id = settings.getString("userId", "NA");
+        SharedPreferences settings = this.getSharedPreferences("FACEBOOK_PREF", Context.MODE_PRIVATE);
+        String id = settings.getString("FACEBOOK_ID", "NA");
 
         if (id.equals("NA")) {
             intent = new Intent(this, LoginActivity.class);
