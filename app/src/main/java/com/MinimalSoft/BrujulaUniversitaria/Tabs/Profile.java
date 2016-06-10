@@ -1,11 +1,16 @@
 package com.MinimalSoft.BrujulaUniversitaria.Tabs;
 
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
+import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+
 import android.os.Bundle;
 import android.graphics.Bitmap;
 import android.content.Intent;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
@@ -17,19 +22,14 @@ import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.SettingsActivity;
 import com.MinimalSoft.BrujulaUniversitaria.Start.LoginActivity;
 import com.MinimalSoft.BrujulaUniversitaria.Facebook.FacebookPicturesCollector;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Profile extends Fragment implements View.OnClickListener, DialogInterface.OnClickListener {
     private FacebookPicturesCollector picturesCollector;

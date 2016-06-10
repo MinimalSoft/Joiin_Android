@@ -27,9 +27,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
 
