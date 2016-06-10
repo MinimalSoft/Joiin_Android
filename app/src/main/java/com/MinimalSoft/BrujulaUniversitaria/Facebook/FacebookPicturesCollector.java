@@ -27,8 +27,8 @@ public class FacebookPicturesCollector implements GraphRequest.GraphJSONObjectCa
     private Bitmap profileBitmap;
 
     public FacebookPicturesCollector (final Profile profile) {
-        flag = false;
         this.profile = profile;
+        flag = false;
     }
 
     public void execute () {
@@ -58,7 +58,7 @@ public class FacebookPicturesCollector implements GraphRequest.GraphJSONObjectCa
             downloadThread.start();
             downloadThread.join();
 
-            profile.setPictures(profileBitmap, coverBitmap);
+            profile.uploadPictures(profileBitmap, coverBitmap);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {

@@ -1,6 +1,7 @@
 package com.MinimalSoft.BrujulaUniversitaria.Tabs;
 
 import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.graphics.Bitmap;
 import android.content.Intent;
@@ -22,6 +23,11 @@ import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.SettingsActivity;
 import com.MinimalSoft.BrujulaUniversitaria.Start.LoginActivity;
 import com.MinimalSoft.BrujulaUniversitaria.Facebook.FacebookPicturesCollector;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -56,9 +62,7 @@ public class Profile extends Fragment implements View.OnClickListener, DialogInt
             settingsButton.setOnClickListener(this);
             logOutButton.setOnClickListener(this);
 
-            emailLabel.setText("loading...");
-            nameLabel.setText("loading...");
-            picturesCollector.execute();
+            this.setUserElements();
         }
 
         return inflatedView;
@@ -101,6 +105,61 @@ public class Profile extends Fragment implements View.OnClickListener, DialogInt
         }
     }
 
+    private void setUserElements () {
+        SharedPreferences settings = this.getActivity().getSharedPreferences("FACEBOOK_PREF", Context.MODE_PRIVATE);
+        boolean imagesSaved = settings.getBoolean("USER_PICS", false);
+
+        if (imagesSaved) {
+            emailLabel.setText(settings.getString("USER_EMAIL", ""));
+            nameLabel.setText(settings.getString("USER_NAME", ""));
+
+            try {
+                FileInputStream fileInputStream = this.getContext().openFileInput("PROFILE_BITMAP");
+                Bitmap profileBitmap = BitmapFactory.decodeStream(fileInputStream);
+
+                fileInputStream = this.getContext().openFileInput("COVER_BITMAP");
+                Bitmap coverBitmap = BitmapFactory.decodeStream(fileInputStream);
+
+                profilePicture.setImageBitmap(profileBitmap);
+                coverPicture.setImageBitmap(coverBitmap);
+
+                fileInputStream.close();
+            } catch (FileNotFoundException exc) {
+                emailLabel.setText("loading...");
+                exc.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            emailLabel.setText("loading...");
+            nameLabel.setText("loading...");
+        }
+    }
+
+    public void uploadPictures(Bitmap profileBitmap, Bitmap coverBitmap) {
+        SharedPreferences settings = this.getActivity().getSharedPreferences("FACEBOOK_PREF", Context.MODE_PRIVATE);
+        SharedPreferences.Editor settingsEditor = settings.edit();
+
+        try {
+            FileOutputStream fileOutputStream = this.getContext().openFileOutput("PROFILE_BITMAP", Context.MODE_PRIVATE);
+            profileBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+
+            fileOutputStream = this.getContext().openFileOutput("COVER_BITMAP", Context.MODE_PRIVATE);
+            coverBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+
+            fileOutputStream.close();
+
+            settingsEditor.putBoolean("USER_PICS", true);
+            settingsEditor.commit();
+            this.setUserElements();
+        } catch (FileNotFoundException e) {
+            emailLabel.setText("loading...");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void logOutConfirmDialog() {
         AlertDialog.Builder confirmDialog = new AlertDialog.Builder(this.getActivity());
         confirmDialog.setMessage("Cada que alguien nos deja, nuestro  DevTeam llora :'(");
@@ -108,14 +167,6 @@ public class Profile extends Fragment implements View.OnClickListener, DialogInt
         confirmDialog.setPositiveButton("No me importa, salir", this);
         confirmDialog.setTitle("¿Serguro que deseas salir?");
         confirmDialog.show();
-    }
-
-    public void setPictures(Bitmap profileBitmap, Bitmap coverBitmap) {
-        SharedPreferences settings = this.getActivity().getSharedPreferences("FACEBOOK_PREF", Context.MODE_PRIVATE);
-        nameLabel.setText(settings.getString("USER_NAME", ""));
-        emailLabel.setText(settings.getString("USER_EMAIL", ""));
-        profilePicture.setImageBitmap(profileBitmap);
-        coverPicture.setImageBitmap(coverBitmap);
     }
 
     public void reloadPictures () {

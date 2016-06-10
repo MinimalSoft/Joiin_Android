@@ -77,6 +77,7 @@ public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallba
             String name = json.getString("name");
             String email = json.getString("email");
 
+            editor.putBoolean("USER_PICS", false);
             editor.putString("USER_EMAIL", email);
             editor.putString("USER_NAME", name);
             editor.commit();
