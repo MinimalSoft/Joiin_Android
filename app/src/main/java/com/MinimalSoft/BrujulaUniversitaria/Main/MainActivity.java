@@ -1,7 +1,6 @@
 package com.MinimalSoft.BrujulaUniversitaria.Main;
 
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.app.AlertDialog;
 import android.provider.Settings;
 
