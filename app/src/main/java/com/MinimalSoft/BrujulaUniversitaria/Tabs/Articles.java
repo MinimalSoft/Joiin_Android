@@ -1,6 +1,71 @@
 package com.MinimalSoft.BrujulaUniversitaria.Tabs;
 
-import android.os.AsyncTask;
+import android.os.Bundle;
+import android.content.Intent;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.LayoutInflater;
+
+import com.MinimalSoft.BrujulaUniversitaria.R;
+import com.MinimalSoft.BrujulaUniversitaria.WebActivity;
+import com.MinimalSoft.BrujulaUniversitaria.RecyclerArticles.EntryAdapter;
+
+public class Articles extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+    private View inflatedView;
+
+    private EntryAdapter entryAdapter;
+    private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private RecyclerView.LayoutManager layoutManager;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (inflatedView == null) {
+            inflatedView = inflater.inflate(R.layout.fragment_articles, container, false);
+
+            recyclerView = (RecyclerView) inflatedView.findViewById(R.id.articles_recycler);
+            swipeRefreshLayout = (SwipeRefreshLayout) inflatedView.findViewById(R.id.articles_swipe_refresh);
+
+            entryAdapter = new EntryAdapter(this, swipeRefreshLayout);
+            layoutManager = new LinearLayoutManager(inflatedView.getContext());
+
+            recyclerView.setAdapter(entryAdapter);
+            recyclerView.setLayoutManager(layoutManager);
+            swipeRefreshLayout.setOnRefreshListener(this);
+            swipeRefreshLayout.setColorSchemeResources(R.color.s1, R.color.s2, R.color.s3);
+
+            entryAdapter.updateData();
+        }
+
+        return inflatedView;
+    }
+
+    public void showArticle (String title, String link) {
+        Intent intent = new Intent(this.getActivity(), WebActivity.class);
+        intent.putExtra("TITLE", title);
+        intent.putExtra("LINK", link);
+        this.startActivity(intent);
+        //this.startActivity(new Intent(this.getActivity(), WebActivity.class));
+        //Log.i(this.getClass().getSimpleName(), "count: " + )
+        //Toast.makeText(this.getContext(), title, Toast.LENGTH_SHORT).show();
+    }
+
+    /* SwipeRefreshLayout implemented methods */
+
+    @Override
+    public void onRefresh() {
+        entryAdapter.updateData();
+    }
+}
+
+/*import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -117,4 +182,4 @@ public class Articles extends Fragment {
         }
 
     }
-}
+}*/

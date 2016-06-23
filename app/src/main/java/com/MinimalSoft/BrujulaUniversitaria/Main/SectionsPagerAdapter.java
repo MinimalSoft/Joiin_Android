@@ -16,6 +16,7 @@ import com.MinimalSoft.BrujulaUniversitaria.Tabs.Categories;
 public class SectionsPagerAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener, AppBarLayout.OnOffsetChangedListener {
     private AppCompatActivity appCompatActivity;
     private Categories categoriesFragment;
+    private Articles articlesFragment;
     private Profile profileFragment;
     private Resources resources;
 
@@ -27,6 +28,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter implements ViewPa
         this.appCompatActivity = appCompatActivity;
 
         categoriesFragment = new Categories();
+        articlesFragment = new Articles();
         profileFragment = new Profile();
         toolbarOffset = 0;
 
@@ -40,11 +42,12 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter implements ViewPa
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                this.getItem(2);
-                this.getItem(3);
+                //this.getItem(2);
+                //this.getItem(3);
                 return NewsFeed.newInstance();
             case 1:
-                return Articles.newInstance();
+                //return Articles.newInstance();
+                return articlesFragment;
             case 2:
                 //return Categories.newInstance();
                 return categoriesFragment;
