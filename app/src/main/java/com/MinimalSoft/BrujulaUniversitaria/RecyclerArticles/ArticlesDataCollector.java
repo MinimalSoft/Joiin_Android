@@ -1,28 +1,28 @@
 package com.MinimalSoft.BrujulaUniversitaria.RecyclerArticles;
 
-import java.net.URL;
-import java.util.List;
-import java.util.ArrayList;
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONException;
-
-import android.os.AsyncTask;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArticlesDataCollector extends AsyncTask<Void, Void, Boolean> {
     private static final String URL_JSON_DATA = "http://brujulauniversitaria.com.mx/wp-json/wp/v2/posts?_wp_json_nonce=4355d0c4b3&items=id,title,image,link";
-    private EntryAdapter adapter;
+    private ArticleAdapter adapter;
     private List<Article> items;
 
-    public ArticlesDataCollector(final EntryAdapter entryAdapter) {
+    public ArticlesDataCollector(final ArticleAdapter entryAdapter) {
         this.adapter = entryAdapter;
     }
 

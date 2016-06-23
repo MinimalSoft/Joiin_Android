@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 
 import com.MinimalSoft.BrujulaUniversitaria.R;
 
-public class Summary extends Fragment {
+public class
+Summary extends Fragment {
 
 
     public static Summary newInstance(String param1, String param2) {

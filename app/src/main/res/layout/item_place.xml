@@ -14,7 +14,7 @@
         android:id="@+id/gradient"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_alignBottom="@+id/entry_foto"
+        android:layout_alignBottom="@+id/place_foto"
         android:background="@drawable/gradient" />
 
     <TextView

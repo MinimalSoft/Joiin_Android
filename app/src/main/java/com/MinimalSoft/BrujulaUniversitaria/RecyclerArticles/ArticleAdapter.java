@@ -14,13 +14,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.Tabs.Articles;
 
-public class EntryAdapter extends RecyclerView.Adapter <ArticleHolder> {
+public class ArticleAdapter extends RecyclerView.Adapter <ArticleHolder> {
     private SwipeRefreshLayout refreshAnimation;
     private List <Article> items;
     private Articles articlesTab;
     private boolean flag;
 
-    public EntryAdapter(final Articles articles, final SwipeRefreshLayout swipeRefreshLayout) {
+    public ArticleAdapter(final Articles articles, final SwipeRefreshLayout swipeRefreshLayout) {
         refreshAnimation = swipeRefreshLayout;
         items = new ArrayList<>();
         articlesTab = articles;
@@ -57,7 +57,7 @@ public class EntryAdapter extends RecyclerView.Adapter <ArticleHolder> {
 
     @Override
     public ArticleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_entry, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_article, parent, false);
         return new ArticleHolder(view);
     }
 
@@ -140,7 +140,7 @@ import java.util.List;
     @Override
     public ArticleHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_entry, viewGroup, false);
+                .inflate(R.layout.item_article, viewGroup, false);
         return new ArticleHolder(v);
     }
 
