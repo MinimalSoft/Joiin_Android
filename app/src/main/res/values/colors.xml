@@ -10,8 +10,18 @@
 
     <color name="windowBackground">#EEEEEE</color>
     <color name="black_overlay">#66000000</color>
-    <color name="black">#000000</color>
     <color name="s1">#9e2c32</color>
     <color name="s2">#FFFF19</color>
     <color name="s3">#008000</color>
+
+
+    <color name="primary_dark">#8a1010</color>
+    <color name="primary">#ad1414</color>
+
+    <color name="yellow">#ffea00</color>
+    <color name="orange">#FB8C00</color>
+    <color name="green">#1B5E20</color>
+    <color name="black">#000000</color>
+    <color name="brown">#795548</color>
+    <color name="red">#B71C1C</color>
 </resources>

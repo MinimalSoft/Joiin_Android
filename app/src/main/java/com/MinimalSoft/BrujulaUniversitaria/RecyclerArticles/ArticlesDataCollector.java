@@ -1,32 +1,37 @@
 package com.MinimalSoft.BrujulaUniversitaria.RecyclerArticles;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONException;
+
+import java.io.InputStream;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+
+import android.os.AsyncTask;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import com.MinimalSoft.BrujulaUniversitaria.Tabs.Articles;
+
 public class ArticlesDataCollector extends AsyncTask<Void, Void, Boolean> {
     private static final String URL_JSON_DATA = "http://brujulauniversitaria.com.mx/wp-json/wp/v2/posts?_wp_json_nonce=4355d0c4b3&items=id,title,image,link";
-    private ArticleAdapter adapter;
+    private Articles articlesFragment;
+    private ArticleAdapter articlesAdapter;
     private List<Article> items;
 
-    public ArticlesDataCollector(final ArticleAdapter entryAdapter) {
-        this.adapter = entryAdapter;
+    public ArticlesDataCollector(final Articles fragment, final ArticleAdapter entryAdapter) {
+        articlesAdapter = entryAdapter;
+        articlesFragment = fragment;
     }
 
-    private String fetchJSONData() throws IOException {
+    private String fetchJSONData () throws IOException {
         URL url = new URL(URL_JSON_DATA);
         InputStream inputStream = url.openStream();
         InputStreamReader streamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
@@ -56,7 +61,7 @@ public class ArticlesDataCollector extends AsyncTask<Void, Void, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(Void... params) {
+    protected Boolean doInBackground (Void... params) {
         try {
             String jsonData = this.fetchJSONData();
             JSONArray posts = new JSONArray(jsonData);
@@ -77,12 +82,13 @@ public class ArticlesDataCollector extends AsyncTask<Void, Void, Boolean> {
                 title = json.getJSONObject("title").getString("rendered");
 
                 items.add(new Article(title, id, image, link));
+
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             return Boolean.FALSE;
         } catch (JSONException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             return Boolean.FALSE;
         }
 
@@ -94,10 +100,12 @@ public class ArticlesDataCollector extends AsyncTask<Void, Void, Boolean> {
         super.onPostExecute(bool);
 
         if (bool) {
-            adapter.removeOld();
-            adapter.addNew(items);
+            articlesAdapter.removeOld();
+            articlesAdapter.addNew(items);
+            articlesFragment.onPostUpdateSucceed();
+        } else {
+            articlesAdapter.stopCollector();
+            articlesFragment.onPostUpdateFailed();
         }
-
-        adapter.stopRefreshingAnimation(bool);
     }
 }

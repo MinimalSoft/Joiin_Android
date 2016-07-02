@@ -56,9 +56,9 @@
             android:theme="@style/AppTheme"></activity>
 
         <activity
-            android:name=".WebActivity"
+            android:name=".Web.WebActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme2.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Main.MainActivity" />

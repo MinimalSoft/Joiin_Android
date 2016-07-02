@@ -1,11 +1,15 @@
-package com.MinimalSoft.BrujulaUniversitaria;
+package com.MinimalSoft.BrujulaUniversitaria.Web;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AppCompatActivity;
+
+import com.MinimalSoft.BrujulaUniversitaria.R;
 
 public class WebActivity extends AppCompatActivity {
 
@@ -14,26 +18,33 @@ public class WebActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_web);
 
-        Toolbar toolbar = (Toolbar) this.findViewById(R.id.web_toolbar);
         WebView webView = (WebView) this.findViewById(R.id.webView);
+        Toolbar toolbar = (Toolbar) this.findViewById(R.id.web_toolbar);
+        ProgressBar progressBar = (ProgressBar) this.findViewById(R.id.web_progress);
 
+        WebBrowser webBrowser = new WebBrowser(webView, progressBar);
         String title = this.getIntent().getStringExtra("TITLE");
         String link = this.getIntent().getStringExtra("LINK");
 
         this.setSupportActionBar(toolbar);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl(link);
         toolbar.setTitle(title);
-        //Uri uri = Uri.parse("http://brujulauniversitaria.com.mx/2016/02/01/el-dilema-de-la-universidad/");
-        //startActivity(new Intent(Intent.ACTION_VIEW, uri));
+        webBrowser.load(link);
+        this.setTitle(title);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //this.getMenuInflater().inflate(R.menu.menu_web, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+
                 if (!super.onOptionsItemSelected(item)) {
                     NavUtils.navigateUpFromSameTask(this);
                 }
