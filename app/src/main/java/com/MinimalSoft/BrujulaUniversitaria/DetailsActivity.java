@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    public static final String EXTRA_PLACE = "movie";
     android.support.v7.app.ActionBar actionBar;
 
     @Override
