@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.MinimalSoft.BrujulaUniversitaria.Maps.Bars_Map;
@@ -15,8 +17,11 @@ import com.MinimalSoft.BrujulaUniversitaria.Maps.Gym_Map;
 import com.MinimalSoft.BrujulaUniversitaria.Maps.Rent_Map;
 import com.MinimalSoft.BrujulaUniversitaria.Maps.Work_Map;
 import com.MinimalSoft.BrujulaUniversitaria.Promos.PromosFragment;
+import com.MinimalSoft.BrujulaUniversitaria.RecyclerViewer.ViewerFragment;
 
 public class ViewerActivity extends AppCompatActivity {
+
+    String titulo = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +31,7 @@ public class ViewerActivity extends AppCompatActivity {
         setToolbar();
 
         Bundle bundle = getIntent().getExtras();
-        String titulo = bundle.getString("Titulo");
+        titulo = bundle.getString("Titulo");
 
         switch (titulo) {
             case "bares": setFragment(new Bars_Map());
@@ -74,4 +79,30 @@ public class ViewerActivity extends AppCompatActivity {
             });
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        if(!titulo.equals("promos"))
+        getMenuInflater().inflate(R.menu.menu_viewer, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.viewer_item_list) {
+
+            Fragment listView = new ViewerFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.Viewer_Container, listView);
+            transaction.commit();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }
