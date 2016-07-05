@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.MinimalSoft.BrujulaUniversitaria.ViewerActivity">
     <item
-        android:id="@+id/Viewer_List"
+        android:id="@+id/viewer_item_list"
         android:orderInCategory="100"
-        android:icon="@drawable/lista"
+        android:icon="@drawable/ic_list_white_36dp"
         android:title="lista"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>
