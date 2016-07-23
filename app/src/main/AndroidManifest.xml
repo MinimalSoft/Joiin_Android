@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.MinimalSoft.BrujulaUniversitaria">
+    package="com.MinimalSoft.BrujulaUniversitaria" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -24,61 +24,58 @@
         android:glEsVersion="0x00020000"
         android:required="true" />
 
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true">
-
+        android:supportsRtl="true" >
         <activity
             android:name=".Start.StartActivity"
             android:configChanges="keyboardHidden|screenSize"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.ActivityStart">
-
+            android:theme="@style/AppTheme.ActivityStart" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Start.LoginActivity"
             android:configChanges="keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.ActivityStart"></activity>
-
+            android:theme="@style/AppTheme.ActivityStart" />
         <activity
             android:name=".Main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"></activity>
-
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Web.WebActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme2.NoActionBar">
+            android:theme="@style/AppTheme2.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Main.MainActivity" />
         </activity>
-
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".Main.MainActivity"
-            android:theme="@style/AppTheme.Settings">
+            android:theme="@style/AppTheme.Settings" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Main.MainActivity" />
         </activity>
-
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <provider
             android:name="com.facebook.FacebookContentProvider"
@@ -94,21 +91,30 @@
 
         <activity
             android:name=".DetailsActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Maps.AddPlaceActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Promos.Bars_Promo"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Promos.Gyms_Promo"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Promos.Food_Promo"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ViewerActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Transportation.Routes"
+            android:label="Lineas"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Transportation.Map"
+            android:label="@string/title_activity_map"
+            android:theme="@style/AppTheme"/>
     </application>
+
 </manifest>

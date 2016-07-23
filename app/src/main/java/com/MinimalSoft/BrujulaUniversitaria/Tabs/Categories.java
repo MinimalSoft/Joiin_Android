@@ -1,20 +1,20 @@
 package com.MinimalSoft.BrujulaUniversitaria.Tabs;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.LayoutInflater;
-import android.content.Intent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.support.v4.app.Fragment;
 
 import com.MinimalSoft.BrujulaUniversitaria.R;
-import com.MinimalSoft.BrujulaUniversitaria.ViewerActivity;
-import com.MinimalSoft.BrujulaUniversitaria.Maps.AddPlaceActivity;
 import com.MinimalSoft.BrujulaUniversitaria.Utilities.ScreenUtility;
+import com.MinimalSoft.BrujulaUniversitaria.ViewerActivity;
 
 public class Categories extends Fragment implements View.OnClickListener {
+
     private int pagerViewHeight;
     private int topLayoutsMargin;
     private int fullLayoutHeight;
@@ -25,7 +25,7 @@ public class Categories extends Fragment implements View.OnClickListener {
     private ImageView barsButton;
     private ImageView foodButton;
     private ImageView gymsButton;
-    private ImageView coffeeButton;
+    private ImageView transportButton;
     private ImageView promosButton;
     private ImageView featuredButton;
     private ImageView suppliesButton;
@@ -44,7 +44,7 @@ public class Categories extends Fragment implements View.OnClickListener {
             barsButton = (ImageView) inflatedLayout.findViewById(R.id.categories_bars_image);
             foodButton = (ImageView) inflatedLayout.findViewById(R.id.categories_food_image);
             gymsButton = (ImageView) inflatedLayout.findViewById(R.id.categories_gyms_image);
-            coffeeButton = (ImageView) inflatedLayout.findViewById(R.id.categories_coffee_image);
+            transportButton = (ImageView) inflatedLayout.findViewById(R.id.categories_transport_image);
             promosButton = (ImageView) inflatedLayout.findViewById(R.id.categories_promos_image);
             featuredButton = (ImageView) inflatedLayout.findViewById(R.id.categories_featured_image);
             suppliesButton = (ImageView) inflatedLayout.findViewById(R.id.categories_supplies_image);
@@ -60,7 +60,7 @@ public class Categories extends Fragment implements View.OnClickListener {
             suppliesButton.setOnClickListener(this);
             featuredButton.setOnClickListener(this);
             promosButton.setOnClickListener(this);
-            coffeeButton.setOnClickListener(this);
+            transportButton.setOnClickListener(this);
             gymsButton.setOnClickListener(this);
             foodButton.setOnClickListener(this);
             barsButton.setOnClickListener(this);
@@ -78,8 +78,7 @@ public class Categories extends Fragment implements View.OnClickListener {
 
         switch (view.getId()) {
             case R.id.categories_featured_image:
-                //bundle.putString("Titulo", "destacados");
-                intent = new Intent(getContext(), AddPlaceActivity.class);
+                bundle.putString("Titulo", "destacados");
                 break;
 
             case R.id.categories_bars_image:
@@ -90,10 +89,12 @@ public class Categories extends Fragment implements View.OnClickListener {
                 bundle.putString("Titulo", "comida");
                 break;
 
-            case R.id.categories_coffee_image:
+            case R.id.categories_gyms_image:
+                bundle.putString("Titulo", "gyms");
                 break;
 
             case R.id.categories_supplies_image:
+                bundle.putString("Titulo", "materiales");
                 break;
 
             case R.id.categories_residence_image:
@@ -104,8 +105,8 @@ public class Categories extends Fragment implements View.OnClickListener {
                 bundle.putString("Titulo", "trabajo");
                 break;
 
-            case R.id.categories_gyms_image:
-                bundle.putString("Titulo", "gyms");
+            case R.id.categories_transport_image:
+                bundle.putString("Titulo", "transporte");
                 break;
 
             case R.id.categories_promos_image:

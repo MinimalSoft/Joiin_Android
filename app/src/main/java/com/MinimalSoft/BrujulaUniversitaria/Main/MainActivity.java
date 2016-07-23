@@ -1,20 +1,20 @@
 package com.MinimalSoft.BrujulaUniversitaria.Main;
 
-import android.os.Bundle;
 import android.app.AlertDialog;
-import android.provider.Settings;
-
-import android.content.Intent;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.LocationManager;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.design.widget.TabLayout;
+import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.Utilities.ScreenUtility;
+import com.google.android.gms.maps.MapView;
 
 public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener {
     private SectionsPagerAdapter pagerAdapter;
@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         tabLayout.getTabAt(1).setIcon(R.drawable.explore);
         tabLayout.getTabAt(2).setIcon(R.drawable.categories);
         tabLayout.getTabAt(3).setIcon(R.drawable.profile);
+
+        prepareMap ();
     }
 
     public void verifyGPSStatus() {
@@ -84,6 +86,23 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     public void onStart() {
         super.onStart();
         this.verifyGPSStatus();
+    }
+
+    private void prepareMap (){
+        // Fixing Later Map loading Delay
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    MapView mv = new MapView(getApplicationContext());
+                    mv.onCreate(null);
+                    mv.onPause();
+                    mv.onDestroy();
+                }catch (Exception ignored){
+
+                }
+            }
+        }).start();
     }
 
     /* Establece la toolbar como action bar */

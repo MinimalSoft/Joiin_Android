@@ -1,35 +1,35 @@
 package com.MinimalSoft.BrujulaUniversitaria.Tabs;
 
-import java.io.IOException;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileNotFoundException;
-
-import android.os.Bundle;
-import android.graphics.Bitmap;
-import android.content.Intent;
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AlertDialog;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
-
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
+import com.MinimalSoft.BrujulaUniversitaria.Facebook.FacebookPicturesCollector;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.SettingsActivity;
 import com.MinimalSoft.BrujulaUniversitaria.Start.LoginActivity;
-import com.MinimalSoft.BrujulaUniversitaria.Facebook.FacebookPicturesCollector;
+import com.MinimalSoft.BrujulaUniversitaria.Web.WebActivity;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Profile extends Fragment implements View.OnClickListener, DialogInterface.OnClickListener {
     private FacebookPicturesCollector picturesCollector;
@@ -101,6 +101,10 @@ public class Profile extends Fragment implements View.OnClickListener, DialogInt
                 startActivity(intent);
                 break;
             case R.id.profile_disclaimer_button:
+                Intent intent = new Intent(this.getActivity(), WebActivity.class);
+                intent.putExtra("TITLE", "Aviso de Privacidad");
+                intent.putExtra("LINK", "http://brujulauniversitaria.com.mx/aviso-de-privacidad/");
+                this.startActivity(intent);
                 break;
         }
     }

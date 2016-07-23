@@ -41,7 +41,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="@dimen/categories_button_size"
                 android:layout_height="@dimen/categories_button_size"
-                android:src="@drawable/bares" />
+                android:src="@drawable/bar" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -78,24 +78,6 @@
         android:layout_marginTop="@dimen/categories_layout_vertical_margin"
         android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/categories_coffee_image"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="@dimen/categories_button_size"
-                android:layout_height="@dimen/categories_button_size"
-                android:src="@drawable/cafeterias" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/categories_coffee_image"
-                android:layout_centerHorizontal="true"
-                android:text="Cafeterias" />
-        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -136,14 +118,6 @@
                 android:layout_centerHorizontal="true"
                 android:text="Materiales" />
         </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/categories_bottom_vertical_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/categories_layout_vertical_margin"
-        android:orientation="horizontal">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -164,6 +138,15 @@
                 android:text="Residencias" />
         </RelativeLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/categories_bottom_vertical_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/categories_layout_vertical_margin"
+        android:orientation="horizontal">
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -183,6 +166,25 @@
                 android:layout_below="@+id/categories_jobs_image"
                 android:layout_centerHorizontal="true"
                 android:text="Trabajos" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/categories_transport_image"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="@dimen/categories_button_size"
+                android:layout_height="@dimen/categories_button_size"
+                android:src="@drawable/transporte" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/categories_transport_image"
+                android:layout_centerHorizontal="true"
+                android:text="Transporte" />
         </RelativeLayout>
 
         <RelativeLayout

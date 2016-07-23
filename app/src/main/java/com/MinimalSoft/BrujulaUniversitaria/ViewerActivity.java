@@ -15,6 +15,7 @@ import com.MinimalSoft.BrujulaUniversitaria.Maps.Gym_Map;
 import com.MinimalSoft.BrujulaUniversitaria.Maps.Rent_Map;
 import com.MinimalSoft.BrujulaUniversitaria.Maps.Work_Map;
 import com.MinimalSoft.BrujulaUniversitaria.Promos.PromosFragment;
+import com.MinimalSoft.BrujulaUniversitaria.Transportation.Means;
 
 public class ViewerActivity extends AppCompatActivity {
 
@@ -27,8 +28,12 @@ public class ViewerActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         String titulo = bundle.getString("Titulo");
+        String agency = null;
 
         switch (titulo) {
+            case "destacados": setFragment(new Bars_Map());
+                setTitle("Destacados");
+                break;
             case "bares": setFragment(new Bars_Map());
                 setTitle("Bares");
                 break;
@@ -38,11 +43,17 @@ public class ViewerActivity extends AppCompatActivity {
             case "gyms": setFragment(new Gym_Map());
                 setTitle("Gimnasios");
                 break;
+            case "materiales": setFragment(new Bars_Map());
+                setTitle("Materiales");
+                break;
             case "renta": setFragment(new Rent_Map());
-                setTitle("Donde Vivir");
+                setTitle("Residencias");
                 break;
             case "trabajo": setFragment(new Work_Map());
                 setTitle("Trabajos");
+                break;
+            case "transporte": setFragment(new Means());
+                setTitle("Transporte");
                 break;
             case "promos": setFragment(new PromosFragment());
                 setTitle("Promociones");

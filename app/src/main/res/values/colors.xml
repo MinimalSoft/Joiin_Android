@@ -24,4 +24,42 @@
     <color name="black">#000000</color>
     <color name="brown">#795548</color>
     <color name="red">#B71C1C</color>
+
+    //colores del Metro
+    <color name="METRO_1">#F56394</color>
+    <color name="METRO_2">#0569A7</color>
+    <color name="METRO_3">#AE9D27</color>
+    <color name="METRO_4">#6FB6AE</color>
+    <color name="METRO_5">#FDDF01</color>
+    <color name="METRO_6">#FF1000</color>
+    <color name="METRO_7">#FF6308</color>
+    <color name="METRO_8">#019934</color>
+    <color name="METRO_9">#5C2C2A</color>
+    <color name="METRO_A">#9D297C</color>
+    <color name="METRO_B">#C7C7C5</color>
+    <color name="METRO_12">#BA9E54</color>
+
+    //colores del Metrobus
+    <color name="MB_1">#B32016</color>
+    <color name="MB_2">#8A3696</color>
+    <color name="MB_3">#78A22F</color>
+    <color name="MB_4">#F49021</color>
+    <color name="MB_5">#07357B</color>
+    <color name="MB_6">#E73E97</color>
+
+    //Colores STE
+    <color name="TL_1">#07357B</color>
+    <color name="TB_1">#FEFE00</color>
+    <color name="TB_2">#B2181A</color>
+    <color name="TB_3">#FF9A00</color>
+    <color name="TB_4">#B051A3</color>
+    <color name="TB_5">#FF6D20</color>
+    <color name="TB_6">#018A9C</color>
+    <color name="TB_7">#FF639A</color>
+    <color name="TB_8">#B2D505</color>
+
+    //Colores Suburbano
+    <color name="SUB_1">#B32016</color>
+
+
 </resources>

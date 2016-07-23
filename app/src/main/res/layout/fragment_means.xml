@@ -1,0 +1,170 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.MinimalSoft.BrujulaUniversitaria.Transportation.Means">
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.MinimalSoft.BrujulaUniversitaria.Transportation.Transportation_Means">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <ImageView
+                        android:id="@+id/transportation_metro_image"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="@dimen/categories_button_size"
+                        android:layout_height="@dimen/categories_button_size"
+                        android:src="@drawable/metro" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/transportation_metro_image"
+                        android:layout_centerHorizontal="true"
+                        android:text="Metro" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <ImageView
+                        android:id="@+id/transportation_metrobus_image"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="@dimen/categories_button_size"
+                        android:layout_height="@dimen/categories_button_size"
+                        android:src="@drawable/metrobus" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/transportation_metrobus_image"
+                        android:layout_centerHorizontal="true"
+                        android:text="Metrobus" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/categories_layout_vertical_margin"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <ImageView
+                        android:id="@+id/transportation_tl_image"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="@dimen/categories_button_size"
+                        android:layout_height="@dimen/categories_button_size"
+                        android:src="@drawable/trenligero" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/transportation_tl_image"
+                        android:layout_centerHorizontal="true"
+                        android:text="Tren Ligero" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <ImageView
+                        android:id="@+id/transportation_tb_image"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="@dimen/categories_button_size"
+                        android:layout_height="@dimen/categories_button_size"
+                        android:src="@drawable/trolebus" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/transportation_tb_image"
+                        android:layout_centerHorizontal="true"
+                        android:text="Trolebus" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/categories_layout_vertical_margin"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <ImageView
+                        android:id="@+id/transportation_suburbano_image"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="@dimen/categories_button_size"
+                        android:layout_height="@dimen/categories_button_size"
+                        android:src="@drawable/suburbano" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/transportation_suburbano_image"
+                        android:layout_centerHorizontal="true"
+                        android:text="Suburbano" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <ImageView
+                        android:id="@+id/transportation_ecobici_image"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="@dimen/categories_button_size"
+                        android:layout_height="@dimen/categories_button_size"
+                        android:src="@drawable/ecobici" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/transportation_ecobici_image"
+                        android:layout_centerHorizontal="true"
+                        android:text="EcoBici" />
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>
