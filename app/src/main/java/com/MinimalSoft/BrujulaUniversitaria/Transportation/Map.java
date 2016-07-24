@@ -10,7 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.MinimalSoft.BrujulaUniversitaria.Models.Station;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -21,6 +24,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -30,9 +34,16 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+
 public class Map extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+        LocationListener, Callback<List<Station>> {
 
     private Bundle bundle;
     private String titulo, agency, route;
@@ -41,6 +52,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
     private GoogleMap mMap;
     LocationRequest mLocationRequest;
     GoogleApiClient mGoogleApiClient;
+    Location mLastLocation;
     LatLng latLng;
     SupportMapFragment mFragment;
     Marker currLocationMarker;
@@ -48,15 +60,18 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_transportation_map);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
         setToolbar();
+
         this.bundle = getIntent().getExtras();
         this.titulo = this.bundle.getString("Titulo");
         this.route = this.bundle.getString("Route");
+        this.agency = this.bundle.getString("Agency");
         this.setTitle(titulo);
     }
 
@@ -73,15 +88,220 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
         buildGoogleApiClient();
         mGoogleApiClient.connect();
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        if(agency.equals("ECO"))
+            googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
+            public View getInfoWindow(Marker arg0) {
+                return null;
+            }
 
-                getDistance(marker);
+            @Override
+            public View getInfoContents(Marker marker) {
 
-                return false;
+                String snippet[]= marker.getSnippet().split(",");
+
+                View v = getLayoutInflater().inflate(R.layout.ecobici_infowindow, null);
+
+                TextView titulo = (TextView) v.findViewById(R.id.infowindow_title);
+                TextView bicis = (TextView) v.findViewById(R.id.int_freeBikes);
+                TextView espacios = (TextView) v.findViewById(R.id.int_emptySlots);
+                TextView distancia = (TextView) v.findViewById(R.id.int_distance);
+
+                titulo.setText(marker.getTitle());
+                bicis.setText(snippet[0]);
+                espacios.setText(snippet[1]);
+                distancia.setText(snippet[2]);
+                return v;
+
             }
         });
+    }
+
+
+    private void drawStops() {
+
+        String sentence,stopRoute, stopName, snippet;
+        Double stopLat, stopLong;
+        BitmapDescriptor stopIcon;
+        int color;
+        float anchor = 0.5f;
+
+        if(this.route.equals("0"))
+            sentence = "SELECT * FROM stops WHERE agency = '" + this.agency + "'";
+        else
+            sentence = "SELECT * FROM stops WHERE agency = '" + this.agency + "' AND route ='" + this.route + "'";
+
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        databaseAccess.open();
+        List<Stop> stops = databaseAccess.getStops(sentence);
+        databaseAccess.close();
+
+        for (int i = 0; i < stops.size(); i++) {
+
+            stopRoute =stops.get(i).route;
+            stopName =stops.get(i).stopName;
+            stopLat =Double.parseDouble(stops.get(i).stopLat);
+            stopLong =Double.parseDouble(stops.get(i).stopLong);
+            stopIcon = BitmapDescriptorFactory.fromResource(getResources().
+                    getIdentifier(stops.get(i).stopIcon, "raw", getPackageName()));
+            color = Color.parseColor(getResources().getString(getResources().
+                    getIdentifier(this.agency + "_" + stopRoute, "color", getPackageName())));
+
+            mMap.addMarker(new MarkerOptions()
+                    .icon(stopIcon)
+                    .anchor(anchor, anchor)
+                    .title("Línea "+stopRoute+" - "+stopName)
+                    .snippet("A "+getDistance(stops.get(i),this.mLastLocation)+" km")
+                    .position(new LatLng(stopLat, stopLong)));
+
+            if (i+1 < stops.size())
+            if (stops.get(i).route.equals(stops.get(i+1).route)) {
+                mMap.addPolyline(new PolylineOptions().geodesic(false)
+                        .add(new LatLng(stopLat, stopLong))
+                        .add(new LatLng(Double.parseDouble(stops.get(i + 1).stopLat), Double.parseDouble(stops.get(i + 1).stopLong)))
+                        .color(color)
+                        .width(40)
+                );
+            }
+        }
+    }
+
+    private void drawEcobici(List<Station> stations) {
+
+        String sentence = "SELECT * FROM stops WHERE agency = 'ECO'";
+        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(getResources().
+                getIdentifier("eco_icon", "raw", getPackageName()));
+
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        databaseAccess.open();
+        List<Stop> stops = databaseAccess.getStops(sentence);
+        databaseAccess.close();
+
+        for (int i = 0; i < stops.size(); i++) {
+
+            mMap.addMarker(new MarkerOptions()
+                    .icon(icon)
+                    .title(stops.get(i).stopName)
+                    .snippet(stations.get(i).getFreeBikes() + ","+stations.get(i).getEmptySlots()+","+getDistance(stops.get(i),this.mLastLocation))
+                    .position(new LatLng(Double.parseDouble(stops.get(i).stopLat), Double.parseDouble(stops.get(i).stopLong))));
+        }
+
+
+    }
+
+    private void getDisponibility()
+    {
+        String BASE_URL = "https://ecobici.me";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        Interface inter = retrofit.create(Interface.class);
+
+        Call<List<Station>> call = inter.getAllStations();
+        //asynchronous call
+        call.enqueue(this);
+    }
+
+    private void setStops() {
+
+        switch (this.agency) {
+            case "ECO":
+                getDisponibility();
+                break;
+            default:
+                drawStops();
+                break;
+        }
+
+    }
+
+
+    private String getDistance (Stop stop, Location mLastLocation)
+    {
+        float distance=0;
+
+        Location stopLocation = new Location(stop.stopName);
+        stopLocation.setLatitude(Double.parseDouble(stop.stopLat));
+        stopLocation.setLongitude(Double.parseDouble(stop.stopLong));
+
+        distance = mLastLocation.distanceTo(stopLocation)/ 1000;
+
+       return String.format("%.2f", distance);
+    }
+
+
+    @Override
+    public void onResponse(Call<List<Station>> call, Response<List<Station>> response) {
+
+        int code = response.code();
+        if (code == 200) {
+            List<Station> stations = response.body();
+            drawEcobici(stations);
+            //Toast.makeText(this, "Nice!: ", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Try again! :(" + String.valueOf(code), Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    private void setLocationButton() {
+        imgMyLocation = (ImageView) this.findViewById(R.id.imgMyLocation);
+        imgMyLocation.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+                onLocationChanged(mLastLocation);
+            }
+        });
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+            latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+        }
+
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(5000);
+        mLocationRequest.setFastestInterval(3000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+
+        setLocationButton();
+
+        setStops();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+        latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(latLng).zoom(15).build();
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+    }
+
+    @Override
+    public void onFailure(Call<List<Station>> call, Throwable t) {
+        Toast.makeText(this, "Error al cargar disponibilidad", Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -110,192 +330,4 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
         }
     }
 
-    private void drawStops(String route) {
-
-        String sentence = "SELECT * FROM stops WHERE agency = '" + this.agency + "' AND route ='" + route + "'";
-
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
-        databaseAccess.open();
-        List<Stop> stops = databaseAccess.getStops(sentence);
-        databaseAccess.close();
-
-        for (int i = 0; i < stops.size(); i++) {
-
-            mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(getResources().getIdentifier(stops.get(i).stopIcon, "raw", getPackageName())))
-                    .anchor(0.5f, 0.5f)
-                    .title("Línea "+stops.get(i).route+" - "+stops.get(i).stopName)
-                    .position(new LatLng(Double.parseDouble(stops.get(i).stopLat), Double.parseDouble(stops.get(i).stopLong))));
-
-            if (i + 1 < stops.size()) {
-                mMap.addPolyline(new PolylineOptions().geodesic(false)
-                        .add(new LatLng(Double.parseDouble(stops.get(i).stopLat), Double.parseDouble(stops.get(i).stopLong)))
-                        .add(new LatLng(Double.parseDouble(stops.get(i + 1).stopLat), Double.parseDouble(stops.get(i + 1).stopLong)))
-                        .color(Color.parseColor(getResources().getString(getResources().
-                                getIdentifier(this.agency + "_" + route, "color", getPackageName()))))
-                        .width(40)
-                );
-            }
-        }
-    }
-
-    private void drawEcobici() {
-
-        String sentence = "SELECT * FROM stops WHERE agency = 'ECO'";
-
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
-        databaseAccess.open();
-        List<Stop> stops = databaseAccess.getStops(sentence);
-        databaseAccess.close();
-
-        for (int i = 0; i < stops.size(); i++) {
-
-            mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(getResources().getIdentifier(stops.get(i).stopIcon, "raw", getPackageName())))
-                    .anchor(0.5f, 0.5f)
-                    .title(stops.get(i).stopName)
-                    .position(new LatLng(Double.parseDouble(stops.get(i).stopLat), Double.parseDouble(stops.get(i).stopLong))));
-        }
-    }
-
-    private void getStops() {
-        int routes = 0;
-
-        switch (this.titulo) {
-            case "Metro":
-                this.agency = "METRO";
-                metro();
-                break;
-            case "Metrobus":
-                this.agency = "MB";
-                routes = 5;
-                others(routes);
-                break;
-            case "Tren Ligero":
-                this.agency = "TL";
-                routes = 1;
-                others(routes);
-                break;
-            case "Trolebus":
-                this.agency = "TB";
-                routes = 8;
-                others(routes);
-                break;
-            case "Suburbano":
-                this.agency = "SUB";
-                routes = 1;
-                others(routes);
-                break;
-            case "Ecobici":
-                this.agency = "ECO";
-                drawEcobici();
-                break;
-        }
-
-    }
-
-    public void metro() {
-        if (this.route.equals("0")) {
-            for (int i = 1; i <= 12; i++) {
-                if (i == 10)
-                    drawStops("A");
-
-                else if (i == 11)
-                    drawStops("B");
-
-                else
-                    drawStops(i + "");
-            }
-        } else {
-            drawStops(this.route);
-        }
-    }
-
-    public void others(int routes) {
-
-        switch (agency) {
-
-
-        }
-        if (this.route.equals("0")) {
-            for (int i = 1; i <= routes; i++) {
-                drawStops(i + "");
-            }
-        } else {
-            drawStops(this.route);
-        }
-    }
-
-    private void setLocationButton() {
-        imgMyLocation = (ImageView) this.findViewById(R.id.imgMyLocation);
-        imgMyLocation.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-                onLocationChanged(mLastLocation);
-            }
-        });
-    }
-
-    private void getDistance (Marker stop)
-    {
-        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        float distance=0;
-
-        Location stopLocation = new Location(stop.getTitle());
-        stopLocation.setLatitude(stop.getPosition().latitude);
-        stopLocation.setLongitude(stop.getPosition().longitude);
-
-        distance = mLastLocation.distanceTo(stopLocation)/ 1000;
-
-        stop.setSnippet("A "+String.format("%.2f", distance)+" km");
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (mLastLocation != null) {
-            //place marker at current position
-            //mGoogleMap.clear();
-            latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-        }
-
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(10000); //5 seconds
-        mLocationRequest.setFastestInterval(3000); //3 seconds
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        //mLocationRequest.setSmallestDisplacement(0.1F); //1/10 meter
-
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-
-        setLocationButton();
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-
-        latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        //zoom to current position:
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(latLng).zoom(15).build();
-
-        mMap.animateCamera(CameraUpdateFactory
-                .newCameraPosition(cameraPosition));
-
-        getStops();
-
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
 }

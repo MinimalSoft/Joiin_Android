@@ -62,31 +62,37 @@ public class Means extends Fragment implements View.OnClickListener, DialogInter
         switch (v.getId()) {
             case R.id.transportation_metro_image:
                 bundle.putString("Titulo", "Metro");
+                bundle.putString("Agency", "METRO");
                 logOutConfirmDialog();
                 break;
 
             case R.id.transportation_metrobus_image:
                 bundle.putString("Titulo", "Metrobus");
+                bundle.putString("Agency", "MB");
                 logOutConfirmDialog();
                 break;
 
             case R.id.transportation_tl_image:
                 bundle.putString("Titulo", "Tren Ligero");
+                bundle.putString("Agency", "TL");
                 getAllRoutes();
                 break;
 
             case R.id.transportation_tb_image:
                 bundle.putString("Titulo", "Trolebus");
+                bundle.putString("Agency", "TB");
                 logOutConfirmDialog();
                 break;
 
             case R.id.transportation_suburbano_image:
                 bundle.putString("Titulo", "Suburbano");
+                bundle.putString("Agency", "SUB");
                 getAllRoutes();
                 break;
 
             case R.id.transportation_ecobici_image:
                 bundle.putString("Titulo", "Ecobici");
+                bundle.putString("Agency", "ECO");
                 getAllRoutes();
                 break;
         }
