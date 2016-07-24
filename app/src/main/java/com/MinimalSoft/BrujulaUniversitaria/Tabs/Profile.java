@@ -62,7 +62,7 @@ public class Profile extends Fragment implements View.OnClickListener, DialogInt
             settingsButton.setOnClickListener(this);
             logOutButton.setOnClickListener(this);
 
-            this.setUserElements();
+            this.setUserProfile();
         }
 
         return inflatedView;
@@ -109,7 +109,7 @@ public class Profile extends Fragment implements View.OnClickListener, DialogInt
         }
     }
 
-    private void setUserElements () {
+    private void setUserProfile () {
         SharedPreferences settings = this.getActivity().getSharedPreferences("FACEBOOK_PREF", Context.MODE_PRIVATE);
         boolean imagesSaved = settings.getBoolean("USER_PICS", false);
 
@@ -155,7 +155,7 @@ public class Profile extends Fragment implements View.OnClickListener, DialogInt
 
             settingsEditor.putBoolean("USER_PICS", true);
             settingsEditor.commit();
-            this.setUserElements();
+            this.setUserProfile();
         } catch (FileNotFoundException e) {
             emailLabel.setText("loading...");
             e.printStackTrace();
@@ -167,8 +167,8 @@ public class Profile extends Fragment implements View.OnClickListener, DialogInt
     private void logOutConfirmDialog() {
         AlertDialog.Builder confirmDialog = new AlertDialog.Builder(this.getActivity());
         confirmDialog.setMessage("Cada que alguien nos deja, nuestro  DevTeam llora :'(");
-        confirmDialog.setNegativeButton("Evitar que lloren, cancelar", null);
-        confirmDialog.setPositiveButton("No me importa, salir", this);
+        confirmDialog.setNegativeButton("Evitar que lloren", null);
+        confirmDialog.setPositiveButton("No me importa", this);
         confirmDialog.setTitle("¿Serguro que deseas salir?");
         confirmDialog.show();
     }
