@@ -2,7 +2,7 @@
     android:id="@+id/renglones"
     android:layout_width="220dp"
     android:layout_height="wrap_content"
-    android:background="#52575E"
+    android:background="@color/theme_grayLight"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -24,7 +24,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#474B51"
+            android:background="@color/theme_grayDark"
             android:orientation="horizontal">
 
             <LinearLayout

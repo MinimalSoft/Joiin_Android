@@ -9,13 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.MinimalSoft.BrujulaUniversitaria.Maps.Bars_Map;
-import com.MinimalSoft.BrujulaUniversitaria.Maps.Food_Map;
-import com.MinimalSoft.BrujulaUniversitaria.Maps.Gym_Map;
-import com.MinimalSoft.BrujulaUniversitaria.Maps.Rent_Map;
-import com.MinimalSoft.BrujulaUniversitaria.Maps.Work_Map;
 import com.MinimalSoft.BrujulaUniversitaria.Promos.PromosFragment;
-import com.MinimalSoft.BrujulaUniversitaria.Transportation.Means;
+import com.MinimalSoft.BrujulaUniversitaria.Transport.Means;
 
 public class ViewerActivity extends AppCompatActivity {
 
@@ -31,32 +26,9 @@ public class ViewerActivity extends AppCompatActivity {
         String agency = null;
 
         switch (titulo) {
-            case "destacados": setFragment(new Bars_Map());
-                setTitle("Destacados");
+            case "Transporte": setFragment(new Means());
                 break;
-            case "bares": setFragment(new Bars_Map());
-                setTitle("Bares");
-                break;
-            case "comida": setFragment(new Food_Map());
-                setTitle("Comida");
-                break;
-            case "gyms": setFragment(new Gym_Map());
-                setTitle("Gimnasios");
-                break;
-            case "materiales": setFragment(new Bars_Map());
-                setTitle("Materiales");
-                break;
-            case "renta": setFragment(new Rent_Map());
-                setTitle("Residencias");
-                break;
-            case "trabajo": setFragment(new Work_Map());
-                setTitle("Trabajos");
-                break;
-            case "transporte": setFragment(new Means());
-                setTitle("Transporte");
-                break;
-            case "promos": setFragment(new PromosFragment());
-                setTitle("Promociones");
+            case "Promociones": setFragment(new PromosFragment());
                 break;
         }
     }

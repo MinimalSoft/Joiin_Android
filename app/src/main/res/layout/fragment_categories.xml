@@ -20,7 +20,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="@dimen/categories_button_size"
                 android:layout_height="@dimen/categories_button_size"
-                android:src="@drawable/destacados" />
+                android:src="@drawable/category_featured" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="@dimen/categories_button_size"
                 android:layout_height="@dimen/categories_button_size"
-                android:src="@drawable/bar" />
+                android:src="@drawable/category_bars" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="@dimen/categories_button_size"
                 android:layout_height="@dimen/categories_button_size"
-                android:src="@drawable/comida" />
+                android:src="@drawable/category_food" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="@dimen/categories_button_size"
                 android:layout_height="@dimen/categories_button_size"
-                android:src="@drawable/gimnasios" />
+                android:src="@drawable/category_gyms" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -109,7 +109,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="@dimen/categories_button_size"
                 android:layout_height="@dimen/categories_button_size"
-                android:src="@drawable/materialescolar" />
+                android:src="@drawable/category_suplies" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -128,7 +128,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="@dimen/categories_button_size"
                 android:layout_height="@dimen/categories_button_size"
-                android:src="@drawable/dondevivir" />
+                android:src="@drawable/category_residence" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -158,7 +158,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="@dimen/categories_button_size"
                 android:layout_height="@dimen/categories_button_size"
-                android:src="@drawable/trabajos" />
+                android:src="@drawable/category_jobs" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -177,7 +177,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="@dimen/categories_button_size"
                 android:layout_height="@dimen/categories_button_size"
-                android:src="@drawable/transporte" />
+                android:src="@drawable/category_transport" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -196,7 +196,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="@dimen/categories_button_size"
                 android:layout_height="@dimen/categories_button_size"
-                android:src="@drawable/promociones" />
+                android:src="@drawable/category_promos" />
 
             <TextView
                 android:layout_width="wrap_content"

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.MinimalSoft.BrujulaUniversitaria.Maps.Categories_Map;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.Utilities.ScreenUtility;
 import com.MinimalSoft.BrujulaUniversitaria.ViewerActivity;
@@ -70,51 +71,75 @@ public class Categories extends Fragment implements View.OnClickListener {
         return inflatedLayout;
     }
 
-    /* OnClickListener implemented Methods */
-
     @Override
     public void onClick(View view) {
         Bundle bundle = new Bundle();
 
         switch (view.getId()) {
             case R.id.categories_featured_image:
-                bundle.putString("Titulo", "destacados");
+                bundle.putString("Titulo", "Destacados");
+                bundle.putString("Type", "1");
+                bundle.putString("Marker", "marker_bu");
                 break;
 
             case R.id.categories_bars_image:
-                bundle.putString("Titulo", "bares");
+                bundle.putString("Titulo", "Bares");
+                bundle.putString("Type", "2");
+                bundle.putString("Marker", "marker_bars");
+                bundle.putString("stringType", "bar");
                 break;
 
             case R.id.categories_food_image:
-                bundle.putString("Titulo", "comida");
+                bundle.putString("Titulo", "Comida");
+                bundle.putString("Type", "3");
+                bundle.putString("Marker", "marker_food");
+                bundle.putString("stringType", "sitio de comida");
                 break;
 
             case R.id.categories_gyms_image:
-                bundle.putString("Titulo", "gyms");
+                bundle.putString("Titulo", "Gimnasios");
+                bundle.putString("Type", "4");
+                bundle.putString("Marker", "marker_gyms");
+                bundle.putString("stringType", "gimnasio");
                 break;
 
             case R.id.categories_supplies_image:
-                bundle.putString("Titulo", "materiales");
+                bundle.putString("Titulo", "Materiales");
+                bundle.putString("Type", "5");
+                bundle.putString("Marker", "marker_suplies");
+                bundle.putString("stringType", "proveedor de material");
                 break;
 
             case R.id.categories_residence_image:
-                bundle.putString("Titulo", "renta");
+                bundle.putString("Titulo", "Residencias");
+                bundle.putString("Type", "6");
+                bundle.putString("Marker", "marker_residence");
+                bundle.putString("stringType", "lugar para vivir");
                 break;
 
             case R.id.categories_jobs_image:
-                bundle.putString("Titulo", "trabajo");
+                bundle.putString("Titulo", "Trabajo");
+                bundle.putString("Type", "7");
+                bundle.putString("Marker", "marker_jobs");
+                bundle.putString("stringType", "trabajo");
                 break;
 
             case R.id.categories_transport_image:
-                bundle.putString("Titulo", "transporte");
-                break;
+                bundle.putString("Titulo", "Transporte");
+                intent = new Intent(Categories.this.getActivity(), ViewerActivity.class);
+                intent.putExtras(bundle);
+                this.startActivity(intent);
+                return;
 
             case R.id.categories_promos_image:
-                bundle.putString("Titulo", "promos");
-                break;
+                bundle.putString("Titulo", "Promociones");
+                intent = new Intent(Categories.this.getActivity(), ViewerActivity.class);
+                intent.putExtras(bundle);
+                this.startActivity(intent);
+                return;
         }
 
-        intent = new Intent(Categories.this.getActivity(), ViewerActivity.class);
+        intent = new Intent(Categories.this.getActivity(), Categories_Map.class);
         intent.putExtras(bundle);
         this.startActivity(intent);
     }
@@ -136,9 +161,4 @@ public class Categories extends Fragment implements View.OnClickListener {
             bottomVerticalLayout.setLayoutParams(layoutParams);
         }
     }
-
-    /*public static Categories newInstance() {
-        Categories fragment = new Categories();
-        return fragment;
-    }*/
 }

@@ -17,9 +17,9 @@ import com.MinimalSoft.BrujulaUniversitaria.Utilities.ScreenUtility;
 import com.google.android.gms.maps.MapView;
 
 public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener {
-    private SectionsPagerAdapter pagerAdapter;
     private ScreenUtility screenUtility;
     private AppBarLayout appBarLayout;
+    private SectionsPagerAdapter pagerAdapter;
     private ViewPager pagerView;
     private TabLayout tabLayout;
     private Toolbar toolbar;
@@ -43,10 +43,10 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         pagerView.addOnPageChangeListener(pagerAdapter);
         appBarLayout.addOnOffsetChangedListener(pagerAdapter);
         tabLayout.setupWithViewPager(pagerView);
-        tabLayout.getTabAt(0).setIcon(R.drawable.newsfeed);
-        tabLayout.getTabAt(1).setIcon(R.drawable.explore);
-        tabLayout.getTabAt(2).setIcon(R.drawable.categories);
-        tabLayout.getTabAt(3).setIcon(R.drawable.profile);
+        tabLayout.getTabAt(0).setIcon(R.drawable.tab_newsfeed);
+        tabLayout.getTabAt(1).setIcon(R.drawable.tab_explore);
+        tabLayout.getTabAt(2).setIcon(R.drawable.tab_categories);
+        tabLayout.getTabAt(3).setIcon(R.drawable.tab_profile);
 
         prepareMap ();
     }
@@ -104,18 +104,4 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             }
         }).start();
     }
-
-    /* Establece la toolbar como action bar */
-    /*private void setToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        final ActionBar ab = getSupportActionBar();
-        //toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        if (ab != null) {
-            // Poner ícono del drawer toggle
-            //ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-            //ab.setDisplayHomeAsUpEnabled(true);
-        }
-
-    }*/
 }
