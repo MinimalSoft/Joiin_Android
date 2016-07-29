@@ -90,7 +90,10 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name=".DetailsActivity"
+            android:name=".Maps.DetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Maps.DetailsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Maps.AddPlaceActivity"
@@ -108,11 +111,15 @@
             android:name=".ViewerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Transportation.Routes"
+            android:name=".Transport.Routes"
             android:label="Lineas"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Transportation.Map"
+            android:name=".Transport.Map"
+            android:label="@string/title_activity_map"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".Maps.Categories_Map"
             android:label="@string/title_activity_map"
             android:theme="@style/AppTheme"/>
     </application>

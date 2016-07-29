@@ -30,50 +30,21 @@
             android:layout_height="200dp"
             android:layout_marginBottom="1dp"
             android:scaleType="fitXY"
-            android:src="@drawable/g1" />
+            android:src="@drawable/default_image" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginBottom="1dp"
             android:scaleType="fitXY"
-            android:src="@drawable/g2" />
+            android:src="@drawable/default_image" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginBottom="1dp"
             android:scaleType="fitXY"
-            android:src="@drawable/g3" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginBottom="1dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/g4" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginBottom="1dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/g5" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginBottom="1dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/g6" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginBottom="1dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/g7" />
-
+            android:src="@drawable/default_image" />
 
     </LinearLayout>
 

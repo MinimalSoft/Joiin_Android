@@ -68,7 +68,7 @@
                 android:orientation="horizontal">
 
                 <com.like.LikeButton
-                    app:icon_type="thumb"
+                    app:icon_type="heart"
                     app:icon_size="20dp"
                     android:id="@+id/star_button"
                     android:layout_width="wrap_content"
@@ -78,11 +78,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="Me Gusta"/>
+                    android:text="Love it"/>
 
                 <com.like.LikeButton
-                    app:icon_type="heart"
                     app:icon_size="20dp"
+                    app:like_drawable="@drawable/poo_on"
+                    app:unlike_drawable="@drawable/poo_on"
                     android:id="@+id/star_butto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>

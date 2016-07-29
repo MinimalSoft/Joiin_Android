@@ -28,7 +28,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:src="@drawable/b1"
+            android:src="@drawable/default_image"
             android:scaleType="fitXY"
             android:layout_marginBottom="1dp"
             />
@@ -36,7 +36,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:src="@drawable/b2"
+            android:src="@drawable/default_image"
             android:scaleType="fitXY"
             android:layout_marginBottom="1dp"
             />
@@ -44,34 +44,11 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:src="@drawable/b3"
+            android:src="@drawable/default_image"
             android:scaleType="fitXY"
             android:layout_marginBottom="1dp"
             />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/b4"
-            android:scaleType="fitXY"
-            android:layout_marginBottom="1dp"
-            />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/b5"
-            android:scaleType="fitXY"
-            android:layout_marginBottom="1dp"
-            />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/b6"
-            android:scaleType="fitXY"
-            android:layout_marginBottom="1dp"
-            />
 
     </LinearLayout>
 

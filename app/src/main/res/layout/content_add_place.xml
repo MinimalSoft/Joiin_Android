@@ -35,7 +35,7 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:padding="6dp"
-            android:src="@drawable/nombre"
+            android:src="@drawable/icon_user"
             android:tint="@color/com_facebook_likeboxcountview_text_color"/>
 
 
@@ -57,10 +57,10 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
             android:padding="6dp"
-            android:src="@drawable/email"
+            android:src="@drawable/icon_mail"
             android:tint="@color/com_facebook_likeboxcountview_text_color"/>
 
         <android.support.design.widget.TextInputLayout
@@ -87,10 +87,10 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
             android:padding="6dp"
-            android:src="@drawable/phoneb"
+            android:src="@drawable/icon_phone"
             android:tint="@color/com_facebook_likeboxcountview_text_color"/>
 
         <android.support.design.widget.TextInputLayout
@@ -135,7 +135,7 @@
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:padding="6dp"
-            android:src="@drawable/shop"
+            android:src="@drawable/icon_store"
             android:tint="@color/com_facebook_likeboxcountview_text_color"/>
 
         <android.support.design.widget.TextInputLayout
@@ -164,7 +164,7 @@
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:padding="6dp"
-            android:src="@drawable/map"
+            android:src="@drawable/icon_address"
             android:tint="@color/com_facebook_likeboxcountview_text_color"/>
 
         <android.support.design.widget.TextInputLayout

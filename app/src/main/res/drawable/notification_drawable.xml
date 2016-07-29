@@ -2,11 +2,11 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/ic_notification"
-        android:drawable="@drawable/newsfeed"
+        android:drawable="@drawable/tab_newsfeed"
         android:gravity="center" />
 
     <!-- Insignia flotante -->
     <item
         android:id="@+id/ic_badge"
-        android:drawable="@drawable/newsfeed" />
+        android:drawable="@drawable/tab_newsfeed" />
 </layer-list>

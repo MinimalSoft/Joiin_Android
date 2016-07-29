@@ -56,6 +56,14 @@
                 android:src="@drawable/location"
                 android:visibility="visible" />
 
+            <FrameLayout
+                android:id="@+id/page_view"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="13dp"
+                android:visibility="invisible"/>
+
         </RelativeLayout>
 
     </FrameLayout>
