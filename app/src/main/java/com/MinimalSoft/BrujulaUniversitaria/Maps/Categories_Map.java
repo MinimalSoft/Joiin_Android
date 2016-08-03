@@ -20,8 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.MinimalSoft.BrujulaUniversitaria.Models.BU_Response;
-import com.MinimalSoft.BrujulaUniversitaria.Models.BU_Response_Data;
+import com.MinimalSoft.BrujulaUniversitaria.Models.Response_General;
+import com.MinimalSoft.BrujulaUniversitaria.Models.Data_General;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
 import com.google.android.gms.common.ConnectionResult;
@@ -55,7 +55,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Categories_Map extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, Callback<BU_Response> {
+        LocationListener, Callback<Response_General> {
 
     private Bundle bundle;
     final private String cityCenterLong = "-99.141483", cityCenterLat = "19.409520";
@@ -69,9 +69,9 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
     private FrameLayout frame;
     private ImageView sum_image, sum_stars_image;
     private TextView sum_tittle, sum_address, sum_stars, sum_distance, sum_placeId;
-    List<BU_Response_Data> placesData;
-    BU_Response_Data placeData;
-    HashMap<Marker, BU_Response_Data> haspMap = new HashMap<Marker, BU_Response_Data>();
+    List<Data_General> placesData;
+    Data_General placeData;
+    HashMap<Marker, Data_General> haspMap = new HashMap<Marker, Data_General>();
 
     private GoogleMap mMap;
     LocationRequest mLocationRequest;
@@ -131,13 +131,13 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
 
         Interfaces inter = retrofit.create(Interfaces.class);
 
-        Call<BU_Response> call = inter.getPlaces("places", this.idType, cityCenterLat, cityCenterLong, "100");
+        Call<Response_General> call = inter.getPlaces("places", this.idType, cityCenterLat, cityCenterLong, "100");
 
         call.enqueue(this);
     }
 
     @Override
-    public void onResponse(Call<BU_Response> call, Response<BU_Response> response) {
+    public void onResponse(Call<Response_General> call, Response<Response_General> response) {
 
         int code = response.code();
         if (code == 200 && response.body().getResponse().equals("success")) {
@@ -149,7 +149,7 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
     }
 
     @Override
-    public void onFailure(Call<BU_Response> call, Throwable t) {
+    public void onFailure(Call<Response_General> call, Throwable t) {
 
         Toast.makeText(this, "Error de red!", Toast.LENGTH_LONG).show();
     }
@@ -252,7 +252,7 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
                 }
 
                 tempMarker = marker;
-                BU_Response_Data data = haspMap.get(marker);
+                Data_General data = haspMap.get(marker);
                 placeData = data;
                 marker.setIcon(BitmapDescriptorFactory.fromResource(getResources().
                         getIdentifier("marker_bu", "drawable", getPackageName())));

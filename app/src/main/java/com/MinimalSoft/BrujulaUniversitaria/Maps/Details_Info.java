@@ -14,8 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.MinimalSoft.BrujulaUniversitaria.Models.BU_Response_Data;
-import com.MinimalSoft.BrujulaUniversitaria.Models.BU_Response_Details;
+import com.MinimalSoft.BrujulaUniversitaria.Models.Data_General;
+import com.MinimalSoft.BrujulaUniversitaria.Models.Response_PlaceDetails;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
 import com.MinimalSoft.BrujulaUniversitaria.Web.WebActivity;
@@ -26,12 +26,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Details_Info extends Fragment implements Callback<BU_Response_Details> {
+public class Details_Info extends Fragment implements Callback<Response_PlaceDetails> {
 
     private Bundle bundle;
     private View superView;
     private Context context;
-    private BU_Response_Data placeDetails;
+    private Data_General placeDetails;
     private RelativeLayout details_twitter, details_instagram, details_facebook, details_email, details_webpage;
     private TextView details_phone, details_about, details_address;
     private String placePhone, placeEmail, placeWebPage, placeFacebook, placeTwitter, placeInstagram,
@@ -72,7 +72,7 @@ public class Details_Info extends Fragment implements Callback<BU_Response_Detai
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Interfaces inter = retrofit.create(Interfaces.class);
-        Call<BU_Response_Details> call = inter.getPlaceDetails("placeDetails", placeId);
+        Call<Response_PlaceDetails> call = inter.getPlaceDetails("placeDetails", placeId);
         call.enqueue(this);
     }
 
@@ -197,7 +197,7 @@ public class Details_Info extends Fragment implements Callback<BU_Response_Detai
     }
 
     @Override
-    public void onResponse(Call<BU_Response_Details> call, Response<BU_Response_Details> response) {
+    public void onResponse(Call<Response_PlaceDetails> call, Response<Response_PlaceDetails> response) {
         int code = response.code();
         if (code == 200 && response.body().getResponse().equals("success")) {
             placeDetails = response.body().getData();
@@ -208,7 +208,7 @@ public class Details_Info extends Fragment implements Callback<BU_Response_Detai
     }
 
     @Override
-    public void onFailure(Call<BU_Response_Details> call, Throwable t) {
+    public void onFailure(Call<Response_PlaceDetails> call, Throwable t) {
         showSnackBar("Error de red!");
     }
 
