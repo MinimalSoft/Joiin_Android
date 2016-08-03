@@ -1,5 +1,7 @@
 package com.MinimalSoft.BrujulaUniversitaria.Maps;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -16,18 +18,32 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.Toast;
 
+import com.MinimalSoft.BrujulaUniversitaria.Models.Response_General;
 import com.MinimalSoft.BrujulaUniversitaria.R;
+import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -38,9 +54,9 @@ public class DetailsActivity extends AppCompatActivity {
     //private Bitmap placeImage;
     private String placeImage;
     private ImageView details_image;
+    private View dialogView;
     CollapsingToolbarLayout collapser;
-    private String placeLong, placeLat, userLong, userLat, placeAddress, placeName, placeId;
-
+    private String placeLong, placeLat, userLong, userLat, placeAddress, placeName, placeId,idUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +175,13 @@ public class DetailsActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_share:
+                String message = "Gracias a BU, descrubri "+ placeName+ "\nBaja la app, !esta genial! \n " +
+                        "http://brujulauniversitaria.com.mx";
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, message);
+
+                startActivity(Intent.createChooser(share, "Comparte tu nuevo hallazgo"));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -232,6 +255,25 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void setFavReview() {
 
+        fab_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                /*
+                Bundle bundleInfo = new Bundle();
+                Intent intent = new Intent(getApplicationContext(), AddReview.class);
+                //TODO: Fix idUser
+                //bundleInfo.putString("idUser", idUser);
+                bundleInfo.putString("idUser", "2");
+                bundleInfo.putString("placeId", placeId);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                */
+
+                showReviewDialog ();
+            }
+        });
+
     }
 
     private void getDataFromBundle() {
@@ -244,6 +286,92 @@ public class DetailsActivity extends AppCompatActivity {
         placeLong = bundle.getString("placeLong");
         userLat = bundle.getString("userLat");
         userLong = bundle.getString("userLong");
+        //idUser = bundle.getString("idUser");
+    }
+
+    public void showReviewDialog() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.dialog_add_review, null);
+        dialogBuilder.setView(dialogView);
+
+        dialogBuilder.setTitle(placeName);
+        //dialogBuilder.setMessage(placeName);
+        dialogBuilder.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //All of the fun happens inside the CustomListener now.
+                //I had to move it to enable data validation.
+
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //pass
+            }
+        });
+        AlertDialog b = dialogBuilder.create();
+        b.show();
+
+        Button theButton = b.getButton(DialogInterface.BUTTON_POSITIVE);
+        theButton.setOnClickListener(new CustomListener(b));
+    }
+
+    private void sendReview(String text, String stars)
+    {
+        String BASE_URL = "http://ec2-52-38-75-156.us-west-2.compute.amazonaws.com";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        Interfaces inter = retrofit.create(Interfaces.class);
+        //Call<Response_General> call = inter.writeReview("putReviews",idUser,placeId,text,stars);
+        Call<Response_General> call = inter.writeReview("putReviews","3",placeId,text,stars);
+        call.enqueue(new Callback<Response_General>() {
+            @Override
+            public void onResponse(Call<Response_General> call, Response<Response_General> response) {
+                if (response.body().getResponse().equals("success"))
+                    showConfirmDialog(1);
+                else
+                    showConfirmDialog(0);
+            }
+
+            @Override
+            public void onFailure(Call<Response_General> call, Throwable t) {
+                showConfirmDialog(2);
+            }
+        });
+    }
+
+    private void showConfirmDialog(int type)
+    {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+
+        switch (type)
+        {
+            case 0:
+                dialogBuilder.setTitle("Error al enviar la reseña");
+                dialogBuilder.setMessage("No te preocupes, Nuestro equipo de universitarios ya esta trabajando para solucionarlo.");
+                break;
+
+            case 1:
+                dialogBuilder.setTitle("Reseña enviada");
+                dialogBuilder.setMessage("Gracias por enviar tu reseña, despues de una breve revisión tu reseña sera publicada.");
+                break;
+
+            case 2:
+                dialogBuilder.setTitle("Error de red");
+                dialogBuilder.setMessage("!Algo salio mal! verifica tu conexión a internet.");
+                break;
+        }
+
+        dialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+
+        AlertDialog b = dialogBuilder.create();
+        b.show();
     }
 
     private void setActivityGUI() {
@@ -257,6 +385,40 @@ public class DetailsActivity extends AppCompatActivity {
                 .placeholder(R.drawable.default_image)
                 .error(R.drawable.default_image)
                 .into(details_image);
+    }
+
+    class CustomListener implements View.OnClickListener {
+        private final Dialog dialog;
+        public CustomListener(Dialog dialog) {
+            this.dialog = dialog;
+        }
+        @Override
+        public void onClick(View v) {
+
+            final EditText eText = (EditText) dialogView.findViewById(R.id.review_comment);
+            final RatingBar rStars = (RatingBar) dialogView.findViewById(R.id.review_ratingBar);
+
+            String sText, sStars;
+            sText = eText.getText()+"";
+            int iStars = (int) rStars.getRating();
+
+            if(sText.equals("")){
+                eText.setError("El campo no puede estar vacío");
+
+            }else{
+                if(iStars <= 0)
+                {
+                    Toast.makeText(getApplicationContext(), "Asigna una calificacion para continuar",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    sStars = iStars+"";
+                    sendReview(sText, sStars);
+                    dialog.dismiss();
+                }
+            }
+        }
     }
 
 }

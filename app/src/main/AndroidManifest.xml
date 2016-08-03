@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.MinimalSoft.BrujulaUniversitaria" >
+    package="com.MinimalSoft.BrujulaUniversitaria">
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -31,13 +31,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true" >
+        android:supportsRtl="true">
         <activity
             android:name=".Start.StartActivity"
             android:configChanges="keyboardHidden|screenSize"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.ActivityStart" >
+            android:theme="@style/AppTheme.ActivityStart">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,7 +57,7 @@
         <activity
             android:name=".Web.WebActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme2.NoActionBar" >
+            android:theme="@style/AppTheme2.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Main.MainActivity" />
@@ -66,7 +66,7 @@
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".Main.MainActivity"
-            android:theme="@style/AppTheme.Settings" >
+            android:theme="@style/AppTheme.Settings">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Main.MainActivity" />
@@ -117,11 +117,12 @@
         <activity
             android:name=".Transport.Map"
             android:label="@string/title_activity_map"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Maps.Categories_Map"
             android:label="@string/title_activity_map"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Maps.AddReview"></activity>
     </application>
 
 </manifest>
