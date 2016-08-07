@@ -27,9 +27,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         facebookLoginButton = (LoginButton) this.findViewById(R.id.login_hidden_facebook_button);
         Button fakeFacebookButton = (Button) this.findViewById(R.id.login_facebook_button);
+        Button registerButton = (Button) this.findViewById(R.id.login_registerButton);
         facebookCallbackManager = CallbackManager.Factory.create();
         FacebookDataCollector dataCollector = new FacebookDataCollector(this);
 
+        registerButton.setOnClickListener(this);
         fakeFacebookButton.setOnClickListener(this);
         facebookLoginButton.setReadPermissions("public_profile email");
         facebookLoginButton.registerCallback(facebookCallbackManager, dataCollector);
@@ -42,7 +44,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        facebookLoginButton.performClick();
+        switch (view.getId()) {
+            case R.id.login_facebook_button:
+                facebookLoginButton.performClick();
+                break;
+
+            case R.id.login_registerButton:
+                intent = new Intent(this.getApplicationContext(), RegisterActivity.class);
+                this.startActivity(intent);
+                this.finish();
+                break;
+
+            case R.id.login_accessButton:
+                break;
+        }
     }
 
     public void logInWithFacebook() {

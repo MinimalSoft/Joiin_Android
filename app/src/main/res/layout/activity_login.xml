@@ -59,8 +59,8 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerInParent="true"
-                    android:tint="@color/gray"
-                    android:src="@drawable/icon_mail" />
+                    android:src="@drawable/icon_mail"
+                    android:tint="@color/gray" />
             </RelativeLayout>
 
             <EditText
@@ -93,8 +93,8 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerInParent="true"
-                    android:tint="@color/gray"
-                    android:src="@drawable/icon_password" />
+                    android:src="@drawable/icon_password"
+                    android:tint="@color/gray" />
             </RelativeLayout>
 
             <EditText
@@ -109,6 +109,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/login_accessButton"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
@@ -199,9 +200,11 @@
                 android:layout_weight="1"
                 android:text="Recuperar Contraseña"
                 android:textAllCaps="false"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:visibility="gone"/>
 
             <Button
+                android:id="@+id/login_registerButton"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
