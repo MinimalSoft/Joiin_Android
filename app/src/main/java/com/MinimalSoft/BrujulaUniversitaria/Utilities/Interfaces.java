@@ -36,7 +36,7 @@ public interface Interfaces {
                                      @Field("radio") String radio);
 
     @FormUrlEncoded
-    @POST("/app/controllers/user/user.php")
+    @POST("/appBrujula/controllers/user/user.php")
     Call<Response_General> logInUser(@Field("action") String action,
                                      @Field("email") String idType,
                                      @Field("password") String latitude,
@@ -44,7 +44,7 @@ public interface Interfaces {
                                      @Field("deviceToken") String radio);
 
     @FormUrlEncoded
-    @POST("/app/controllers/user/user.php")
+    @POST("/appBrujula/controllers/user/user.php")
     Call<Response_General> registerUser(@Field("action") String action,
                                         @Field("name") String name,
                                         @Field("lastName") String lastName,

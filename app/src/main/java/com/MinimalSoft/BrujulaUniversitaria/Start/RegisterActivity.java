@@ -14,14 +14,23 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.MinimalSoft.BrujulaUniversitaria.Models.Response_General;
 import com.MinimalSoft.BrujulaUniversitaria.R;
+import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Jair-Jacobo on 05/08/2016.
  */
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, Callback <Response_General>{
 
+    private String message;
     private Button button;
     private EditText dayField;
     private EditText yearField;
@@ -33,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText passwordField;
     private Spinner monthSpinner;
     private Spinner genderSpinner;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,49 +91,149 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-
-        String message;
-        String name = nameField.getText().toString();
-        String lastName = lastField.getText().toString();
-        String telephone = phoneField.getText().toString();
-        String day = dayField.getText().toString();
-        String year = yearField.getText().toString();
-        String email = emailField.getText().toString();
+        String name = nameField.getText().toString().trim();
+        String lastName = lastField.getText().toString().trim();
+        String telephone = phoneField.getText().toString().trim();
+        String day = dayField.getText().toString().trim();
+        String year = yearField.getText().toString().trim();
+        String email = emailField.getText().toString().trim();
         String password = passwordField.getText().toString();
         String passwordConfirm = confirmField.getText().toString();
 
         int monthNumber = monthSpinner.getSelectedItemPosition();
         int genderId = genderSpinner.getSelectedItemPosition();
 
-        if (name.length() == 0) {
-            message = "Escriba el nombre del usuario";
-            Toast.makeText(this.getBaseContext(), "Escriba el nombre del usuario", Toast.LENGTH_SHORT);
-        } else if(lastName.length() == 0) {
-            message = "El campo de apellido no puede quedar vacio";
-            //Toast.makeText(this, "El campo de apellido no puede quedar vacio", Toast.LENGTH_SHORT);
-        } else if(telephone.length() == 0) {
-            message = "Inserte un numero de telefono";
-            //Toast.makeText(this, "Inserte un numero de telefono", Toast.LENGTH_SHORT);
+        if (!this.isNameValid(name)) {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        } else if(!this.isNameValid(lastName)) {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        } else if(!this.isNumberValid(telephone)) {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         } else if (genderId == 0) {
-            message = "Seleccione el genero";
-            //Toast.makeText(this, "Seleccione el genero", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "Seleccione el Genero", Toast.LENGTH_LONG).show();
         } else if (day.length() == 0 || year.length() == 0 || monthNumber == 0) {
-            message = "Seleccione la fecha de nacimiento";
-            //Toast.makeText(this, "Seleccione la fecha de nacimiento", Toast.LENGTH_SHORT);
-        } else if (email.length() == 0) {
-            message = "Inserte su direccion de correo electronico";
-            //Toast.makeText(this, "Inserte su direccion de correo electronico", Toast.LENGTH_SHORT);
-        } else if (password.length() < 4) {
-            message = "Escriba una contraseña mayor a 4 caracteres";
-            //Toast.makeText(this, "Escriba una contraseña mayor a 4 caracteres", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "Seleccione la Fecha de nacimiento", Toast.LENGTH_LONG).show();
+        } else if (!isEmailValid(email)) {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        } else if (password.length() < 8) {;
+            Toast.makeText(this, "La contraseña debe contener al menos 8 caracteres", Toast.LENGTH_LONG).show();
         } else if (!passwordConfirm.equals(password)) {
-            message = "La contraseña de confirmacion no coincide";
-            //Toast.makeText(this, "La contraseñas no coinciden", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "La contraseña de confirmacion no coincide", Toast.LENGTH_LONG).show();
         } else {
+            message = "connecting...";
             String gender = genderId == 1 ? "F" : "M";
             String birthday = "" + year + '-' + monthNumber + '-' + day;
+
+            String BASE_URL = "http://ec2-54-210-116-247.compute-1.amazonaws.com";
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+            Interfaces interfaces = retrofit.create(Interfaces.class);
+            Call <Response_General> call = interfaces.registerUser("register", name, lastName, gender, telephone , email, password, "0", birthday, "0");
+            call.enqueue(this);
+        }
+    }
+
+    /*----Retrofit Methods----*/
+
+    @Override
+    public void onResponse(Call<Response_General> call, Response<Response_General> response) {
+        int code = response.code();
+        //String message = response.body().getResponse();
+        Log.d(this.getClass().getSimpleName(), "Code: " + code);
+    }
+
+    @Override
+    public void onFailure(Call<Response_General> call, Throwable t) {
+        Toast.makeText(this, t.getMessage(), Toast.LENGTH_LONG).show();
+        Log.e(this.getClass().getSimpleName(), "Message: " + t.getMessage());
+        t.printStackTrace();
+    }
+
+    private boolean isNameValid (String name) {
+        boolean flag = false;
+        char c;
+
+        for (short i = 0; i < name.length(); i++) {
+            c = name.charAt(i);
+
+            if((c < 'A' || c > 'Z') && (c < 'a' || c > 'z') && c!= ' ' && c != '\u00F1' && c != '\u00D1') {
+                Log.e(this.getClass().getSimpleName(), "Character not accepted: " + c);
+                flag = true;
+                break;
+            }
         }
 
-        //Log.d(this.getClass().getSimpleName(), message);
+        if (name.length() == 0) {
+            message = "El campo Nombre o Apellido esta vacio";
+        } else if (name.length() < 3) {
+            message = "Escriba un nombre y/o appellido validos";
+        } else if (flag) {
+            message = "El nombre y el apellido solo puede contener letras";
+        } else {
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean isNumberValid (String number) {
+        boolean flag = false;
+        char c;
+
+        for (short i = 0; i < number.length(); i++) {
+            c = number.charAt(i);
+
+            if(c < '0' || c > '9') {
+                Log.e(this.getClass().getSimpleName(), "Character not accepted: " + c);
+                flag = true;
+                break;
+            }
+        }
+
+        if (number.length() == 0) {
+            message = "El campo Telefono esta vacio";
+        } else if (number.length() < 8 || number.length() > 10 || flag) {
+            message = "Escriba un numero de telefono valido";
+        }  else {
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean isEmailValid (String email) {
+        boolean flag = false;
+        char c;
+        int i;
+
+        for (i = 0; i < email.length(); i++) {
+            c = email.charAt(i);
+
+            if(c == '\u0040') {
+                flag = true;
+                break;
+            }
+        }
+
+        if (email.length() == 0) {
+            message = "El campo Correo esta vacio";
+        } else if (email.length() < 3 || !flag) {
+            message = "Correo electronico no valido";
+        } else {
+            String username = email.substring(0, i);
+            String domain = email.substring(i + 1);
+
+            if (username.length() == 0) {
+                message = "Direccion de correo no aceptado";
+            } else if (domain.length() == 0) {
+                message = "El correo no tiene dominio";
+            } else {
+                return true;
+            }
+
+            Log.d(this.getClass().getSimpleName(), "Username: " + username);
+            Log.d(this.getClass().getSimpleName(), "Domain: " + domain);
+        }
+
+        return false;
     }
 }

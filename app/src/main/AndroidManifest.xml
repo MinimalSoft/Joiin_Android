@@ -99,9 +99,7 @@
         <activity
             android:name=".Maps.DetailsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Maps.DetailsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".Maps.AddPlaceActivity"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -10,7 +10,7 @@ public class Response_General {
 
     private String response;
     private String message;
-    private List<Data_General> data = new ArrayList<Data_General>();
+    private List<Data_General> data = new ArrayList<>();
 
     public String getResponse() {
         return response;
