@@ -38,10 +38,10 @@ public interface Interfaces {
     @FormUrlEncoded
     @POST("/appBrujula/controllers/user/user.php")
     Call<Response_General> logInUser(@Field("action") String action,
-                                     @Field("email") String idType,
-                                     @Field("password") String latitude,
-                                     @Field("idFacebook") String longitude,
-                                     @Field("deviceToken") String radio);
+                                     @Field("email") String email,
+                                     @Field("password") String password,
+                                     @Field("idFacebook") String idFacebook,
+                                     @Field("deviceToken") String deviceToken);
 
     @FormUrlEncoded
     @POST("/appBrujula/controllers/user/user.php")

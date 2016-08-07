@@ -1,8 +1,13 @@
 package com.MinimalSoft.BrujulaUniversitaria.Start;
 
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,11 +17,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.MinimalSoft.BrujulaUniversitaria.Models.Response_General;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
+import com.MinimalSoft.BrujulaUniversitaria.Models.Response_General;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,10 +34,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Jair-Jacobo on 05/08/2016.
  */
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, Callback <Response_General>{
-
-    private String message;
-    private Button button;
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnClickListener, Callback<Response_General> {
+    private Intent intent;
     private EditText dayField;
     private EditText yearField;
     private EditText nameField;
@@ -43,6 +47,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Spinner monthSpinner;
     private Spinner genderSpinner;
 
+    private String name;
+    private String email;
+    private String gender;
+    private String message;
+    private String birthday;
+    private String password;
+    private String lastName;
+    private String telephone;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,8 +62,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         this.setContentView(R.layout.activity_register);
 
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.register_toolbar);
+        TextView link = (TextView) this.findViewById(R.id.register_link);
+        Button button = (Button) this.findViewById(R.id.register_button);
 
-        button = (Button) this.findViewById(R.id.register_button);
         dayField = (EditText) this.findViewById(R.id.register_dayField);
         yearField = (EditText) this.findViewById(R.id.register_yearField);
         nameField = (EditText) this.findViewById(R.id.register_nameField);
@@ -63,9 +76,101 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         monthSpinner = (Spinner) this.findViewById(R.id.register_monthSpinner);
         genderSpinner = (Spinner) this.findViewById(R.id.register_genderSpinner);
 
+        link.setOnClickListener(this);
         button.setOnClickListener(this);
         this.setSupportActionBar(toolbar);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void getData() {
+        name = nameField.getText().toString().trim();
+        lastName = lastField.getText().toString().trim();
+        telephone = phoneField.getText().toString().trim();
+        String day = dayField.getText().toString().trim();
+        String year = yearField.getText().toString().trim();
+        email = emailField.getText().toString().trim();
+        password = passwordField.getText().toString();
+        String passwordConfirm = confirmField.getText().toString();
+
+        int monthNumber = monthSpinner.getSelectedItemPosition();
+        int genderId = genderSpinner.getSelectedItemPosition();
+
+        if (!this.isNameValid(name)) {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        } else if (!this.isNameValid(lastName)) {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        } else if (!this.isNumberValid(telephone)) {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        } else if (genderId == 0) {
+            Toast.makeText(this, "Seleccione el Genero", Toast.LENGTH_LONG).show();
+        } else if (day.length() == 0 || year.length() == 0 || monthNumber == 0) {
+            Toast.makeText(this, "Seleccione la Fecha de nacimiento", Toast.LENGTH_LONG).show();
+        } else if (!isEmailValid(email)) {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        } else if (password.length() < 8) {
+            ;
+            Toast.makeText(this, "La contraseña debe contener al menos 8 caracteres", Toast.LENGTH_LONG).show();
+        } else if (!passwordConfirm.equals(password)) {
+            Toast.makeText(this, "La contraseña de confirmacion no coincide", Toast.LENGTH_LONG).show();
+        } else {
+            message = "connecting...";
+            gender = genderId == 1 ? "F" : "M";
+            birthday = "" + year + '-' + monthNumber + '-' + day;
+
+            AlertDialog.Builder confirmDialog = new AlertDialog.Builder(this);
+            confirmDialog.setMessage("Al crear esta cuenta, estas aceptando los Terminos de Privacidad.");
+            confirmDialog.setNegativeButton("Cancelar", null);
+            confirmDialog.setPositiveButton("Aceptar", this);
+            confirmDialog.setTitle("Advertencia");
+            confirmDialog.show();
+        }
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        String BASE_URL = "http://ec2-54-210-116-247.compute-1.amazonaws.com";
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+        Interfaces interfaces = retrofit.create(Interfaces.class);
+        Call<Response_General> call = interfaces.registerUser("register", name, lastName, gender, telephone, email, password, "0", birthday, "0");
+        call.enqueue(this);
+    }
+
+    /*----Retrofit Methods----*/
+
+    @Override
+    public void onResponse(Call<Response_General> call, Response<Response_General> response) {
+        if(response.code() == 404) {
+            Toast.makeText(this, "Error al conectar con el servidor", Toast.LENGTH_SHORT).show();
+        } else if (!response.body().getResponse().equals("success")){
+            Toast.makeText(this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+        } else {
+
+        }
+    }
+
+    @Override
+    public void onFailure(Call<Response_General> call, Throwable t) {
+        Toast.makeText(this, t.getMessage(), Toast.LENGTH_LONG).show();
+        Log.e(this.getClass().getSimpleName(), "Message: " + t.getMessage());
+        t.printStackTrace();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.register_link:
+                try {
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://brujulauniversitaria.com.mx/aviso-de-privacidad"));
+                    this.startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(this, "No application can handle this request, please install a Web browser.", Toast.LENGTH_LONG).show();
+                }
+                break;
+
+            case R.id.register_button:
+                this.getData();
+                break;
+        }
     }
 
     @Override
@@ -89,73 +194,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onClick(View v) {
-        String name = nameField.getText().toString().trim();
-        String lastName = lastField.getText().toString().trim();
-        String telephone = phoneField.getText().toString().trim();
-        String day = dayField.getText().toString().trim();
-        String year = yearField.getText().toString().trim();
-        String email = emailField.getText().toString().trim();
-        String password = passwordField.getText().toString();
-        String passwordConfirm = confirmField.getText().toString();
-
-        int monthNumber = monthSpinner.getSelectedItemPosition();
-        int genderId = genderSpinner.getSelectedItemPosition();
-
-        if (!this.isNameValid(name)) {
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        } else if(!this.isNameValid(lastName)) {
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        } else if(!this.isNumberValid(telephone)) {
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        } else if (genderId == 0) {
-            Toast.makeText(this, "Seleccione el Genero", Toast.LENGTH_LONG).show();
-        } else if (day.length() == 0 || year.length() == 0 || monthNumber == 0) {
-            Toast.makeText(this, "Seleccione la Fecha de nacimiento", Toast.LENGTH_LONG).show();
-        } else if (!isEmailValid(email)) {
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        } else if (password.length() < 8) {;
-            Toast.makeText(this, "La contraseña debe contener al menos 8 caracteres", Toast.LENGTH_LONG).show();
-        } else if (!passwordConfirm.equals(password)) {
-            Toast.makeText(this, "La contraseña de confirmacion no coincide", Toast.LENGTH_LONG).show();
-        } else {
-            message = "connecting...";
-            String gender = genderId == 1 ? "F" : "M";
-            String birthday = "" + year + '-' + monthNumber + '-' + day;
-
-            String BASE_URL = "http://ec2-54-210-116-247.compute-1.amazonaws.com";
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
-            Interfaces interfaces = retrofit.create(Interfaces.class);
-            Call <Response_General> call = interfaces.registerUser("register", name, lastName, gender, telephone , email, password, "0", birthday, "0");
-            call.enqueue(this);
-        }
-    }
-
-    /*----Retrofit Methods----*/
-
-    @Override
-    public void onResponse(Call<Response_General> call, Response<Response_General> response) {
-        int code = response.code();
-        //String message = response.body().getResponse();
-        Log.d(this.getClass().getSimpleName(), "Code: " + code);
-    }
-
-    @Override
-    public void onFailure(Call<Response_General> call, Throwable t) {
-        Toast.makeText(this, t.getMessage(), Toast.LENGTH_LONG).show();
-        Log.e(this.getClass().getSimpleName(), "Message: " + t.getMessage());
-        t.printStackTrace();
-    }
-
-    private boolean isNameValid (String name) {
+    private boolean isNameValid(String name) {
         boolean flag = false;
         char c;
 
         for (short i = 0; i < name.length(); i++) {
             c = name.charAt(i);
 
-            if((c < 'A' || c > 'Z') && (c < 'a' || c > 'z') && c!= ' ' && c != '\u00F1' && c != '\u00D1') {
+            if ((c < 'A' || c > 'Z') && (c < 'a' || c > 'z') && c != ' ' && c != '\u00F1' && c != '\u00D1') {
                 Log.e(this.getClass().getSimpleName(), "Character not accepted: " + c);
                 flag = true;
                 break;
@@ -175,14 +221,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         return false;
     }
 
-    private boolean isNumberValid (String number) {
+    private boolean isNumberValid(String number) {
         boolean flag = false;
         char c;
 
         for (short i = 0; i < number.length(); i++) {
             c = number.charAt(i);
 
-            if(c < '0' || c > '9') {
+            if (c < '0' || c > '9') {
                 Log.e(this.getClass().getSimpleName(), "Character not accepted: " + c);
                 flag = true;
                 break;
@@ -193,14 +239,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             message = "El campo Telefono esta vacio";
         } else if (number.length() < 8 || number.length() > 10 || flag) {
             message = "Escriba un numero de telefono valido";
-        }  else {
+        } else {
             return true;
         }
 
         return false;
     }
 
-    private boolean isEmailValid (String email) {
+    private boolean isEmailValid(String email) {
         boolean flag = false;
         char c;
         int i;
@@ -208,7 +254,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         for (i = 0; i < email.length(); i++) {
             c = email.charAt(i);
 
-            if(c == '\u0040') {
+            if (c == '\u0040') {
                 flag = true;
                 break;
             }

@@ -64,7 +64,7 @@
             </RelativeLayout>
 
             <EditText
-                android:id="@+id/login_email_field"
+                android:id="@+id/login_emailField"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/colorWhite"
@@ -98,7 +98,7 @@
             </RelativeLayout>
 
             <EditText
-                android:id="@+id/login_password_field"
+                android:id="@+id/login_passwordField"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/colorWhite"
