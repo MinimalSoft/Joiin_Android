@@ -70,7 +70,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.login_registerButton:
                 intent = new Intent(this.getApplicationContext(), RegisterActivity.class);
                 this.startActivity(intent);
-                this.finish();
                 break;
 
             case R.id.login_accessButton:
@@ -106,7 +105,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(response.code() == 404) {
             Toast.makeText(this, "Error al conectar con el servidor", Toast.LENGTH_SHORT).show();
         } else if (!response.body().getResponse().equals("success")){
-            Toast.makeText(this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, response.body().getMessage(), Toast.LENGTH_LONG).show();
         } else {
             this.logIn();
         }

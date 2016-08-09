@@ -85,10 +85,10 @@ public class ArticlesDataCollector extends AsyncTask<Void, Void, Boolean> {
 
             }
         } catch (IOException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             return Boolean.FALSE;
         } catch (JSONException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             return Boolean.FALSE;
         }
 
