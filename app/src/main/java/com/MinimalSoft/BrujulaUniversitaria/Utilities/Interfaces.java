@@ -5,6 +5,7 @@ import com.MinimalSoft.BrujulaUniversitaria.Models.Response_PlaceDetails;
 import com.MinimalSoft.BrujulaUniversitaria.Models.Ecobici_Stop;
 import com.MinimalSoft.BrujulaUniversitaria.Models.Response_Reviews;
 
+import java.sql.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -49,7 +50,7 @@ public interface Interfaces {
                                         @Field("name") String name,
                                         @Field("lastName") String lastName,
                                         @Field("gender") String gender,
-                                        @Field("phone") String phone,
+                                        @Field("phone") int phone,
                                         @Field("email") String email,
                                         @Field("password") String password,
                                         @Field("idFacebook") String idFacebook,
