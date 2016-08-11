@@ -1,5 +1,6 @@
 package com.MinimalSoft.BrujulaUniversitaria.Start;
 
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,11 +20,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.MinimalSoft.BrujulaUniversitaria.Main.MainActivity;
+import com.MinimalSoft.BrujulaUniversitaria.Models.Response_Start;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
-import com.MinimalSoft.BrujulaUniversitaria.Models.Response_General;
-
-import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,10 +35,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Jair-Jacobo on 05/08/2016.
  */
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnClickListener, Callback<Response_General> {
-    private Intent intent;
-    //private EditText dayField;
-    //private EditText yearField;
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnClickListener, Callback<Response_Start> {
+    private ProgressDialog progressDialog;
     private EditText nameField;
     private EditText phoneField;
     private EditText emailField;
@@ -49,11 +47,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Spinner monthSpinner;
     private Spinner yearSpinner;
     private Spinner daySpinner;
+    private Intent intent;
 
-    private Date date;
-    private int phone;
     private String name;
     private String email;
+    private String phone;
     private String gender;
     private String message;
     private String birthday;
@@ -69,8 +67,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         TextView link = (TextView) this.findViewById(R.id.register_link);
         Button button = (Button) this.findViewById(R.id.register_button);
 
-        //dayField = (EditText) this.findViewById(R.id.register_dayField);
-        //yearField = (EditText) this.findViewById(R.id.register_yearField);
         nameField = (EditText) this.findViewById(R.id.register_nameField);
         phoneField = (EditText) this.findViewById(R.id.register_phoneField);
         emailField = (EditText) this.findViewById(R.id.register_emailField);
@@ -83,6 +79,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         monthSpinner = (Spinner) this.findViewById(R.id.register_monthSpinner);
         genderSpinner = (Spinner) this.findViewById(R.id.register_genderSpinner);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("Cargando. Espere...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setIndeterminate(true);
+
         link.setOnClickListener(this);
         button.setOnClickListener(this);
         this.setSupportActionBar(toolbar);
@@ -93,22 +95,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         name = nameField.getText().toString().trim();
         password = passwordField.getText().toString();
         email = emailField.getText().toString().trim();
+        phone = phoneField.getText().toString().trim();
         lastName = lastField.getText().toString().trim();
-        //String day = dayField.getText().toString().trim();
-        //String year = yearField.getText().toString().trim();
-        String telephone = phoneField.getText().toString().trim();
-        String passwordConfirm = confirmField.getText().toString();
-
         int day = daySpinner.getSelectedItemPosition();
         int year = yearSpinner.getSelectedItemPosition();
         int month = monthSpinner.getSelectedItemPosition();
         int genderId = genderSpinner.getSelectedItemPosition();
+        String passwordConfirm = confirmField.getText().toString();
 
         if (!this.isNameValid(name)) {
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         } else if (!this.isNameValid(lastName)) {
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        } else if (!this.isPhoneValid(telephone)) {
+        } else if (!this.isPhoneValid(phone)) {
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         } else if (genderId == 0) {
             Toast.makeText(this, "Seleccione el Género", Toast.LENGTH_LONG).show();
@@ -121,21 +120,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         } else if (!passwordConfirm.equals(password)) {
             Toast.makeText(this, "La contraseña de confirmación no coincide", Toast.LENGTH_LONG).show();
         } else {
-            phone = Integer.valueOf(telephone);
             gender = (genderId == 1 ? "F" : "M");
-            birthday = String.format("%s-%02d-%02d", yearSpinner.getSelectedItem().toString(), month, day);
+            birthday = String.format("%s/%02d/%02d", yearSpinner.getSelectedItem().toString(), month, day);
 
-            Log.i(this.getClass().getSimpleName(), "Data: " +
-                    "\n Name:" + name +
+            /*Log.i(this.getClass().getSimpleName(), "Data: " +
+                    "\n Name: " + name +
                     "\n Last Name: " + lastName +
                     "\n Gender: " + gender +
                     "\n Phone: " + phone +
                     "\n Email: " + email +
                     "\n Password: " + password +
-                    "\n Birthday: " + birthday);
+                    "\n Birthday: " + birthday);*/
 
             AlertDialog.Builder confirmDialog = new AlertDialog.Builder(this);
-            confirmDialog.setMessage("Al crear esta cuenta, estas aceptando los Terminos de Privacidad.");
+            confirmDialog.setMessage("Al crear esta cuenta, estas aceptando el Aviso de Privacidad.");
             confirmDialog.setNegativeButton("Cancelar", null);
             confirmDialog.setPositiveButton("Aceptar", this);
             confirmDialog.setTitle("Advertencia");
@@ -145,31 +143,39 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
-        String BASE_URL = "http://ec2-54-210-116-247.compute-1.amazonaws.com";
+        String BASE_URL = "http://ec2-52-38-75-156.us-west-2.compute.amazonaws.com";
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
         Interfaces interfaces = retrofit.create(Interfaces.class);
-        Call<Response_General> call = interfaces.registerUser("register", name, lastName, gender, phone, email, password, "", birthday, "");
+        Call<Response_Start> call = interfaces.registerUser("register", name, lastName, gender, phone, email, password, "", birthday, "");
+        progressDialog.show();
         call.enqueue(this);
     }
 
     /*----Retrofit Methods----*/
 
     @Override
-    public void onResponse(Call<Response_General> call, Response<Response_General> response) {
+    public void onResponse(Call<Response_Start> call, Response<Response_Start> response) {
+        progressDialog.hide();
+
         if (response.code() == 404) {
             Toast.makeText(this, "Error al conectar con el servidor", Toast.LENGTH_SHORT).show();
+        } else if (response.body().getResponse().equals("alert")) {
+            Toast.makeText(this, "Este correo electrónico ya ha sido registrado", Toast.LENGTH_LONG).show();
         } else if (!response.body().getResponse().equals("success")) {
             Toast.makeText(this, response.body().getMessage(), Toast.LENGTH_LONG).show();
         } else {
-
+            intent = new Intent(this.getApplicationContext(), MainActivity.class);
+            this.startActivity(intent);
+            this.finish();
         }
     }
 
     @Override
-    public void onFailure(Call<Response_General> call, Throwable t) {
+    public void onFailure(Call<Response_Start> call, Throwable t) {
         Toast.makeText(this, t.getMessage(), Toast.LENGTH_LONG).show();
         Log.e(this.getClass().getSimpleName(), "Message: " + t.getMessage());
         t.printStackTrace();
+        progressDialog.hide();
     }
 
     @Override
@@ -189,12 +195,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 break;
         }
     }
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //this.getMenuInflater().inflate(R.menu.menu_web, menu);
-        return super.onCreateOptionsMenu(menu);
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
