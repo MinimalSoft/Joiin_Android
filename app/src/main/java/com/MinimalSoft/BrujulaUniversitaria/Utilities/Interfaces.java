@@ -1,6 +1,7 @@
 package com.MinimalSoft.BrujulaUniversitaria.Utilities;
 
 import com.MinimalSoft.BrujulaUniversitaria.Models.Response_General;
+import com.MinimalSoft.BrujulaUniversitaria.Models.Response_Start;
 import com.MinimalSoft.BrujulaUniversitaria.Models.Response_PlaceDetails;
 import com.MinimalSoft.BrujulaUniversitaria.Models.Ecobici_Stop;
 import com.MinimalSoft.BrujulaUniversitaria.Models.Response_Reviews;
@@ -36,16 +37,16 @@ public interface Interfaces {
                                      @Field("radio") String radio);
 
     @FormUrlEncoded
-    @POST("/appBrujula/controllers/user/user.php")
-    Call<Response_General> logInUser(@Field("action") String action,
-                                     @Field("email") String email,
-                                     @Field("password") String password,
-                                     @Field("idFacebook") String idFacebook,
-                                     @Field("deviceToken") String deviceToken);
+    @POST("/app/controllers/user/user.php")
+    Call<Response_Start> logInUser(@Field("action") String action,
+                                   @Field("email") String email,
+                                   @Field("password") String password,
+                                   @Field("idFacebook") String idFacebook,
+                                   @Field("deviceToken") String deviceToken);
 
     @FormUrlEncoded
-    @POST("/appBrujula/controllers/user/user.php")
-    Call<Response_General> registerUser(@Field("action") String action,
+    @POST("/app/controllers/user/user.php")
+    Call<Response_Start> registerUser(@Field("action") String action,
                                         @Field("name") String name,
                                         @Field("lastName") String lastName,
                                         @Field("gender") String gender,
