@@ -40,6 +40,7 @@
             android:theme="@style/AppTheme.ActivityStart">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -48,14 +49,6 @@
             android:configChanges="keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.ActivityStart" />
-        <activity
-            android:name=".Start.RegisterActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme2.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Start.LoginActivity" />
-        </activity>
         <activity
             android:name=".Main.MainActivity"
             android:launchMode="singleTask"
@@ -99,7 +92,9 @@
         <activity
             android:name=".Maps.DetailsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
+        <activity
+            android:name=".Maps.DetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Maps.AddPlaceActivity"
             android:theme="@style/AppTheme.NoActionBar" />

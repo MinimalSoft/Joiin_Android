@@ -39,7 +39,7 @@ public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallba
         editor.commit();
 
         requestThread.start();
-        logActivity.logIn();
+        logActivity.logInWithFacebook();
     }
 
     @Override
