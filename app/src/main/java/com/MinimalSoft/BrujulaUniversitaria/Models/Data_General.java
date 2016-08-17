@@ -5,7 +5,7 @@ package com.MinimalSoft.BrujulaUniversitaria.Models;
  * Esta clase contiene todos los campos de todas las posibles respuestas
  * JSON del API
  */
-public class Data_General {
+public class  Data_General {
 
     //TODO: Agregar los campos para el getPromos
 
