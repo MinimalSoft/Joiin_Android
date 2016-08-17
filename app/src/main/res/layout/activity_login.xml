@@ -59,12 +59,12 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/icon_mail"
-                    android:tint="@color/gray" />
+                    android:tint="@color/gray"
+                    android:src="@drawable/icon_mail" />
             </RelativeLayout>
 
             <EditText
-                android:id="@+id/login_emailField"
+                android:id="@+id/login_email_field"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/colorWhite"
@@ -93,12 +93,12 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/icon_password"
-                    android:tint="@color/gray" />
+                    android:tint="@color/gray"
+                    android:src="@drawable/icon_password" />
             </RelativeLayout>
 
             <EditText
-                android:id="@+id/login_passwordField"
+                android:id="@+id/login_password_field"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/colorWhite"
@@ -109,7 +109,6 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/login_accessButton"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
@@ -200,11 +199,9 @@
                 android:layout_weight="1"
                 android:text="Recuperar Contraseña"
                 android:textAllCaps="false"
-                android:textColor="@color/colorWhite"
-                android:visibility="gone"/>
+                android:textColor="@color/colorWhite" />
 
             <Button
-                android:id="@+id/login_registerButton"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"

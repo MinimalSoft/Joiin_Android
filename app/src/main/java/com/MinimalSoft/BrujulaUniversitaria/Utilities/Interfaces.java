@@ -1,7 +1,6 @@
 package com.MinimalSoft.BrujulaUniversitaria.Utilities;
 
 import com.MinimalSoft.BrujulaUniversitaria.Models.Response_General;
-import com.MinimalSoft.BrujulaUniversitaria.Models.Response_Start;
 import com.MinimalSoft.BrujulaUniversitaria.Models.Response_PlaceDetails;
 import com.MinimalSoft.BrujulaUniversitaria.Models.Ecobici_Stop;
 import com.MinimalSoft.BrujulaUniversitaria.Models.Response_Reviews;
@@ -38,15 +37,15 @@ public interface Interfaces {
 
     @FormUrlEncoded
     @POST("/app/controllers/user/user.php")
-    Call<Response_Start> logInUser(@Field("action") String action,
-                                   @Field("email") String email,
-                                   @Field("password") String password,
-                                   @Field("idFacebook") String idFacebook,
-                                   @Field("deviceToken") String deviceToken);
+    Call<Response_General> logInUser(@Field("action") String action,
+                                     @Field("email") String idType,
+                                     @Field("password") String latitude,
+                                     @Field("idFacebook") String longitude,
+                                     @Field("deviceToken") String radio);
 
     @FormUrlEncoded
     @POST("/app/controllers/user/user.php")
-    Call<Response_Start> registerUser(@Field("action") String action,
+    Call<Response_General> registerUser(@Field("action") String action,
                                         @Field("name") String name,
                                         @Field("lastName") String lastName,
                                         @Field("gender") String gender,
