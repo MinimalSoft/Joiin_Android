@@ -123,14 +123,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             gender = (genderId == 1 ? "F" : "M");
             birthday = String.format("%s/%02d/%02d", yearSpinner.getSelectedItem().toString(), month, day);
 
-            /*Log.i(this.getClass().getSimpleName(), "Data: " +
+            Log.i(this.getClass().getSimpleName(), "Data: " +
                     "\n Name: " + name +
                     "\n Last Name: " + lastName +
                     "\n Gender: " + gender +
                     "\n Phone: " + phone +
                     "\n Email: " + email +
                     "\n Password: " + password +
-                    "\n Birthday: " + birthday);*/
+                    "\n Birthday: " + birthday);
 
             AlertDialog.Builder confirmDialog = new AlertDialog.Builder(this);
             confirmDialog.setMessage("Al crear esta cuenta, estas aceptando el Aviso de Privacidad.");
@@ -146,7 +146,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String BASE_URL = "http://ec2-52-38-75-156.us-west-2.compute.amazonaws.com";
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
         Interfaces interfaces = retrofit.create(Interfaces.class);
-        Call<Response_Start> call = interfaces.registerUser("register", name, lastName, gender, phone, email, password, "", birthday, "");
+        Call<Response_Start> call = interfaces.registerUser("register", name, lastName, gender, birthday, phone, email, password, "", "", "");
         progressDialog.show();
         call.enqueue(this);
     }

@@ -47,15 +47,16 @@ public interface Interfaces {
     @FormUrlEncoded
     @POST("/app/controllers/user/user.php")
     Call<Response_Start> registerUser(@Field("action") String action,
-                                        @Field("name") String name,
-                                        @Field("lastName") String lastName,
-                                        @Field("gender") String gender,
-                                        @Field("phone") String phone,
-                                        @Field("email") String email,
-                                        @Field("password") String password,
-                                        @Field("idFacebook") String idFacebook,
-                                        @Field("birthday") String birthday,
-                                        @Field("deviceToken") String deviceToken);
+                                      @Field("name") String name,
+                                      @Field("lastName") String lastName,
+                                      @Field("gender") String gender,
+                                      @Field("birthday") String birthday,
+                                      @Field("phone") String phone,
+                                      @Field("email") String email,
+                                      @Field("password") String password,
+                                      @Field("fbImage") String urlImage,
+                                      @Field("idFacebook") String idFacebook,
+                                      @Field("deviceToken") String deviceToken);
 
     @FormUrlEncoded
     @POST("/app/controllers/user/user.php")
