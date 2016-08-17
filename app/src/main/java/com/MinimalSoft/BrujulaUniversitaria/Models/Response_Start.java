@@ -1,16 +1,12 @@
 package com.MinimalSoft.BrujulaUniversitaria.Models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Created by David on 24/07/2016.
+ * Created by Jair-Jacobo on 12/08/2016.
  */
-public class Response_General {
-
+public class Response_Start {
     private String response;
     private String message;
-    private List<Data_General> data = new ArrayList<>();
+    private Data_Start data;
 
     public String getResponse() {
         return response;
@@ -28,12 +24,11 @@ public class Response_General {
         this.message = message;
     }
 
-    public List<Data_General> getData() {
+    public Data_Start getData() {
         return data;
     }
 
-    public void setData(List<Data_General> data) {
+    public void setData(Data_Start data) {
         this.data = data;
     }
-
 }
