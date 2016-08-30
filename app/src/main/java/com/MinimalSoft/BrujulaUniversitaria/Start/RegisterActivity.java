@@ -1,6 +1,5 @@
 package com.MinimalSoft.BrujulaUniversitaria.Start;
 
-import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,10 +20,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.MinimalSoft.BrujulaUniversitaria.Main.MainActivity;
-import com.MinimalSoft.BrujulaUniversitaria.Models.Response_Start;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
+import com.MinimalSoft.BrujulaUniversitaria.Models.Response_General;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,28 +34,27 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Jair-Jacobo on 05/08/2016.
  */
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnClickListener, Callback<Response_Start> {
-    private ProgressDialog progressDialog;
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnClickListener, Callback<Response_General> {
+    private Intent intent;
+    private EditText dayField;
+    private EditText yearField;
     private EditText nameField;
     private EditText phoneField;
     private EditText emailField;
     private EditText lastField;
     private EditText confirmField;
     private EditText passwordField;
-    private Spinner genderSpinner;
     private Spinner monthSpinner;
-    private Spinner yearSpinner;
-    private Spinner daySpinner;
-    private Intent intent;
+    private Spinner genderSpinner;
 
     private String name;
     private String email;
-    private String phone;
     private String gender;
     private String message;
     private String birthday;
     private String password;
     private String lastName;
+    private String telephone;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,23 +65,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         TextView link = (TextView) this.findViewById(R.id.register_link);
         Button button = (Button) this.findViewById(R.id.register_button);
 
+        dayField = (EditText) this.findViewById(R.id.register_dayField);
+        yearField = (EditText) this.findViewById(R.id.register_yearField);
         nameField = (EditText) this.findViewById(R.id.register_nameField);
         phoneField = (EditText) this.findViewById(R.id.register_phoneField);
         emailField = (EditText) this.findViewById(R.id.register_emailField);
         lastField = (EditText) this.findViewById(R.id.register_lastNameField);
         confirmField = (EditText) this.findViewById(R.id.register_confirmField);
         passwordField = (EditText) this.findViewById(R.id.register_passwordField);
-
-        daySpinner = (Spinner) this.findViewById(R.id.register_daySpinner);
-        yearSpinner = (Spinner) this.findViewById(R.id.register_yearSpinner);
         monthSpinner = (Spinner) this.findViewById(R.id.register_monthSpinner);
         genderSpinner = (Spinner) this.findViewById(R.id.register_genderSpinner);
-
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("Cargando. Espere...");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.setIndeterminate(true);
 
         link.setOnClickListener(this);
         button.setOnClickListener(this);
@@ -93,47 +84,41 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void getData() {
         name = nameField.getText().toString().trim();
-        password = passwordField.getText().toString();
-        email = emailField.getText().toString().trim();
-        phone = phoneField.getText().toString().trim();
         lastName = lastField.getText().toString().trim();
-        int day = daySpinner.getSelectedItemPosition();
-        int year = yearSpinner.getSelectedItemPosition();
-        int month = monthSpinner.getSelectedItemPosition();
-        int genderId = genderSpinner.getSelectedItemPosition();
+        telephone = phoneField.getText().toString().trim();
+        String day = dayField.getText().toString().trim();
+        String year = yearField.getText().toString().trim();
+        email = emailField.getText().toString().trim();
+        password = passwordField.getText().toString();
         String passwordConfirm = confirmField.getText().toString();
+
+        int monthNumber = monthSpinner.getSelectedItemPosition();
+        int genderId = genderSpinner.getSelectedItemPosition();
 
         if (!this.isNameValid(name)) {
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         } else if (!this.isNameValid(lastName)) {
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        } else if (!this.isPhoneValid(phone)) {
+        } else if (!this.isNumberValid(telephone)) {
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         } else if (genderId == 0) {
-            Toast.makeText(this, "Seleccione el Género", Toast.LENGTH_LONG).show();
-        } else if (!this.isDateValid(day, month, year)) {
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Seleccione el Genero", Toast.LENGTH_LONG).show();
+        } else if (day.length() == 0 || year.length() == 0 || monthNumber == 0) {
+            Toast.makeText(this, "Seleccione la Fecha de nacimiento", Toast.LENGTH_LONG).show();
         } else if (!isEmailValid(email)) {
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         } else if (password.length() < 8) {
+            ;
             Toast.makeText(this, "La contraseña debe contener al menos 8 caracteres", Toast.LENGTH_LONG).show();
         } else if (!passwordConfirm.equals(password)) {
-            Toast.makeText(this, "La contraseña de confirmación no coincide", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "La contraseña de confirmacion no coincide", Toast.LENGTH_LONG).show();
         } else {
-            gender = (genderId == 1 ? "F" : "M");
-            birthday = String.format("%s/%02d/%02d", yearSpinner.getSelectedItem().toString(), month, day);
-
-            Log.i(this.getClass().getSimpleName(), "Data: " +
-                    "\n Name: " + name +
-                    "\n Last Name: " + lastName +
-                    "\n Gender: " + gender +
-                    "\n Phone: " + phone +
-                    "\n Email: " + email +
-                    "\n Password: " + password +
-                    "\n Birthday: " + birthday);
+            message = "connecting...";
+            gender = genderId == 1 ? "F" : "M";
+            birthday = "" + year + '-' + monthNumber + '-' + day;
 
             AlertDialog.Builder confirmDialog = new AlertDialog.Builder(this);
-            confirmDialog.setMessage("Al crear esta cuenta, estas aceptando el Aviso de Privacidad.");
+            confirmDialog.setMessage("Al crear esta cuenta, estas aceptando los Terminos de Privacidad.");
             confirmDialog.setNegativeButton("Cancelar", null);
             confirmDialog.setPositiveButton("Aceptar", this);
             confirmDialog.setTitle("Advertencia");
@@ -143,39 +128,31 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
-        String BASE_URL = "http://ec2-52-38-75-156.us-west-2.compute.amazonaws.com";
+        String BASE_URL = "http://ec2-54-210-116-247.compute-1.amazonaws.com";
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
         Interfaces interfaces = retrofit.create(Interfaces.class);
-        Call<Response_Start> call = interfaces.registerUser("register", name, lastName, gender, birthday, phone, email, password, "", "", "");
-        progressDialog.show();
+        Call<Response_General> call = interfaces.registerUser("register", name, lastName, gender, telephone, email, password, "0", birthday, "0");
         call.enqueue(this);
     }
 
     /*----Retrofit Methods----*/
 
     @Override
-    public void onResponse(Call<Response_Start> call, Response<Response_Start> response) {
-        progressDialog.hide();
-
-        if (response.code() == 404) {
+    public void onResponse(Call<Response_General> call, Response<Response_General> response) {
+        if(response.code() == 404) {
             Toast.makeText(this, "Error al conectar con el servidor", Toast.LENGTH_SHORT).show();
-        } else if (response.body().getResponse().equals("alert")) {
-            Toast.makeText(this, "Este correo electrónico ya ha sido registrado", Toast.LENGTH_LONG).show();
-        } else if (!response.body().getResponse().equals("success")) {
-            Toast.makeText(this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+        } else if (!response.body().getResponse().equals("success")){
+            Toast.makeText(this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
         } else {
-            intent = new Intent(this.getApplicationContext(), MainActivity.class);
-            this.startActivity(intent);
-            this.finish();
+
         }
     }
 
     @Override
-    public void onFailure(Call<Response_Start> call, Throwable t) {
+    public void onFailure(Call<Response_General> call, Throwable t) {
         Toast.makeText(this, t.getMessage(), Toast.LENGTH_LONG).show();
         Log.e(this.getClass().getSimpleName(), "Message: " + t.getMessage());
         t.printStackTrace();
-        progressDialog.hide();
     }
 
     @Override
@@ -194,6 +171,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 this.getData();
                 break;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //this.getMenuInflater().inflate(R.menu.menu_web, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -226,9 +209,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         if (name.length() == 0) {
-            message = "El campo Nombre o Apellido esta vacío";
+            message = "El campo Nombre o Apellido esta vacio";
         } else if (name.length() < 3) {
-            message = "Escriba un nombre y/o appellido válidos";
+            message = "Escriba un nombre y/o appellido validos";
         } else if (flag) {
             message = "El nombre y el apellido solo puede contener letras";
         } else {
@@ -238,7 +221,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         return false;
     }
 
-    private boolean isPhoneValid(String number) {
+    private boolean isNumberValid(String number) {
         boolean flag = false;
         char c;
 
@@ -253,23 +236,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         if (number.length() == 0) {
-            message = "El campo Teléfono esta vacío";
+            message = "El campo Telefono esta vacio";
         } else if (number.length() < 8 || number.length() > 10 || flag) {
-            message = "Escriba un numero de telefono válido";
-        } else {
-            return true;
-        }
-
-        return false;
-    }
-
-    private boolean isDateValid(int day, int month, int year) {
-        if (day == 0) {
-            message = "Seleccione el Dia de nacimiento";
-        } else if (month == 0) {
-            message = "Seleccione el Mes de nacimiento";
-        } else if (year == 0) {
-            message = "Seleccione el Año de nacimiento";
+            message = "Escriba un numero de telefono valido";
         } else {
             return true;
         }
@@ -292,15 +261,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         if (email.length() == 0) {
-            message = "El campo Correo esta vacío";
+            message = "El campo Correo esta vacio";
         } else if (email.length() < 3 || !flag) {
-            message = "Correo electronico no válido";
+            message = "Correo electronico no valido";
         } else {
             String username = email.substring(0, i);
             String domain = email.substring(i + 1);
 
             if (username.length() == 0) {
-                message = "Dirección de correo no aceptado";
+                message = "Direccion de correo no aceptado";
             } else if (domain.length() == 0) {
                 message = "El correo no tiene dominio";
             } else {
