@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.MinimalSoft.BrujulaUniversitaria.Models.Data_General;
@@ -17,7 +19,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlacesList extends AppCompatActivity {
+public class PlacesList extends AppCompatActivity implements AdapterView.OnItemClickListener {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_map, menu);
@@ -53,6 +55,7 @@ public class PlacesList extends AppCompatActivity {
         PlaceListAdapter listAdapter = new PlaceListAdapter(this, R.layout.item_list_place, placesList);
         ListView listView = (ListView) findViewById(R.id.list_listView);
         listView.setAdapter(listAdapter);
+        listView.setOnItemClickListener(this);
     }
 
     @Override
@@ -70,5 +73,11 @@ public class PlacesList extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /*----OnItemClickListener Methods----*/
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 }
