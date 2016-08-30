@@ -129,5 +129,15 @@
             android:label="@string/title_activity_map"
             android:theme="@style/AppTheme" />
         <activity android:name=".Maps.AddReview"></activity>
+
+        <activity
+            android:name=".List.PlacesList"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme2.NoActionBar">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Maps.Categories_Map" />
+        </activity>
     </application>
 </manifest>
