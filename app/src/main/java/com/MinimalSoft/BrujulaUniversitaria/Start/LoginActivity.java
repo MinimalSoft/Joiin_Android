@@ -1,13 +1,12 @@
 package com.MinimalSoft.BrujulaUniversitaria.Start;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
 
-import com.MinimalSoft.BrujulaUniversitaria.Models.Response_Start;
+import com.MinimalSoft.BrujulaUniversitaria.Models.Response_General;
 import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
 import com.facebook.FacebookSdk;
 import com.facebook.CallbackManager;
@@ -26,11 +25,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, Callback<Response_Start> {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, Callback<Response_General> {
     private CallbackManager facebookCallbackManager;
     private LoginButton facebookLoginButton;
     private EditText passwordField;
-    private ProgressDialog dialog;
     private EditText emailField;
     private Intent intent;
 
@@ -48,14 +46,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         passwordField = (EditText) this.findViewById(R.id.login_passwordField);
         emailField = (EditText) this.findViewById(R.id.login_emailField);
         facebookCallbackManager = CallbackManager.Factory.create();
-
-        dialog = new ProgressDialog(this);
         FacebookDataCollector dataCollector = new FacebookDataCollector(this);
-
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage("Cargando. Espere...");
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setIndeterminate(true);
 
         loginButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
@@ -79,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.login_registerButton:
                 intent = new Intent(this.getApplicationContext(), RegisterActivity.class);
                 this.startActivity(intent);
+                this.finish();
                 break;
 
             case R.id.login_accessButton:
@@ -90,12 +82,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 } else if (password.length() == 0) {
                     Toast.makeText(this, "Inserte la contraseña", Toast.LENGTH_LONG).show();
                 } else {
-                    String BASE_URL = "http://ec2-52-38-75-156.us-west-2.compute.amazonaws.com";
+                    String BASE_URL = "http://ec2-54-210-116-247.compute-1.amazonaws.com";
                     Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
                     Interfaces interfaces = retrofit.create(Interfaces.class);
-                    Call<Response_Start> call = interfaces.logInUser("login", email, password, "0", "0");
+                    Call <Response_General> call = interfaces.logInUser("login", email, password, "0", "0");
                     call.enqueue(this);
-                    dialog.show();
                 }
 
                 break;
@@ -111,23 +102,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     /*----Retrofit Methods----*/
 
     @Override
-    public void onResponse(Call<Response_Start> call, Response<Response_Start> response) {
-        dialog.hide();
-
+    public void onResponse(Call<Response_General> call, Response<Response_General> response) {
         if(response.code() == 404) {
             Toast.makeText(this, "Error al conectar con el servidor", Toast.LENGTH_SHORT).show();
-        } else if (!response.body().getResponse().equals("success")) {
-            Toast.makeText(this, "El correo o la contraseña estan incorrectos", Toast.LENGTH_SHORT).show();
+        } else if (!response.body().getResponse().equals("success")){
+            Toast.makeText(this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
         } else {
             this.logIn();
         }
     }
 
     @Override
-    public void onFailure(Call<Response_Start> call, Throwable t) {
+    public void onFailure(Call<Response_General> call, Throwable t) {
         Toast.makeText(this, t.getMessage(), Toast.LENGTH_LONG).show();
         Log.e(this.getClass().getSimpleName(), "Message: " + t.getMessage());
         t.printStackTrace();
-        dialog.hide();
     }
 }
