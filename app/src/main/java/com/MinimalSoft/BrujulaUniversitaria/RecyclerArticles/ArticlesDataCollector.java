@@ -82,12 +82,13 @@ public class ArticlesDataCollector extends AsyncTask<Void, Void, Boolean> {
                 title = json.getJSONObject("title").getString("rendered");
 
                 items.add(new Article(title, id, image, link));
+
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             return Boolean.FALSE;
         } catch (JSONException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             return Boolean.FALSE;
         }
 
