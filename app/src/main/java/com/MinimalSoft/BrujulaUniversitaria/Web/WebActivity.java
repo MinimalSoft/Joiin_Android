@@ -5,50 +5,53 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
-import android.support.v4.app.NavUtils;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.MinimalSoft.BrujulaUniversitaria.R;
 
 public class WebActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_web);
-
-        WebView webView = (WebView) this.findViewById(R.id.webView);
-        Toolbar toolbar = (Toolbar) this.findViewById(R.id.web_toolbar);
-        ProgressBar progressBar = (ProgressBar) this.findViewById(R.id.web_progress);
-
-        WebBrowser webBrowser = new WebBrowser(webView, progressBar);
-        String title = this.getIntent().getStringExtra("TITLE");
-        String link = this.getIntent().getStringExtra("LINK");
-
-        this.setSupportActionBar(toolbar);
-        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        toolbar.setTitle(title);
-        webBrowser.load(link);
-        this.setTitle(title);
-    }
+    private WebView webView;
+    private ProgressBar progressBar;
+    private LoadIndicator loadIndicator;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //this.getMenuInflater().inflate(R.menu.menu_web, menu);
+        this.getMenuInflater().inflate(R.menu.options_web, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_web);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.web_toolbar);
+        progressBar = (ProgressBar) findViewById(R.id.web_progress);
+        webView = (WebView) findViewById(R.id.web_webView);
+
+        loadIndicator = new LoadIndicator(progressBar, webView);
+        toolbar.setTitle(getIntent().getStringExtra("TITLE"));
+        String link = getIntent().getStringExtra("LINK");
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        webView.getSettings().setLoadWithOverviewMode(true);
+        //webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl(link);
+        loadIndicator.execute();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                onBackPressed();
+                return true;
 
-                if (!super.onOptionsItemSelected(item)) {
-                    NavUtils.navigateUpFromSameTask(this);
-                }
-
+            case R.id.options_share:
                 return true;
         }
 

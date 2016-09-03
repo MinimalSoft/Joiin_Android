@@ -1,85 +1,63 @@
 package com.MinimalSoft.BrujulaUniversitaria.Tabs;
 
+import java.util.List;
 import android.os.Bundle;
-import android.content.Intent;
+import android.widget.Toast;
 
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
-
-import android.widget.Toast;
-import android.widget.ProgressBar;
-
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 
-import android.support.annotation.Nullable;
-
 import com.MinimalSoft.BrujulaUniversitaria.R;
-import com.MinimalSoft.BrujulaUniversitaria.Web.WebActivity;
-import com.MinimalSoft.BrujulaUniversitaria.RecyclerArticles.ArticleAdapter;
+import com.MinimalSoft.BrujulaUniversitaria.RecyclerArticles.Article;
+import com.MinimalSoft.BrujulaUniversitaria.RecyclerArticles.ArticlesAdapter;
+import com.MinimalSoft.BrujulaUniversitaria.RecyclerArticles.ArticlesCollector;
 
 public class Articles extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    private ArticleAdapter articlesAdapter;
     private SwipeRefreshLayout swipeRefresh;
-    private ProgressBar progressRing;
+    private ArticlesAdapter articlesAdapter;
     private View inflatedView;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (inflatedView == null) {
             inflatedView = inflater.inflate(R.layout.fragment_articles, container, false);
-            progressRing = (ProgressBar) inflatedView.findViewById(R.id.articles_progress);
-            swipeRefresh = (SwipeRefreshLayout) inflatedView.findViewById(R.id.articles_swipe_refresh);
-            RecyclerView recyclerView = (RecyclerView) inflatedView.findViewById(R.id.articles_recycler);
+            swipeRefresh = (SwipeRefreshLayout) inflatedView.findViewById(R.id.articles_swipeRefresh);
+            RecyclerView recyclerView = (RecyclerView) inflatedView.findViewById(R.id.articles_recyclerView);
 
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(inflatedView.getContext());
-            swipeRefresh.setColorSchemeResources(R.color.red, R.color.brown, R.color.green, R.color.orange);
-            swipeRefresh.setOnRefreshListener(this);
+            articlesAdapter = new ArticlesAdapter(this);
 
-            articlesAdapter = new ArticleAdapter(this);
+            swipeRefresh.setColorSchemeResources(R.color.red_900, R.color.brown_500, R.color.green_900, R.color.orange_600);
+            swipeRefresh.setOnRefreshListener(this);
             recyclerView.setAdapter(articlesAdapter);
             recyclerView.setLayoutManager(layoutManager);
+            onRefresh();
         }
 
         return inflatedView;
     }
 
-    public void showArticle (String title, String link) {
-        Intent intent = new Intent(this.getActivity(), WebActivity.class);
-        intent.putExtra("TITLE", title);
-        intent.putExtra("LINK", link);
-        this.startActivity(intent);
-    }
-
-    public void onPostUpdateFailed () {
-        Toast.makeText(this.getContext(), "Error al cargar los artículos.", Toast.LENGTH_SHORT).show();
-        progressRing.setVisibility(View.VISIBLE);
-        swipeRefresh.setRefreshing(false);
-    }
-
-    public void onPostUpdateSucceed () {
-        progressRing.setVisibility(View.GONE);
-        swipeRefresh.setRefreshing(false);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        articlesAdapter.updateData();
-    }
-
+    /*----OnRefreshListener Methods*/
     @Override
     public void onRefresh() {
-        articlesAdapter.updateData();
+        String api_url = getResources().getString(R.string.server_wp);
+        new ArticlesCollector(this, api_url).execute();
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        articlesAdapter.stopCollector();
+    public void onPostUpdateFailed(String message) {
+        Toast.makeText(this.getContext(), message, Toast.LENGTH_LONG).show();
+        swipeRefresh.setRefreshing(false);
+    }
+
+    public void onPostUpdateSucceed(List<Article> List) {
+        articlesAdapter.updateArticles(List);
+        swipeRefresh.setRefreshing(false);
     }
 }

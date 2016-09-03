@@ -110,8 +110,8 @@ public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallba
             String BASE_URL = "http://ec2-52-38-75-156.us-west-2.compute.amazonaws.com";
             Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
             Interfaces interfaces = retrofit.create(Interfaces.class);
-            Call<Response_Start> call = interfaces.registerUser("register", firstName, lastName, String.valueOf(gender.charAt(0)).toUpperCase(), "", "", email, "", url, id, "");
-            call.enqueue(this);
+            //Call<Response_Start> call = interfaces.registerUser("register", firstName, lastName, String.valueOf(gender.charAt(0)).toUpperCase(), "", "", email, "", url, id, "");
+            //call.enqueue(this);
 
         } catch (NullPointerException exc) {
             exc.printStackTrace();

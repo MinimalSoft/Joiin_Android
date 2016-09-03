@@ -30,10 +30,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by Jair-Jacobo on 05/08/2016.
- */
-
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnClickListener, Callback<Response_General> {
     private Intent intent;
     private EditText dayField;
@@ -65,8 +61,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         TextView link = (TextView) this.findViewById(R.id.register_link);
         Button button = (Button) this.findViewById(R.id.register_button);
 
-        dayField = (EditText) this.findViewById(R.id.register_dayField);
-        yearField = (EditText) this.findViewById(R.id.register_yearField);
+        //dayField = (EditText) this.findViewById(R.id.register_dayField);
+        //yearField = (EditText) this.findViewById(R.id.register_yearField);
         nameField = (EditText) this.findViewById(R.id.register_nameField);
         phoneField = (EditText) this.findViewById(R.id.register_phoneField);
         emailField = (EditText) this.findViewById(R.id.register_emailField);
@@ -131,8 +127,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String BASE_URL = "http://ec2-54-210-116-247.compute-1.amazonaws.com";
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
         Interfaces interfaces = retrofit.create(Interfaces.class);
-        Call<Response_General> call = interfaces.registerUser("register", name, lastName, gender, telephone, email, password, "0", birthday, "0");
-        call.enqueue(this);
+        //Call<Response_General> call = interfaces.registerUser("register", name, lastName, gender, telephone, email, password, "0", birthday, "0");
+        //call.enqueue(this);
     }
 
     /*----Retrofit Methods----*/

@@ -1,34 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp">
 
     <ImageView
-        android:id="@+id/entry_image"
+        android:id="@+id/article_image"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginBottom="2dp"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_image" />
 
     <View
-        android:id="@+id/gradient"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_alignBottom="@+id/entry_image"
         android:background="@drawable/gradient" />
 
     <Button
-        android:id="@+id/entry_button"
+        android:id="@+id/article_button"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
 
     <TextView
-        android:id="@+id/entry_text"
+        android:id="@+id/article_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/entry_image"
-        android:layout_alignParentLeft="true"
+        android:layout_alignBottom="@id/article_image"
         android:text="Titulo"
-        android:textColor="@color/colorWhite"
+        android:textColor="@android:color/white"
         android:textSize="25sp" />
 </RelativeLayout>
