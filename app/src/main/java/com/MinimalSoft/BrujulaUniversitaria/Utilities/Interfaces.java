@@ -1,13 +1,8 @@
 package com.MinimalSoft.BrujulaUniversitaria.Utilities;
 
-import com.MinimalSoft.BrujulaUniversitaria.Models.Response_General;
-import com.MinimalSoft.BrujulaUniversitaria.Models.Response_PlaceDetails;
-import com.MinimalSoft.BrujulaUniversitaria.Models.Ecobici_Stop;
-import com.MinimalSoft.BrujulaUniversitaria.Models.Response_Reviews;
+import com.MinimalSoft.BrujulaUniversitaria.Models.*;
 
-import java.sql.Date;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -45,16 +40,17 @@ public interface Interfaces {
                                      @Field("deviceToken") String deviceToken);
 
     @FormUrlEncoded
-    @POST("/appBrujula/controllers/user/user.php")
-    Call<Response_General> registerUser(@Field("action") String action,
+    @POST("/controllers/user/user.php")
+    Call<ResponseRegister> registerUser(@Field("action") String action,
                                         @Field("name") String name,
                                         @Field("lastName") String lastName,
                                         @Field("gender") String gender,
-                                        @Field("phone") int phone,
+                                        @Field("birthday") String birthday,
+                                        @Field("phone") String phone,
                                         @Field("email") String email,
                                         @Field("password") String password,
+                                        @Field("fbImage") String urlImage,
                                         @Field("idFacebook") String idFacebook,
-                                        @Field("birthday") String birthday,
                                         @Field("deviceToken") String deviceToken);
 
     @FormUrlEncoded

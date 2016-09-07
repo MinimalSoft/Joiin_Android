@@ -48,7 +48,7 @@
             android:configChanges="keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.ActivityStart" />
+            android:theme="@style/BU.NoActionBar" />
         <activity
             android:name=".Start.RegisterActivity"
             android:screenOrientation="portrait"

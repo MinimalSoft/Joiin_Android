@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">BU</string>
-    <string name="slogan">¡Apuntando en la direccion correcta!</string>
+    <string name="slogan">¡Apuntando en la dirección correcta!</string>
     <string name="link">Consulta el <u>Aviso de Privacidad </u>.</string>
 
     <string name="title_page_0">Novedades</string>
@@ -45,6 +45,7 @@
     <string name="title_activity_transportation__means">Medios de Transporte</string>
     <string name="title_activity_map">Transporte</string>
 
+    <string name="server_api">http://api.buniversitaria.com</string>
     <string name="server_wp"><![CDATA[http://buniversitaria.com/wp-json/wp/v2/posts?_wp_json_nonce=4355d0c4b3&items=id,title,image,link]]></string>
 </resources>
 

@@ -15,123 +15,99 @@ import com.MinimalSoft.BrujulaUniversitaria.Utilities.ScreenUtility;
 import com.MinimalSoft.BrujulaUniversitaria.ViewerActivity;
 
 public class Categories extends Fragment implements View.OnClickListener {
-
-    private int pagerViewHeight;
-    private int topLayoutsMargin;
-    private int fullLayoutHeight;
-
-    private Intent intent;
-    private View inflatedLayout;
-    private ImageView jobsButton;
-    private ImageView barsButton;
-    private ImageView foodButton;
-    private ImageView gymsButton;
-    private ImageView transportButton;
-    private ImageView promosButton;
-    private ImageView featuredButton;
-    private ImageView suppliesButton;
-    private ImageView residenceButton;
-    private LinearLayout topVerticalLayout;
-    private LinearLayout middleVerticalLayout;
-    private LinearLayout bottomVerticalLayout;
-    private LinearLayout.LayoutParams layoutParams;
+    private View inflatedView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (inflatedLayout == null) {
-            inflatedLayout = inflater.inflate(R.layout.fragment_categories, container, false);
+        if (inflatedView == null) {
+            inflatedView = inflater.inflate(R.layout.fragment_categories, container, false);
 
-            jobsButton = (ImageView) inflatedLayout.findViewById(R.id.categories_jobs_image);
-            barsButton = (ImageView) inflatedLayout.findViewById(R.id.categories_bars_image);
-            foodButton = (ImageView) inflatedLayout.findViewById(R.id.categories_food_image);
-            gymsButton = (ImageView) inflatedLayout.findViewById(R.id.categories_gyms_image);
-            transportButton = (ImageView) inflatedLayout.findViewById(R.id.categories_transport_image);
-            promosButton = (ImageView) inflatedLayout.findViewById(R.id.categories_promos_image);
-            featuredButton = (ImageView) inflatedLayout.findViewById(R.id.categories_featured_image);
-            suppliesButton = (ImageView) inflatedLayout.findViewById(R.id.categories_supplies_image);
-            residenceButton = (ImageView) inflatedLayout.findViewById(R.id.categories_residence_image);
-            topVerticalLayout = (LinearLayout) inflatedLayout.findViewById(R.id.categories_top_vertical_layout);
-            middleVerticalLayout = (LinearLayout) inflatedLayout.findViewById(R.id.categories_middle_vertical_layout);
-            bottomVerticalLayout = (LinearLayout) inflatedLayout.findViewById(R.id.categories_bottom_vertical_layout);
+            ImageView barsButton = (ImageView) inflatedView.findViewById(R.id.categories_barsImage);
+            ImageView foodButton = (ImageView) inflatedView.findViewById(R.id.categories_foodImage);
+            ImageView gymsButton = (ImageView) inflatedView.findViewById(R.id.categories_gymsImage);
+            ImageView jobsButton = (ImageView) inflatedView.findViewById(R.id.categories_jobsImage);
+            ImageView promosButton = (ImageView) inflatedView.findViewById(R.id.categories_promosImage);
+            ImageView featuredButton = (ImageView) inflatedView.findViewById(R.id.categories_featuredImage);
+            ImageView suppliesButton = (ImageView) inflatedView.findViewById(R.id.categories_suppliesImage);
+            ImageView transportButton = (ImageView) inflatedView.findViewById(R.id.category_transportImage);
+            ImageView residencesButton = (ImageView) inflatedView.findViewById(R.id.categories_residencesImage);
 
-            layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            fullLayoutHeight = topVerticalLayout.getHeight() + middleVerticalLayout.getHeight() + bottomVerticalLayout.getHeight();
-
-            residenceButton.setOnClickListener(this);
+            residencesButton.setOnClickListener(this);
+            transportButton.setOnClickListener(this);
             suppliesButton.setOnClickListener(this);
             featuredButton.setOnClickListener(this);
             promosButton.setOnClickListener(this);
-            transportButton.setOnClickListener(this);
             gymsButton.setOnClickListener(this);
             foodButton.setOnClickListener(this);
             barsButton.setOnClickListener(this);
             jobsButton.setOnClickListener(this);
         }
 
-        return inflatedLayout;
+        return inflatedView;
     }
 
     @Override
     public void onClick(View view) {
         Bundle bundle = new Bundle();
+        Intent intent;
 
         switch (view.getId()) {
-            case R.id.categories_featured_image:
+            case R.id.categories_featuredImage:
                 bundle.putString("Titulo", "Destacados");
                 bundle.putString("Type", "1");
                 bundle.putString("Marker", "marker_bu");
                 break;
 
-            case R.id.categories_bars_image:
+            case R.id.categories_barsImage:
                 bundle.putString("Titulo", "Bares");
                 bundle.putString("Type", "2");
                 bundle.putString("Marker", "marker_bars");
                 bundle.putString("stringType", "bar");
                 break;
 
-            case R.id.categories_food_image:
+            case R.id.categories_foodImage:
                 bundle.putString("Titulo", "Comida");
                 bundle.putString("Type", "3");
                 bundle.putString("Marker", "marker_food");
                 bundle.putString("stringType", "sitio de comida");
                 break;
 
-            case R.id.categories_gyms_image:
+            case R.id.categories_gymsImage:
                 bundle.putString("Titulo", "Gimnasios");
                 bundle.putString("Type", "4");
                 bundle.putString("Marker", "marker_gyms");
                 bundle.putString("stringType", "gimnasio");
                 break;
 
-            case R.id.categories_supplies_image:
+            case R.id.categories_suppliesImage:
                 bundle.putString("Titulo", "Materiales");
                 bundle.putString("Type", "5");
                 bundle.putString("Marker", "marker_suplies");
                 bundle.putString("stringType", "proveedor de material");
                 break;
 
-            case R.id.categories_residence_image:
+            case R.id.categories_residencesImage:
                 bundle.putString("Titulo", "Residencias");
                 bundle.putString("Type", "6");
                 bundle.putString("Marker", "marker_residence");
                 bundle.putString("stringType", "lugar para vivir");
                 break;
 
-            case R.id.categories_jobs_image:
+            case R.id.categories_jobsImage:
                 bundle.putString("Titulo", "Trabajo");
                 bundle.putString("Type", "7");
                 bundle.putString("Marker", "marker_jobs");
                 bundle.putString("stringType", "trabajo");
                 break;
 
-            case R.id.categories_transport_image:
+            case R.id.category_transportImage:
                 bundle.putString("Titulo", "Transporte");
                 intent = new Intent(Categories.this.getActivity(), ViewerActivity.class);
                 intent.putExtras(bundle);
                 this.startActivity(intent);
                 return;
 
-            case R.id.categories_promos_image:
+            case R.id.categories_promosImage:
                 bundle.putString("Titulo", "Promociones");
                 intent = new Intent(Categories.this.getActivity(), ViewerActivity.class);
                 intent.putExtras(bundle);
@@ -144,7 +120,7 @@ public class Categories extends Fragment implements View.OnClickListener {
         this.startActivity(intent);
     }
 
-    public void modifyVerticalPosition(int offset) {
+    /*public void modifyVerticalPosition(int offset) {
         if (topVerticalLayout != null) {
             if(topVerticalLayout.getHeight() == 0) {
                 fullLayoutHeight = (int) (360 * ScreenUtility.getDensity()); // Cheater way !!
@@ -160,5 +136,5 @@ public class Categories extends Fragment implements View.OnClickListener {
             middleVerticalLayout.setLayoutParams(layoutParams);
             bottomVerticalLayout.setLayoutParams(layoutParams);
         }
-    }
+    }*/
 }
