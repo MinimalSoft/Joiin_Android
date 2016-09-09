@@ -48,7 +48,8 @@ public class WebActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+                //onBackPressed();
+                finish();
                 return true;
 
             case R.id.options_share:

@@ -85,7 +85,6 @@ public class LoginActivity extends Activity implements View.OnClickListener, Cal
             case R.id.login_registerButton:
                 Intent intent = new Intent(this.getApplicationContext(), RegisterActivity.class);
                 this.startActivity(intent);
-                this.finish();
                 break;
 
             case R.id.login_accessButton:
@@ -100,7 +99,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Cal
                     String BASE_URL = "http://ec2-54-210-116-247.compute-1.amazonaws.com";
                     Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
                     Interfaces interfaces = retrofit.create(Interfaces.class);
-                    Call <Response_General> call = interfaces.logInUser("login", email, password, "0", "0");
+                    Call<Response_General> call = interfaces.logInUser("login", email, password, "0", "0");
                     call.enqueue(this);
                 }
 
@@ -112,9 +111,9 @@ public class LoginActivity extends Activity implements View.OnClickListener, Cal
 
     @Override
     public void onResponse(Call<Response_General> call, Response<Response_General> response) {
-        if(response.code() == 404) {
+        if (response.code() == 404) {
             Toast.makeText(this, "Error al conectar con el servidor", Toast.LENGTH_SHORT).show();
-        } else if (!response.body().getResponse().equals("success")){
+        } else if (!response.body().getResponse().equals("success")) {
             Toast.makeText(this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
         } else {
             this.logIn();

@@ -51,8 +51,8 @@
             android:theme="@style/BU.NoActionBar" />
         <activity
             android:name=".Start.RegisterActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme2.NoActionBar">
+            android:theme="@style/BU.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Start.LoginActivity" />
@@ -65,11 +65,8 @@
         <activity
             android:name=".Web.WebActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme2.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Main.MainActivity" />
-        </activity>
+            android:theme="@style/BU.NoActionBar" />
+
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"

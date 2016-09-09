@@ -1,28 +1,29 @@
 package com.MinimalSoft.BrujulaUniversitaria.Start;
 
-import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
+import com.MinimalSoft.BrujulaUniversitaria.R;
+import com.MinimalSoft.BrujulaUniversitaria.Web.WebActivity;
+import com.MinimalSoft.BrujulaUniversitaria.Main.MainActivity;
+import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
+import com.MinimalSoft.BrujulaUniversitaria.Models.ResponseRegister;
+import com.MinimalSoft.BrujulaUniversitaria.Utilities.PromptedDataAnalyzer;
+
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.KeyEvent;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.EditText;
+import android.app.ProgressDialog;
 
-import com.MinimalSoft.BrujulaUniversitaria.R;
-import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
-import com.MinimalSoft.BrujulaUniversitaria.Models.Response_General;
+import android.content.Intent;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,159 +31,99 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnClickListener, Callback<Response_General> {
-    private Intent intent;
-    private EditText dayField;
-    private EditText yearField;
-    private EditText nameField;
-    private EditText phoneField;
-    private EditText emailField;
-    private EditText lastField;
-    private EditText confirmField;
+public class RegisterActivity extends AppCompatActivity implements DialogInterface.OnClickListener, Callback<ResponseRegister> {
+    private AlertDialog.Builder alertDialog;
+    private ProgressDialog progressDialog;
+
     private EditText passwordField;
+    private EditText confirmField;
+    private EditText emailField;
+    private EditText phoneField;
+    private EditText nameField;
+    private EditText lastField;
+
+    private Spinner daySpinner;
+    private Spinner yearSpinner;
     private Spinner monthSpinner;
     private Spinner genderSpinner;
 
-    private String name;
-    private String email;
-    private String gender;
-    private String message;
-    private String birthday;
-    private String password;
-    private String lastName;
+    private boolean isDataAccepted;
     private String telephone;
+    private String lastName;
+    private String password;
+    private String birthday;
+    private String gender;
+    private String email;
+    private String name;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_register);
 
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.register_toolbar);
-        TextView link = (TextView) this.findViewById(R.id.register_link);
-        Button button = (Button) this.findViewById(R.id.register_button);
 
-        //dayField = (EditText) this.findViewById(R.id.register_dayField);
-        //yearField = (EditText) this.findViewById(R.id.register_yearField);
         nameField = (EditText) this.findViewById(R.id.register_nameField);
         phoneField = (EditText) this.findViewById(R.id.register_phoneField);
         emailField = (EditText) this.findViewById(R.id.register_emailField);
         lastField = (EditText) this.findViewById(R.id.register_lastNameField);
         confirmField = (EditText) this.findViewById(R.id.register_confirmField);
         passwordField = (EditText) this.findViewById(R.id.register_passwordField);
-        monthSpinner = (Spinner) this.findViewById(R.id.register_monthSpinner);
         genderSpinner = (Spinner) this.findViewById(R.id.register_genderSpinner);
+        monthSpinner = (Spinner) this.findViewById(R.id.register_monthSpinner);
+        yearSpinner = (Spinner) this.findViewById(R.id.register_yearSpinner);
+        daySpinner = (Spinner) this.findViewById(R.id.register_daySpinner);
 
-        link.setOnClickListener(this);
-        button.setOnClickListener(this);
-        this.setSupportActionBar(toolbar);
-        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+        progressDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
+        alertDialog = new AlertDialog.Builder(this, AlertDialog.BUTTON_NEUTRAL);
 
-    private void getData() {
-        name = nameField.getText().toString().trim();
-        lastName = lastField.getText().toString().trim();
-        telephone = phoneField.getText().toString().trim();
-        String day = dayField.getText().toString().trim();
-        String year = yearField.getText().toString().trim();
-        email = emailField.getText().toString().trim();
-        password = passwordField.getText().toString();
-        String passwordConfirm = confirmField.getText().toString();
+        alertDialog.setMessage("Al crear esta cuenta, estas aceptando los Términos de Privacidad.");
+        alertDialog.setPositiveButton("Aceptar", this);
+        alertDialog.setTitle("Advertencia");
 
-        int monthNumber = monthSpinner.getSelectedItemPosition();
-        int genderId = genderSpinner.getSelectedItemPosition();
+        progressDialog.setMessage("Cargando. Espere...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setIndeterminate(true);
 
-        if (!this.isNameValid(name)) {
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        } else if (!this.isNameValid(lastName)) {
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        } else if (!this.isNumberValid(telephone)) {
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        } else if (genderId == 0) {
-            Toast.makeText(this, "Seleccione el Genero", Toast.LENGTH_LONG).show();
-        } else if (day.length() == 0 || year.length() == 0 || monthNumber == 0) {
-            Toast.makeText(this, "Seleccione la Fecha de nacimiento", Toast.LENGTH_LONG).show();
-        } else if (!isEmailValid(email)) {
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        } else if (password.length() < 8) {
-            ;
-            Toast.makeText(this, "La contraseña debe contener al menos 8 caracteres", Toast.LENGTH_LONG).show();
-        } else if (!passwordConfirm.equals(password)) {
-            Toast.makeText(this, "La contraseña de confirmacion no coincide", Toast.LENGTH_LONG).show();
-        } else {
-            message = "connecting...";
-            gender = genderId == 1 ? "F" : "M";
-            birthday = "" + year + '-' + monthNumber + '-' + day;
-
-            AlertDialog.Builder confirmDialog = new AlertDialog.Builder(this);
-            confirmDialog.setMessage("Al crear esta cuenta, estas aceptando los Terminos de Privacidad.");
-            confirmDialog.setNegativeButton("Cancelar", null);
-            confirmDialog.setPositiveButton("Aceptar", this);
-            confirmDialog.setTitle("Advertencia");
-            confirmDialog.show();
-        }
-    }
-
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        String BASE_URL = "http://ec2-54-210-116-247.compute-1.amazonaws.com";
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
-        Interfaces interfaces = retrofit.create(Interfaces.class);
-        //Call<Response_General> call = interfaces.registerUser("register", name, lastName, gender, telephone, email, password, "0", birthday, "0");
-        //call.enqueue(this);
-    }
-
-    /*----Retrofit Methods----*/
-
-    @Override
-    public void onResponse(Call<Response_General> call, Response<Response_General> response) {
-        if(response.code() == 404) {
-            Toast.makeText(this, "Error al conectar con el servidor", Toast.LENGTH_SHORT).show();
-        } else if (!response.body().getResponse().equals("success")){
-            Toast.makeText(this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-        } else {
-
-        }
-    }
-
-    @Override
-    public void onFailure(Call<Response_General> call, Throwable t) {
-        Toast.makeText(this, t.getMessage(), Toast.LENGTH_LONG).show();
-        Log.e(this.getClass().getSimpleName(), "Message: " + t.getMessage());
-        t.printStackTrace();
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.register_link:
-                try {
-                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://brujulauniversitaria.com.mx/aviso-de-privacidad"));
-                    this.startActivity(intent);
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(this, "No application can handle this request, please install a Web browser.", Toast.LENGTH_LONG).show();
-                }
-                break;
-
-            case R.id.register_button:
-                this.getData();
-                break;
-        }
+        isDataAccepted = false;
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //this.getMenuInflater().inflate(R.menu.menu_web, menu);
+        getMenuInflater().inflate(R.menu.options_register, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        //Log.i(getClass().getSimpleName(), "keyCode;" + keyCode + "KeyEbent: " + event.toString());
+        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            verifyData();
+        }
+
+        return super.onKeyUp(keyCode, event);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                onBackPressed();
+                return true;
 
-                if (!super.onOptionsItemSelected(item)) {
-                    NavUtils.navigateUpFromSameTask(this);
+            case R.id.options_check:
+                // TODO: Verify data before sending to the Database
+                /*if (!isDataAccepted) {
+                    verifyData();
                 }
+
+                if (isDataAccepted) {
+                    alertDialog.show();
+                }*/
+
+                alertDialog.show();
 
                 return true;
         }
@@ -190,92 +131,90 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean isNameValid(String name) {
-        boolean flag = false;
-        char c;
+    /*-----DialogInterface method----*/
 
-        for (short i = 0; i < name.length(); i++) {
-            c = name.charAt(i);
-
-            if ((c < 'A' || c > 'Z') && (c < 'a' || c > 'z') && c != ' ' && c != '\u00F1' && c != '\u00D1') {
-                Log.e(this.getClass().getSimpleName(), "Character not accepted: " + c);
-                flag = true;
-                break;
-            }
-        }
-
-        if (name.length() == 0) {
-            message = "El campo Nombre o Apellido esta vacio";
-        } else if (name.length() < 3) {
-            message = "Escriba un nombre y/o appellido validos";
-        } else if (flag) {
-            message = "El nombre y el apellido solo puede contener letras";
-        } else {
-            return true;
-        }
-
-        return false;
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        progressDialog.show();
+        String urlAPI = getResources().getString(R.string.server_api);
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(urlAPI).addConverterFactory(GsonConverterFactory.create()).build();
+        Interfaces minimalSoftAPI = retrofit.create(Interfaces.class);
+        minimalSoftAPI.registerUser("register", name, lastName, gender, birthday, telephone, email, password, "", "", "").enqueue(this);
     }
 
-    private boolean isNumberValid(String number) {
-        boolean flag = false;
-        char c;
+    /*----Callback Methods----*/
 
-        for (short i = 0; i < number.length(); i++) {
-            c = number.charAt(i);
+    @Override
+    public void onResponse(Call<ResponseRegister> call, Response<ResponseRegister> response) {
+        progressDialog.hide();
 
-            if (c < '0' || c > '9') {
-                Log.e(this.getClass().getSimpleName(), "Character not accepted: " + c);
-                flag = true;
-                break;
-            }
-        }
-
-        if (number.length() == 0) {
-            message = "El campo Telefono esta vacio";
-        } else if (number.length() < 8 || number.length() > 10 || flag) {
-            message = "Escriba un numero de telefono valido";
+        if (response.code() == 404) {
+            alertDialog.setMessage("Error al conectar con el servidor");
+            alertDialog.setTitle("Server error");
+        } else if (!response.body().getResponse().equals("success")) {
+            alertDialog.setMessage(response.body().getMessage());
+            alertDialog.setTitle(response.body().getResponse());
         } else {
-            return true;
+            SharedPreferences.Editor preferencesEditor = getSharedPreferences("FACEBOOK_PREF", Context.MODE_PRIVATE).edit();
+            Intent intent = new Intent(this.getApplicationContext(), MainActivity.class);
+
+            preferencesEditor.putString("USER_NAME", name + ' ' + lastName);
+            preferencesEditor.putString("USER_EMAIL", email);
+            preferencesEditor.putBoolean("USER_PICS", false);
+            preferencesEditor.apply();
+            progressDialog.hide();
+            startActivity(intent);
+            finish();
+            return;
         }
 
-        return false;
+        alertDialog.show();
     }
 
-    private boolean isEmailValid(String email) {
-        boolean flag = false;
-        char c;
-        int i;
+    @Override
+    public void onFailure(Call<ResponseRegister> call, Throwable t) {
+        alertDialog.setMessage(t.getMessage());
+        alertDialog.setTitle("Failure");
+        progressDialog.hide();
+        alertDialog.show();
+    }
 
-        for (i = 0; i < email.length(); i++) {
-            c = email.charAt(i);
+    /*-----onClick Method----*/
 
-            if (c == '\u0040') {
-                flag = true;
-                break;
-            }
-        }
+    public void openLink(View v) {
+        String link = getResources().getString(R.string.terms_url);
+        Intent intent = new Intent(this, WebActivity.class);
 
-        if (email.length() == 0) {
-            message = "El campo Correo esta vacio";
-        } else if (email.length() < 3 || !flag) {
-            message = "Correo electronico no valido";
-        } else {
-            String username = email.substring(0, i);
-            String domain = email.substring(i + 1);
+        intent.putExtra("TITLE", "Aviso de privacidad");
+        intent.putExtra("LINK", link);
+        startActivity(intent);
 
-            if (username.length() == 0) {
-                message = "Direccion de correo no aceptado";
-            } else if (domain.length() == 0) {
-                message = "El correo no tiene dominio";
-            } else {
-                return true;
-            }
+        /*try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://brujulauniversitaria.com.mx/aviso-de-privacidad"));
+            this.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "No application can handle this request, please install a Web browser.", Toast.LENGTH_LONG).show();
+        }*/
+    }
 
-            Log.d(this.getClass().getSimpleName(), "Username: " + username);
-            Log.d(this.getClass().getSimpleName(), "Domain: " + domain);
-        }
+    private void verifyData() {
+        name = nameField.getText().toString().trim();
+        password = passwordField.getText().toString();
+        email = emailField.getText().toString().trim();
+        lastName = lastField.getText().toString().trim();
+        telephone = phoneField.getText().toString().trim();
 
-        return false;
+        int day = daySpinner.getSelectedItemPosition();
+        int year = yearSpinner.getSelectedItemPosition();
+        int month = monthSpinner.getSelectedItemPosition();
+        int genderId = genderSpinner.getSelectedItemPosition();
+        String confirmPassword = confirmField.getText().toString();
+
+        PromptedDataAnalyzer analyzer = new PromptedDataAnalyzer();
+        //isDataAccepted = analyzer.isAcceptable(name, lastName, telephone, email, password, confirmPassword, genderId, day, month, year);
+
+        //TODO: verify before accepting
+        gender = genderId == 1 ? "F" : "M";
+        birthday = "" + (year + 1989) + '-' + month + '-' + day;
     }
 }

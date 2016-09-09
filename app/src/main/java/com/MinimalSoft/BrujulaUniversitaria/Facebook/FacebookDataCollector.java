@@ -28,6 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallback, FacebookCallback<LoginResult>, Callback<ResponseRegister> {
     private final String FACEBOOK_API_FIELDS;
     private final String API_URL;
+
     private SharedPreferences.Editor preferencesEditor;
     private LoginActivity loginActivity;
     private String facebookToken;
