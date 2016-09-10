@@ -1,6 +1,6 @@
 package com.MinimalSoft.BrujulaUniversitaria.Facebook;
 
-import com.MinimalSoft.BrujulaUniversitaria.Models.ResponseRegister;
+import com.MinimalSoft.BrujulaUniversitaria.Models.UserResponse;
 import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
 import com.MinimalSoft.BrujulaUniversitaria.Start.LoginActivity;
 import com.MinimalSoft.BrujulaUniversitaria.R;
@@ -25,7 +25,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallback, FacebookCallback<LoginResult>, Callback<ResponseRegister> {
+public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallback, FacebookCallback<LoginResult>, Callback<UserResponse> {
     private final String FACEBOOK_API_FIELDS;
     private final String API_URL;
 
@@ -103,18 +103,16 @@ public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallba
     /*----Callback Methods----*/
 
     @Override
-    public void onResponse(Call<ResponseRegister> call, Response<ResponseRegister> response) {
+    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
         if (response.code() == 404) {
             loginActivity.displayError("Server error", "Error al conectar con el servidor");
-        } else if (!response.body().getResponse().equals("success")) {
-            loginActivity.displayError(response.body().getResponse(), response.body().getMessage());
         } else {
             loginActivity.logIn();
         }
     }
 
     @Override
-    public void onFailure(Call<ResponseRegister> call, Throwable t) {
+    public void onFailure(Call<UserResponse> call, Throwable t) {
         loginActivity.displayError("Failure", t.getMessage());
         // TODO: Fix API issues to get rid of this line
         loginActivity.logIn();

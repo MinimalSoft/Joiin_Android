@@ -3,8 +3,8 @@ package com.MinimalSoft.BrujulaUniversitaria.Start;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.Web.WebActivity;
 import com.MinimalSoft.BrujulaUniversitaria.Main.MainActivity;
+import com.MinimalSoft.BrujulaUniversitaria.Models.UserResponse;
 import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
-import com.MinimalSoft.BrujulaUniversitaria.Models.ResponseRegister;
 import com.MinimalSoft.BrujulaUniversitaria.Utilities.PromptedDataAnalyzer;
 
 import android.os.Bundle;
@@ -31,7 +31,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RegisterActivity extends AppCompatActivity implements DialogInterface.OnClickListener, Callback<ResponseRegister> {
+public class RegisterActivity extends AppCompatActivity implements DialogInterface.OnClickListener, Callback<UserResponse> {
     private AlertDialog.Builder alertDialog;
     private ProgressDialog progressDialog;
 
@@ -77,12 +77,8 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
         progressDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
         alertDialog = new AlertDialog.Builder(this, AlertDialog.BUTTON_NEUTRAL);
 
-        alertDialog.setMessage("Al crear esta cuenta, estas aceptando los Términos de Privacidad.");
-        alertDialog.setPositiveButton("Aceptar", this);
-        alertDialog.setTitle("Advertencia");
-
-        progressDialog.setMessage("Cargando. Espere...");
         progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Autenticando...");
         progressDialog.setIndeterminate(true);
 
         isDataAccepted = false;
@@ -123,6 +119,10 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
                     alertDialog.show();
                 }*/
 
+                alertDialog.setMessage("Al crear esta cuenta, estas aceptando los Términos de Privacidad.");
+                alertDialog.setNegativeButton("Cancelar", null);
+                alertDialog.setPositiveButton("Aceptar", this);
+                alertDialog.setTitle("Advertencia");
                 alertDialog.show();
 
                 return true;
@@ -145,15 +145,17 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
     /*----Callback Methods----*/
 
     @Override
-    public void onResponse(Call<ResponseRegister> call, Response<ResponseRegister> response) {
+    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
         progressDialog.hide();
 
         if (response.code() == 404) {
-            alertDialog.setMessage("Error al conectar con el servidor");
-            alertDialog.setTitle("Server error");
-        } else if (!response.body().getResponse().equals("success")) {
-            alertDialog.setMessage(response.body().getMessage());
-            alertDialog.setTitle(response.body().getResponse());
+            alertDialog.setTitle("Error al conectar con el servidor");
+            alertDialog.setMessage("¿Intentar de nuevo?");
+        } else if (response.body().getResponse().equals("alert")) {
+            alertDialog.setMessage("Ya existe un usuario con la misma información");
+            alertDialog.setNegativeButton(null, null);
+            alertDialog.setPositiveButton("Ok", null);
+            alertDialog.setTitle("Verificar datos");
         } else {
             SharedPreferences.Editor preferencesEditor = getSharedPreferences("FACEBOOK_PREF", Context.MODE_PRIVATE).edit();
             Intent intent = new Intent(this.getApplicationContext(), MainActivity.class);
@@ -172,7 +174,9 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
     }
 
     @Override
-    public void onFailure(Call<ResponseRegister> call, Throwable t) {
+    public void onFailure(Call<UserResponse> call, Throwable t) {
+        alertDialog.setNegativeButton(null, null);
+        alertDialog.setPositiveButton("Ok", null);
         alertDialog.setMessage(t.getMessage());
         alertDialog.setTitle("Failure");
         progressDialog.hide();
