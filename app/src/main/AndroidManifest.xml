@@ -51,6 +51,7 @@
             android:theme="@style/BU.NoActionBar" />
         <activity
             android:name=".Start.RegisterActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/BU.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden">
             <meta-data

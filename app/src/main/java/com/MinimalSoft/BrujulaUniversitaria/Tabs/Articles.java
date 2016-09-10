@@ -27,9 +27,9 @@ public class Articles extends Fragment implements SwipeRefreshLayout.OnRefreshLi
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (inflatedView == null) {
-            inflatedView = inflater.inflate(R.layout.fragment_articles, container, false);
-            swipeRefresh = (SwipeRefreshLayout) inflatedView.findViewById(R.id.articles_swipeRefresh);
-            RecyclerView recyclerView = (RecyclerView) inflatedView.findViewById(R.id.articles_recyclerView);
+            inflatedView = inflater.inflate(R.layout.fragment_refresher_list, container, false);
+            swipeRefresh = (SwipeRefreshLayout) inflatedView.findViewById(R.id.refresher_swipeRefresh);
+            RecyclerView recyclerView = (RecyclerView) inflatedView.findViewById(R.id.refresher_recyclerView);
 
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(inflatedView.getContext());
             articlesAdapter = new ArticlesAdapter(this);
