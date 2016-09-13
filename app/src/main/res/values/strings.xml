@@ -46,6 +46,7 @@
     <string name="title_activity_map">Transporte</string>
 
     <string name="server_api">http://api.buniversitaria.com</string>
+    <string name="terms_url">http://buniversitaria.com/aviso-de-privacidad/</string>
     <string name="server_wp"><![CDATA[http://buniversitaria.com/wp-json/wp/v2/posts?_wp_json_nonce=4355d0c4b3&items=id,title,image,link]]></string>
 </resources>
 

@@ -1,6 +1,6 @@
 package com.MinimalSoft.BrujulaUniversitaria.Models;
 
-public class DataRegister {
+public class UserData {
     private Integer idUser;
     private String name;
     private String lastName;

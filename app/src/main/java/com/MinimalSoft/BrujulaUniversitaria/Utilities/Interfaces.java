@@ -1,13 +1,8 @@
 package com.MinimalSoft.BrujulaUniversitaria.Utilities;
 
-import com.MinimalSoft.BrujulaUniversitaria.Models.Response_General;
-import com.MinimalSoft.BrujulaUniversitaria.Models.Response_Start;
-import com.MinimalSoft.BrujulaUniversitaria.Models.Response_PlaceDetails;
-import com.MinimalSoft.BrujulaUniversitaria.Models.Ecobici_Stop;
-import com.MinimalSoft.BrujulaUniversitaria.Models.Response_Reviews;
+import com.MinimalSoft.BrujulaUniversitaria.Models.*;
 
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -37,25 +32,26 @@ public interface Interfaces {
                                      @Field("radio") String radio);
 
     @FormUrlEncoded
-    @POST("/app/controllers/user/user.php")
-    Call<Response_Start> logInUser(@Field("action") String action,
-                                   @Field("email") String email,
-                                   @Field("password") String password,
-                                   @Field("idFacebook") String idFacebook,
-                                   @Field("deviceToken") String deviceToken);
+    @POST("/controllers/user/user.php")
+    Call<UserResponse> logInUser(@Field("action") String action,
+                                 @Field("email") String email,
+                                 @Field("password") String password,
+                                 @Field("idFacebook") String idFacebook,
+                                 @Field("deviceToken") String deviceToken);
 
     @FormUrlEncoded
-    @POST("/app/controllers/user/user.php")
-    Call<Response_Start> registerUser(@Field("action") String action,
-                                        @Field("name") String name,
-                                        @Field("lastName") String lastName,
-                                        @Field("gender") String gender,
-                                        @Field("phone") String phone,
-                                        @Field("email") String email,
-                                        @Field("password") String password,
-                                        @Field("idFacebook") String idFacebook,
-                                        @Field("birthday") String birthday,
-                                        @Field("deviceToken") String deviceToken);
+    @POST("/controllers/user/user.php")
+    Call<UserResponse> registerUser(@Field("action") String action,
+                                    @Field("name") String name,
+                                    @Field("lastName") String lastName,
+                                    @Field("gender") String gender,
+                                    @Field("birthday") String birthday,
+                                    @Field("phone") String phone,
+                                    @Field("email") String email,
+                                    @Field("password") String password,
+                                    @Field("fbImage") String urlImage,
+                                    @Field("idFacebook") String idFacebook,
+                                    @Field("deviceToken") String deviceToken);
 
     @FormUrlEncoded
     @POST("/app/controllers/user/user.php")

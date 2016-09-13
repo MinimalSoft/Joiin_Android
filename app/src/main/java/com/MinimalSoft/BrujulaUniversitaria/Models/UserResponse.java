@@ -1,9 +1,9 @@
 package com.MinimalSoft.BrujulaUniversitaria.Models;
 
-public class ResponseRegister {
+public class UserResponse {
     private String response;
     private String message;
-    private DataRegister data;
+    private UserData data;
 
     public String getResponse() {
         return response;
@@ -21,11 +21,11 @@ public class ResponseRegister {
         this.message = message;
     }
 
-    public DataRegister getData() {
+    public UserData getData() {
         return data;
     }
 
-    public void setData(DataRegister data) {
+    public void setData(UserData data) {
         this.data = data;
     }
 }

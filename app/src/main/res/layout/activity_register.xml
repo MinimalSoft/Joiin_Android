@@ -10,13 +10,13 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/register_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:title="Registro Nuevo Usuario" />
+            android:layout_height="?attr/actionBarSize"
+            app:title="Formulario de Registro" />
     </android.support.design.widget.AppBarLayout>
 
     <ScrollView
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="330dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="20dp"
@@ -36,40 +36,33 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:paddingBottom="10dp"
-                android:text="Informacion del usuario"
+                android:text="Información del usuario"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:background="@color/grey_50"
                 android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/colorWhite" />
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_account"
-                        android:tint="@color/gray" />
-                </RelativeLayout>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_account" />
 
                 <EditText
+
                     android:id="@+id/register_nameField"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/colorWhite"
-                    android:ems="10"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/grey_50"
                     android:hint="Nombre"
                     android:inputType="textPersonName"
                     android:lines="1" />
@@ -79,31 +72,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:background="@color/grey_50"
                 android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/colorWhite" />
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_account"
-                        android:tint="@color/gray" />
-                </RelativeLayout>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_account" />
 
                 <EditText
                     android:id="@+id/register_lastNameField"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/colorWhite"
-                    android:ems="10"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/grey_50"
                     android:hint="Apellido"
                     android:inputType="textPersonName"
                     android:lines="1" />
@@ -113,32 +98,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:background="@color/grey_50"
                 android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/colorWhite" />
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_phone"
-                        android:tint="@color/gray" />
-                </RelativeLayout>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_phone" />
 
                 <EditText
                     android:id="@+id/register_phoneField"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/colorWhite"
-                    android:ems="11"
-                    android:hint="Telefono"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/grey_50"
+                    android:hint="Teléfono"
                     android:inputType="phone"
                     android:lines="1" />
             </LinearLayout>
@@ -147,125 +124,115 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:background="@color/grey_50"
                 android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_gender_male_female" />
 
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/colorWhite" />
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_gender_male_female"
-                        android:tint="@color/gray" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@color/colorWhite" />
-
-                    <Spinner
-                        android:id="@+id/register_genderSpinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_centerInParent="true"
-                        android:entries="@array/genderOptions" />
-                </RelativeLayout>
+                <Spinner
+                    android:id="@+id/register_genderSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:entries="@array/genderOptions" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@color/grey_50"
                 android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="80dp"
-                        android:background="@color/colorWhite" />
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_calendar_blank"
-                        android:tint="@color/gray" />
-                </RelativeLayout>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_calendar_blank" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorWhite"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="5dp">
 
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:layout_gravity="center_horizontal"
                         android:text="Fecha de nacimiento"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceListItem" />
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:layout_height="30dp">
 
-                        <Spinner
-                            android:id="@+id/register_daySpinner"
-                            android:layout_width="90dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center_vertical"
-                            android:entries="@array/dayOptions" />
-
-                        <!--EditText
-                            android:id="@+id/register_dayField"
-                            android:layout_width="70dp"
-                            android:layout_height="50dp"
-                            android:background="@color/colorWhite"
-                            android:ems="10"
-                            android:hint="Dia"
-                            android:inputType="number"
-                            android:lines="1" /-->
-
-                        <Spinner
-                            android:id="@+id/register_monthSpinner"
-                            android:layout_width="95dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center_vertical"
-                            android:entries="@array/monthOptions" />
-
-                        <!--EditText
-                            android:id="@+id/register_yearField"
-                            android:layout_width="80dp"
-                            android:layout_height="50dp"
-                            android:background="@color/colorWhite"
-                            android:ems="10"
-                            android:hint="Año"
-                            android:inputType="number"
-                            android:lines="1" /-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="5dp"
+                            android:text="Año:"
+                            android:textAppearance="?android:attr/textAppearanceListItem" />
 
                         <Spinner
                             android:id="@+id/register_yearSpinner"
-                            android:layout_width="100dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center_vertical"
+                            android:layout_width="180dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
                             android:entries="@array/yearOptions" />
-                    </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="5dp"
+                            android:text="Mes:"
+                            android:textAppearance="?android:attr/textAppearanceListItem" />
+
+                        <Spinner
+                            android:id="@+id/register_monthSpinner"
+                            android:layout_width="180dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:entries="@array/monthOptions" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="5dp"
+                            android:text="Día:"
+                            android:textAppearance="?android:attr/textAppearanceListItem" />
+
+                        <Spinner
+                            android:id="@+id/register_daySpinner"
+                            android:layout_width="180dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:entries="@array/dayOptions" />
+                    </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -279,7 +246,7 @@
                     android:layout_width="70dp"
                     android:layout_height="2dp"
                     android:layout_weight="1"
-                    android:background="@color/colorWhite" />
+                    android:background="@color/grey_50" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -287,46 +254,38 @@
                     android:layout_margin="10dp"
                     android:text="Acceso"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/grey_50"
                     android:textStyle="bold" />
 
                 <View
                     android:layout_width="70dp"
                     android:layout_height="2dp"
                     android:layout_weight="1"
-                    android:background="@color/colorWhite" />
+                    android:background="@color/grey_50" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:background="@color/grey_50"
                 android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/colorWhite" />
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/icon_mail"
-                        android:tint="@color/gray" />
-                </RelativeLayout>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_at" />
 
                 <EditText
                     android:id="@+id/register_emailField"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/colorWhite"
-                    android:ems="10"
-                    android:hint="Insertar correo"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/grey_50"
+                    android:hint="Correo electrónico"
                     android:inputType="textEmailAddress"
                     android:lines="1" />
             </LinearLayout>
@@ -335,32 +294,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:background="@color/grey_50"
                 android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/colorWhite" />
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/icon_password"
-                        android:tint="@color/gray" />
-                </RelativeLayout>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_lock" />
 
                 <EditText
                     android:id="@+id/register_passwordField"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/colorWhite"
-                    android:ems="10"
-                    android:hint="Insertar contraseña"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/grey_50"
+                    android:hint="Contraseña"
                     android:inputType="textPassword"
                     android:lines="1" />
             </LinearLayout>
@@ -369,57 +320,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:background="@color/grey_50"
                 android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/colorWhite" />
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/icon_password"
-                        android:tint="@color/gray" />
-                </RelativeLayout>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_lock" />
 
                 <EditText
                     android:id="@+id/register_confirmField"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/colorWhite"
-                    android:ems="10"
-                    android:hint="Confirmar contraseña"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/grey_50"
+                    android:hint="Repetir contraseña"
                     android:inputType="textPassword"
                     android:lines="1" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/register_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="10dp"
                 android:clickable="true"
+                android:onClick="openLink"
                 android:paddingBottom="10dp"
                 android:text="@string/link"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/register_button"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginBottom="30dp"
-                android:layout_marginTop="15dp"
-                android:background="@color/colorPrimary"
-                android:text="Crear Cuenta"
-                android:textColor="@color/colorWhite"
-                android:textSize="15sp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
