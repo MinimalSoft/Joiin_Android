@@ -11,19 +11,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.MinimalSoft.BrujulaUniversitaria.List.PlacesList;
 import com.MinimalSoft.BrujulaUniversitaria.Models.Response_General;
 import com.MinimalSoft.BrujulaUniversitaria.Models.Data_General;
 import com.MinimalSoft.BrujulaUniversitaria.R;
@@ -43,7 +39,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -431,20 +426,19 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
     private void setToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        /*final ActionBar ab = getSupportActionBar();
+        final ActionBar ab = getSupportActionBar();
         if (ab != null) {
             // Poner ícono del drawer toggle
             //ab.setHomeAsUpIndicator(R.drawable.ic_menu);
             ab.setDisplayHomeAsUpEnabled(true);
 
-            /*toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onBackPressed();
                 }
             });
-        }*/
+        }
     }
 
     private void setActivityParams ()
@@ -462,34 +456,5 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
                 onLocationChanged(mLastLocation);
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.options_map, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            case R.id.options_list:
-                if (placesData != null) {
-                    Gson gson = new Gson();
-                    Bundle bundle = getIntent().getExtras();
-                    String gsonInfo = gson.toJson(placesData);
-                    Intent intent = new Intent(this, PlacesList.class);
-                    intent.putExtra("IMAGE", bundle.getString("MARKER"));
-                    intent.putExtra("GSON", gsonInfo);
-                    startActivity(intent);
-                }
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
