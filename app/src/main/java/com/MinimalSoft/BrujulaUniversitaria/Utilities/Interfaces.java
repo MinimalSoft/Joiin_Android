@@ -88,6 +88,11 @@ public interface Interfaces {
                                      @Field("idPlace") String idPlace);
 
     @FormUrlEncoded
+    @POST("/controllers/reviews/review.php")
+    Call<ReviewsResponse> getAllReviews(@Field("action") String action,
+                                        @Field("number") String number);
+
+    @FormUrlEncoded
     @POST("/app/controllers/user/user.php")
     Call<Response_General> getPromos(@Field("action") String action,
                                      @Field("idType") String idType);

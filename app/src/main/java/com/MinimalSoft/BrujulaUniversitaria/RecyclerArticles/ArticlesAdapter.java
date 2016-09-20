@@ -62,7 +62,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticleHolder> {
                 }
             });
         } else {
-            holder.title.setText(" Loading...");
+            holder.title.setText(" Cargando...");
         }
     }
 
