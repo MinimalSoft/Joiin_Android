@@ -103,12 +103,13 @@ public class LoginActivity extends Activity implements View.OnClickListener, Cal
         } else if (response.body().getResponse().equals("alert")) {
             Toast.makeText(this, "Correo y/o contraseña incorrectos", Toast.LENGTH_LONG).show();
         } else {
-            SharedPreferences.Editor preferencesEditor = getSharedPreferences("FACEBOOK_PREF", Context.MODE_PRIVATE).edit();
+            SharedPreferences.Editor preferencesEditor = getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).edit();
             String fullName = response.body().getData().getName() + ' ' + response.body().getData().getLastName();
 
             preferencesEditor.putString("USER_NAME", fullName);
             preferencesEditor.putString("USER_EMAIL", email);
-            preferencesEditor.putBoolean("USER_PICS", false);
+            //preferencesEditor.putBoolean("USER_PICS", false);
+            preferencesEditor.putBoolean("LOGGED_IN", true);
             preferencesEditor.apply();
             logIn();
         }

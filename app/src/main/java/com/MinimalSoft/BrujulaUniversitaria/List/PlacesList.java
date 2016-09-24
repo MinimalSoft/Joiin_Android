@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.MinimalSoft.BrujulaUniversitaria.Models.Data_General;
+import com.MinimalSoft.BrujulaUniversitaria.Models.PlaceData;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -30,31 +30,36 @@ public class PlacesList extends AppCompatActivity implements AdapterView.OnItemC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.example_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.list_toolbar);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setTitle(getIntent().getExtras().getString("TITLE"));
         String strGson = getIntent().getExtras().getString("GSON");
+        String serverURL = getResources().getString(R.string.server_api) + "/imagenes/";
 
-        Type type = new TypeToken<List<Data_General>>() {
+        Type type = new TypeToken<List<PlaceData>>() {
         }.getType();
-        List<Data_General> dataAPIList = new Gson().fromJson(strGson, type);
+        List<PlaceData> placeDataList = new Gson().fromJson(strGson, type);
         List<Place> placesList = new ArrayList<>();
 
-        for (short i = 0; i < dataAPIList.size(); i++) {
-            String address = dataAPIList.get(i).getStreet() +
-                    " # " + dataAPIList.get(i).getNumber() +
-                    ", " + dataAPIList.get(i).getNeighborhood();
-            String name = dataAPIList.get(i).getPlaceName();
-            placesList.add(new Place(name, address));
+        for (short i = 0; i < placeDataList.size(); i++) {
+            String address = placeDataList.get(i).getStreet() +
+                    " # " + placeDataList.get(i).getNumber() +
+                    ", " + placeDataList.get(i).getNeighborhood();
+            String name = placeDataList.get(i).getPlaceName();
+            String link = placeDataList.get(i).getImage();
+            int rating = placeDataList.get(i).getStars();
+            String url = serverURL + link;
+
+            placesList.add(new Place(name, address, rating, url));
         }
 
-        PlaceListAdapter listAdapter = new PlaceListAdapter(this, R.layout.item_list_place, placesList);
+        PlaceListAdapter listAdapter = new PlaceListAdapter(this, R.layout.item_place, placesList);
         ListView listView = (ListView) findViewById(R.id.list_listView);
-        listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(this);
+        listView.setAdapter(listAdapter);
     }
 
     @Override

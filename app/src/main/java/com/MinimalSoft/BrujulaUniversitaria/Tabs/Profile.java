@@ -1,37 +1,174 @@
 package com.MinimalSoft.BrujulaUniversitaria.Tabs;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.MinimalSoft.BrujulaUniversitaria.Facebook.FacebookPicturesCollector;
-import com.MinimalSoft.BrujulaUniversitaria.R;
-import com.MinimalSoft.BrujulaUniversitaria.SettingsActivity;
 import com.MinimalSoft.BrujulaUniversitaria.Start.LoginActivity;
+import com.MinimalSoft.BrujulaUniversitaria.SettingsActivity;
 import com.MinimalSoft.BrujulaUniversitaria.Web.WebActivity;
+import com.MinimalSoft.BrujulaUniversitaria.R;
+
+import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import org.json.JSONObject;
+import org.json.JSONException;
+
+import android.content.Intent;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.LayoutInflater;
+
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.ImageView;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.support.annotation.Nullable;
+
+import java.net.URL;
+import java.net.MalformedURLException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Profile extends Fragment implements View.OnClickListener, DialogInterface.OnClickListener {
+public class Profile extends Fragment implements GraphRequest.GraphJSONObjectCallback, DialogInterface.OnClickListener, View.OnClickListener {
+    private boolean flag;
+    private TextView nameLabel;
+    private TextView emailLabel;
+    private ImageView imageView;
+    private CircleImageView profilePicture;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View inflatedView = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        imageView = (ImageView) inflatedView.findViewById(R.id.cover_imageView);
+        nameLabel = (TextView) inflatedView.findViewById(R.id.profile_nameLabel);
+        emailLabel = (TextView) inflatedView.findViewById(R.id.profile_emailLabel);
+        profilePicture = (CircleImageView) inflatedView.findViewById(R.id.profile_imageView);
+        Button logoutButton = (Button) inflatedView.findViewById(R.id.profile_logoutButton);
+        Button updateButton = (Button) inflatedView.findViewById(R.id.profile_upDateButton);
+        Button settingsButton = (Button) inflatedView.findViewById(R.id.profile_settingsButton);
+        Button disclaimerButton = (Button) inflatedView.findViewById(R.id.profile_disclaimerButton);
+
+        disclaimerButton.setOnClickListener(this);
+        settingsButton.setOnClickListener(this);
+        updateButton.setOnClickListener(this);
+        logoutButton.setOnClickListener(this);
+
+        return inflatedView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        SharedPreferences settings = getActivity().getSharedPreferences("USER_PREF", Context.MODE_PRIVATE);
+        emailLabel.setText(settings.getString("USER_EMAIL", "loading..."));
+        nameLabel.setText(settings.getString("USER_NAME", "loading..."));
+        String facebookID = settings.getString("FACEBOOK_ID", "NA");
+
+        if (!facebookID.equals("NA")) {
+            flag = true;
+            Bundle parameters = new Bundle();
+            FacebookSdk.sdkInitialize(getActivity());
+            //String facebookFields = "name,email,picture.type(large),source";
+            String facebookFields = "cover";
+            parameters.putString("fields", facebookFields);
+
+            GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), this);
+            graphRequest.setParameters(parameters);
+            graphRequest.executeAsync();
+        } else {
+            flag = false;
+        }
+    }
+
+    /*GraphRequest implemented methods*/
+
+    @Override
+    public void onCompleted(JSONObject object, GraphResponse response) {
+        JSONObject json = response.getJSONObject();
+
+        try {
+            Log.i(getClass().getSimpleName(), json.toString());
+            URL coverPicURL = new URL(json.getJSONObject("cover").getString("source"));
+            //URL profilePicURL = new URL(json.getJSONObject("picture").getJSONObject("data").getString("url"));
+            //boolean imagesSaved = settings.getBoolean("USER_PICS", false);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*----DialogInterface methods----*/
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        SharedPreferences.Editor settingsEditor = getActivity().getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).edit();
+
+        Intent intent = new Intent(this.getActivity(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        //emailLabel.setText(getResources().getString(R.string.user_email_hint));
+        //nameLabel.setText(getResources().getString(R.string.user_name_hint));
+
+        if (flag) {
+            //settingsEditor.putBoolean("USER_PICS", false);
+            settingsEditor.putString("FACEBOOK_ID", "NA");
+            FacebookSdk.sdkInitialize(this.getActivity());
+            LoginManager.getInstance().logOut();
+        }
+
+        settingsEditor.putBoolean("LOGGED_IN", false);
+        settingsEditor.apply();
+        startActivity(intent);
+        getActivity().finish();
+    }
+
+    /*----View methods----*/
+
+    @Override
+    public void onClick(View v) {
+        Intent intent;
+
+        switch (v.getId()) {
+            case R.id.profile_logoutButton:
+                AlertDialog.Builder confirmDialog = new AlertDialog.Builder(this.getActivity());
+                confirmDialog.setMessage("Cada que alguien nos deja, nuestro  DevTeam llora :'(");
+                confirmDialog.setTitle("¿Serguro que deseas salir?");
+                confirmDialog.setPositiveButton("Continuar", this);
+                confirmDialog.setNegativeButton("Cancelar", null);
+                confirmDialog.show();
+                break;
+
+            case R.id.profile_disclaimerButton:
+                String link = getResources().getString(R.string.terms_url);
+                intent = new Intent(this.getActivity(), WebActivity.class);
+
+                intent.putExtra("TITLE", "Aviso de privacidad");
+                intent.putExtra("LINK", link);
+                startActivity(intent);
+                break;
+
+            case R.id.profile_settingsButton:
+                intent = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
+}
+
+/*public class Profile extends Fragment implements View.OnClickListener, DialogInterface.OnClickListener {
     private FacebookPicturesCollector picturesCollector;
     private CircleImageView profilePicture;
     private TextView disclaimerButton;
@@ -178,4 +315,4 @@ public class Profile extends Fragment implements View.OnClickListener, DialogInt
             picturesCollector.execute();
         }
     }
-}
+}*/

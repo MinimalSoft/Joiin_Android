@@ -9,7 +9,9 @@ public class ReviewsData {
     private String date;
     private Object fbImage;
     private Integer idUser;
-    private Object placeName;
+    private String placeName;
+    private Integer idType;
+    private Integer idReview;
 
     public String getName() {
         return name;
@@ -75,11 +77,27 @@ public class ReviewsData {
         this.idUser = idUser;
     }
 
-    public Object getPlaceName() {
+    public String getPlaceName() {
         return placeName;
     }
 
-    public void setPlaceName(Object placeName) {
+    public void setPlaceName(String placeName) {
         this.placeName = placeName;
+    }
+
+    public Integer getIdType() {
+        return idType;
+    }
+
+    public void setIdType(Integer idType) {
+        this.idType = idType;
+    }
+
+    public Integer getIdReview() {
+        return idReview;
+    }
+
+    public void setIdReview(Integer idReview) {
+        this.idReview = idReview;
     }
 }

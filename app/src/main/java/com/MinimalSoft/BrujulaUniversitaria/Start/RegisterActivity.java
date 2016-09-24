@@ -157,12 +157,13 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
             alertDialog.setPositiveButton("Ok", null);
             alertDialog.setTitle("Verificar datos");
         } else {
-            SharedPreferences.Editor preferencesEditor = getSharedPreferences("FACEBOOK_PREF", Context.MODE_PRIVATE).edit();
+            SharedPreferences.Editor preferencesEditor = getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).edit();
             Intent intent = new Intent(this.getApplicationContext(), MainActivity.class);
 
             preferencesEditor.putString("USER_NAME", name + ' ' + lastName);
             preferencesEditor.putString("USER_EMAIL", email);
-            preferencesEditor.putBoolean("USER_PICS", false);
+            //preferencesEditor.putBoolean("USER_PICS", false);
+            preferencesEditor.putBoolean("LOGGED_IN", true);
             preferencesEditor.apply();
             progressDialog.hide();
             startActivity(intent);

@@ -86,12 +86,14 @@ public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallba
             Interfaces minimalSoftAPI = retrofit.create(Interfaces.class);
             minimalSoftAPI.registerUser("register", firstName, lastName, gender, "", "", email, "", url, idFacebook, facebookToken).enqueue(this);
 
-            preferencesEditor = loginActivity.getSharedPreferences("FACEBOOK_PREF", Context.MODE_PRIVATE).edit();
+            // TODO: Move these lines to onSuccess response
+            preferencesEditor = loginActivity.getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).edit();
             preferencesEditor.putString("FACEBOOK_TOKEN", facebookToken);
             preferencesEditor.putString("FACEBOOK_ID", idFacebook);
-            preferencesEditor.putBoolean("USER_PICS", false);
             preferencesEditor.putString("USER_EMAIL", email);
             preferencesEditor.putString("USER_NAME", name);
+            preferencesEditor.putBoolean("LOGGED_IN", true);
+            //preferencesEditor.putBoolean("USER_PICS", false);
             preferencesEditor.apply();
         } catch (NullPointerException exc) {
             loginActivity.displayError("Server error", exc.getMessage());

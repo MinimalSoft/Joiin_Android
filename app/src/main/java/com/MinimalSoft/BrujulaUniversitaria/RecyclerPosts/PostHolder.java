@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.support.v7.widget.RecyclerView;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener, OnLikeListener {

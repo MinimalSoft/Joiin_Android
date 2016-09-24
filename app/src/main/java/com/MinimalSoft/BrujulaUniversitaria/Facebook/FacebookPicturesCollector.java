@@ -58,7 +58,7 @@ public class FacebookPicturesCollector implements GraphRequest.GraphJSONObjectCa
             downloadThread.start();
             downloadThread.join();
 
-            profile.uploadPictures(profileBitmap, coverBitmap);
+            //profile.uploadPictures(profileBitmap, coverBitmap);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {

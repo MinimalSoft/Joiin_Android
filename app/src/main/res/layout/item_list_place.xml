@@ -1,34 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:layout_marginBottom="2dp">
 
     <ImageView
-        android:id="@+id/item_image"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_margin="5dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/marker_bu" />
+        android:id="@+id/place_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_image" />
 
-    <LinearLayout
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient" />
+
+    <TextView
+        android:id="@+id/place_addressText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="vertical">
+        android:layout_alignBottom="@id/place_image"
+        android:layout_marginStart="5dp"
+        android:text="Dirección"
+        android:textAppearance="?android:attr/textAppearanceListItemSecondary"
+        android:textColor="@color/white" />
 
-        <TextView
-            android:id="@+id/item_nameText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Etiqueta"
-            android:textAppearance="?android:attr/textAppearanceListItem" />
+    <TextView
+        android:id="@+id/place_nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/place_addressText"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
+        android:text="Nombre"
+        android:textAppearance="?android:attr/textAppearanceListItem"
+        android:textColor="@android:color/white" />
 
-        <TextView
-            android:id="@+id/item_addressText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Direccion" />
-    </LinearLayout>
-</LinearLayout>
+    <TextView
+        android:id="@+id/place_ratingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/place_image"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="5dp"
+        android:text="0.0"
+        android:textColor="@android:color/white"
+        android:textSize="25sp" />
+
+    <ImageView
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_alignBottom="@id/place_image"
+        android:layout_margin="5dp"
+        android:layout_toLeftOf="@+id/place_ratingText"
+        android:src="@drawable/star_on" />
+</RelativeLayout>

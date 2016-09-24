@@ -18,45 +18,42 @@ import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.Main.MainActivity;
 
 public class StartActivity extends AppCompatActivity implements Runnable {
-
-    private Intent intent;
+    //private AnimationDrawable animation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_start);
 
-        ImageView imageView = (ImageView) findViewById(R.id.animationView);
+        ImageView imageView = (ImageView) findViewById(R.id.start_animation);
         imageView.setBackgroundResource(R.drawable.animation_loading);
-
         AnimationDrawable animation = (AnimationDrawable) imageView.getBackground();
 
-        int imageDelay = this.getApplicationContext().getResources().getInteger(R.integer.image_delay);
-        int imageCount = animation.getNumberOfFrames();
-        int timeDelay = imageDelay * imageCount;
+        int imageDuration = getResources().getInteger(R.integer.image_duration);
+        int framesCount = animation.getNumberOfFrames();
+        int timeDelay = imageDuration * framesCount;
 
-        Handler handler = new Handler();
-
+        new Handler().postDelayed(this, timeDelay);
         animation.start();
-        handler.postDelayed(this, timeDelay);
     }
 
     @Override
     public void run() {
-        SharedPreferences settings = this.getSharedPreferences("FACEBOOK_PREF", Context.MODE_PRIVATE);
-        String id = settings.getString("FACEBOOK_ID", "NA");
+        Intent intent;
+        //animation.stop();
 
-        if (id.equals("NA")) {
-            intent = new Intent(this, LoginActivity.class);
-        } else {
+        SharedPreferences settings = this.getSharedPreferences("USER_PREF", Context.MODE_PRIVATE);
+
+        if (settings.getBoolean("LOGGED_IN", false)) {
             intent = new Intent(this, MainActivity.class);
+        } else {
+            intent = new Intent(this, LoginActivity.class);
         }
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        this.startActivity(intent);
-        this.finish();
+        startActivity(intent);
+        finish();
     }
-
     /* Consider Review */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     protected void setColor ()

@@ -3,10 +3,10 @@ package com.MinimalSoft.BrujulaUniversitaria.Models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReviewsResponse {
+public class PlaceResponse {
     private String response;
-    private Integer message;
-    private List<ReviewsData> data = new ArrayList<>();
+    private String message;
+    private List<PlaceData> data = new ArrayList<>();
 
     public String getResponse() {
         return response;
@@ -16,19 +16,19 @@ public class ReviewsResponse {
         this.response = response;
     }
 
-    public Integer getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(Integer message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 
-    public List<ReviewsData> getData() {
+    public List<PlaceData> getData() {
         return data;
     }
 
-    public void setData(List<ReviewsData> data) {
+    public void setData(List<PlaceData> data) {
         this.data = data;
     }
 }
