@@ -66,18 +66,20 @@ public class NewsFeed extends Fragment implements SwipeRefreshLayout.OnRefreshLi
             int count = response.body().getData().size();
             postList = new ArrayList<>(count);
 
-            for (int i = (count - 1); i >= 0; i--) {
+            for (int i = 0; i < count; i++) {
                 int stars = response.body().getData().get(i).getStars();
                 int likes = response.body().getData().get(i).getLikes();
                 int userID = response.body().getData().get(i).getIdUser();
+                int postID = response.body().getData().get(i).getIdReview();
                 int dislikes = response.body().getData().get(i).getDislikes();
 
+                String url = response.body().getData().get(i).getFbImage();
                 String review = response.body().getData().get(i).getText();
                 String userName = response.body().getData().get(i).getName();
-                String dateTime = response.body().getData().get(i).getDate().replace(" ", " | ");
-                String placeName = String.valueOf(response.body().getData().get(i).getPlaceName());
+                String placeName = response.body().getData().get(i).getPlaceName();
+                String dateTime = response.body().getData().get(i).getDate().replace(" ", " a las ");
 
-                postList.add(new Post(userID, stars, likes, dislikes, userName, placeName, review, dateTime, null));
+                postList.add(new Post(userID, postID, stars, likes, dislikes, userName, placeName, review, dateTime, url));
                 newsFeedAdapter.updatePosts(postList);
             }
         }

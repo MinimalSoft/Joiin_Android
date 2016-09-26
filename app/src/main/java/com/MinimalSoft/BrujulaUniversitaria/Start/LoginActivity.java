@@ -16,8 +16,10 @@ import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Toast;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
+
 import android.content.Intent;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -106,9 +108,9 @@ public class LoginActivity extends Activity implements View.OnClickListener, Cal
             SharedPreferences.Editor preferencesEditor = getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).edit();
             String fullName = response.body().getData().getName() + ' ' + response.body().getData().getLastName();
 
+            preferencesEditor.putInt("USER_ID", response.body().getData().getIdUser());
             preferencesEditor.putString("USER_NAME", fullName);
             preferencesEditor.putString("USER_EMAIL", email);
-            //preferencesEditor.putBoolean("USER_PICS", false);
             preferencesEditor.putBoolean("LOGGED_IN", true);
             preferencesEditor.apply();
             logIn();

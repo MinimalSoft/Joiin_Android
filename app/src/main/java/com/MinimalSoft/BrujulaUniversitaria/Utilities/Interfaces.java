@@ -24,6 +24,12 @@ public interface Interfaces {
                                                 @Field("idPlace") String idPlace);
 
     @FormUrlEncoded
+    @POST("/controllers/reviews/review.php")
+    Call<LikesResponse> like(@Field("action") String action,
+                             @Field("idUser") String idUser,
+                             @Field("idReview") String idReview);
+
+    @FormUrlEncoded
     @POST("/app/controllers/place/place.php")
     Call<Response_General> getPlaces(@Field("action") String action,
                                      @Field("idType") String idType,

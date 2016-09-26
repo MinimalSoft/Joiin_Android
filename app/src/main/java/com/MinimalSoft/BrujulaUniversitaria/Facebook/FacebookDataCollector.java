@@ -5,6 +5,7 @@ import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
 import com.MinimalSoft.BrujulaUniversitaria.Start.LoginActivity;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.FacebookException;
 import com.facebook.FacebookCallback;
@@ -29,7 +30,6 @@ public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallba
     private final String FACEBOOK_API_FIELDS;
     private final String API_URL;
 
-    private SharedPreferences.Editor preferencesEditor;
     private LoginActivity loginActivity;
     private String facebookToken;
     private String idFacebook;
@@ -85,16 +85,6 @@ public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallba
             Retrofit retrofit = new Retrofit.Builder().baseUrl(API_URL).addConverterFactory(GsonConverterFactory.create()).build();
             Interfaces minimalSoftAPI = retrofit.create(Interfaces.class);
             minimalSoftAPI.registerUser("register", firstName, lastName, gender, "", "", email, "", url, idFacebook, facebookToken).enqueue(this);
-
-            // TODO: Move these lines to onSuccess response
-            preferencesEditor = loginActivity.getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).edit();
-            preferencesEditor.putString("FACEBOOK_TOKEN", facebookToken);
-            preferencesEditor.putString("FACEBOOK_ID", idFacebook);
-            preferencesEditor.putString("USER_EMAIL", email);
-            preferencesEditor.putString("USER_NAME", name);
-            preferencesEditor.putBoolean("LOGGED_IN", true);
-            //preferencesEditor.putBoolean("USER_PICS", false);
-            preferencesEditor.apply();
         } catch (NullPointerException exc) {
             loginActivity.displayError("Server error", exc.getMessage());
         } catch (JSONException exc) {
@@ -107,8 +97,17 @@ public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallba
     @Override
     public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
         if (response.code() == 404) {
+            LoginManager.getInstance().logOut();
             loginActivity.displayError("Server error", "Error al conectar con el servidor");
         } else {
+            SharedPreferences.Editor preferencesEditor = loginActivity.getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).edit();
+            preferencesEditor.putInt("USER_ID", response.body().getData().getIdUser());
+            //preferencesEditor.putString("FACEBOOK_TOKEN", facebookToken);
+            preferencesEditor.putString("FACEBOOK_ID", idFacebook);
+            preferencesEditor.putString("USER_EMAIL", email);
+            preferencesEditor.putString("USER_NAME", name);
+            preferencesEditor.putBoolean("LOGGED_IN", true);
+            preferencesEditor.apply();
             loginActivity.logIn();
         }
     }
@@ -116,7 +115,6 @@ public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallba
     @Override
     public void onFailure(Call<UserResponse> call, Throwable t) {
         loginActivity.displayError("Failure", t.getMessage());
-        // TODO: Fix API issues to get rid of this line
-        loginActivity.logIn();
+        LoginManager.getInstance().logOut();
     }
 }

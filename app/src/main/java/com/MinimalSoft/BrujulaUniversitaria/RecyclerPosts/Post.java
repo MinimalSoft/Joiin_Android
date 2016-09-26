@@ -3,7 +3,8 @@ package com.MinimalSoft.BrujulaUniversitaria.RecyclerPosts;
 import android.graphics.Bitmap;
 
 public class Post {
-    protected int ID;
+    protected int userID;
+    protected int postID;
     protected int userRating;
     protected int likesCount;
     protected int dislikesCount;
@@ -11,19 +12,20 @@ public class Post {
     protected String review;
     protected String dateTime;
     protected String userName;
+    protected String imageURL;
     protected String placeName;
-    protected Bitmap profileImage;
 
-    public Post(int ID, int userRating, int likesCount, int dislikesCount, String userName, String placeName, String review, String dateTime, Bitmap profileImage) {
+    public Post(int userID, int postID, int userRating, int likesCount, int dislikesCount, String userName, String placeName, String review, String dateTime, String imageURL) {
         this.dislikesCount = dislikesCount;
-        this.profileImage = profileImage;
         this.likesCount = likesCount;
         this.userRating = userRating;
         this.placeName = placeName;
         this.userName = userName;
         this.dateTime = dateTime;
+        this.imageURL = imageURL;
         this.review = review;
-        this.ID = ID;
+        this.postID = postID;
+        this.userID = userID;
     }
 
     public Post() {

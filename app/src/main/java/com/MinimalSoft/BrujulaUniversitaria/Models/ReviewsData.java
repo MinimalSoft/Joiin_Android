@@ -7,7 +7,7 @@ public class ReviewsData {
     private Integer likes;
     private Integer dislikes;
     private String date;
-    private Object fbImage;
+    private String fbImage;
     private Integer idUser;
     private String placeName;
     private Integer idType;
@@ -61,11 +61,11 @@ public class ReviewsData {
         this.date = date;
     }
 
-    public Object getFbImage() {
+    public String getFbImage() {
         return fbImage;
     }
 
-    public void setFbImage(Object fbImage) {
+    public void setFbImage(String fbImage) {
         this.fbImage = fbImage;
     }
 

@@ -4,7 +4,6 @@ import com.MinimalSoft.BrujulaUniversitaria.R;
 
 import java.util.List;
 import java.util.ArrayList;
-import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -14,14 +13,13 @@ import android.view.ViewGroup;
 import android.view.LayoutInflater;
 
 public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
+    private final int userId;
     private List<Post> postList;
-    private Activity activity;
     private Context context;
     private boolean flag;
 
-
     public NewsFeedAdapter(Fragment fragment) {
-        activity = fragment.getActivity();
+        userId = fragment.getActivity().getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).getInt("USER_ID", 0);
         postList = new ArrayList<>();
         postList.add(new Post());
         postList.add(new Post());
@@ -42,6 +40,9 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
     @Override
     public void onBindViewHolder(PostHolder holder, int position) {
         if (flag) {
+            holder.userID = userId;
+            holder.postID = postList.get(position).postID;
+            holder.loadImage(postList.get(position).imageURL);
             holder.setStars(postList.get(position).userRating);
             holder.reviewText.setText(postList.get(position).review);
             holder.userNameText.setText(postList.get(position).userName);
