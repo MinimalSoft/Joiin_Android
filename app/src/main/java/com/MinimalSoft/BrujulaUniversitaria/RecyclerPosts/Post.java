@@ -1,10 +1,9 @@
 package com.MinimalSoft.BrujulaUniversitaria.RecyclerPosts;
 
-import android.graphics.Bitmap;
-
 public class Post {
     protected int userID;
     protected int postID;
+    protected int typeID;
     protected int userRating;
     protected int likesCount;
     protected int dislikesCount;
@@ -15,7 +14,7 @@ public class Post {
     protected String imageURL;
     protected String placeName;
 
-    public Post(int userID, int postID, int userRating, int likesCount, int dislikesCount, String userName, String placeName, String review, String dateTime, String imageURL) {
+    public Post(int userID, int postID, int typeID, int userRating, int likesCount, int dislikesCount, String userName, String placeName, String review, String dateTime, String imageURL) {
         this.dislikesCount = dislikesCount;
         this.likesCount = likesCount;
         this.userRating = userRating;
@@ -24,6 +23,7 @@ public class Post {
         this.dateTime = dateTime;
         this.imageURL = imageURL;
         this.review = review;
+        this.typeID = typeID;
         this.postID = postID;
         this.userID = userID;
     }

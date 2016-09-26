@@ -70,6 +70,7 @@ public class NewsFeed extends Fragment implements SwipeRefreshLayout.OnRefreshLi
                 int stars = response.body().getData().get(i).getStars();
                 int likes = response.body().getData().get(i).getLikes();
                 int userID = response.body().getData().get(i).getIdUser();
+                int typeID = response.body().getData().get(i).getIdType();
                 int postID = response.body().getData().get(i).getIdReview();
                 int dislikes = response.body().getData().get(i).getDislikes();
 
@@ -79,7 +80,7 @@ public class NewsFeed extends Fragment implements SwipeRefreshLayout.OnRefreshLi
                 String placeName = response.body().getData().get(i).getPlaceName();
                 String dateTime = response.body().getData().get(i).getDate().replace(" ", " a las ");
 
-                postList.add(new Post(userID, postID, stars, likes, dislikes, userName, placeName, review, dateTime, url));
+                postList.add(new Post(userID, postID, typeID, stars, likes, dislikes, userName, placeName, review, dateTime, url));
                 newsFeedAdapter.updatePosts(postList);
             }
         }

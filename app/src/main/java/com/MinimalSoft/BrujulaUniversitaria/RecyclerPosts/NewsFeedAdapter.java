@@ -50,6 +50,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
             holder.placeNameText.setText(postList.get(position).placeName);
             holder.likesText.setText(String.valueOf(postList.get(position).likesCount));
             holder.dislikesText.setText(String.valueOf(postList.get(position).dislikesCount));
+            setBottomLineColor(holder.bottomLine, postList.get(position).typeID);
         } else {
             holder.placeNameText.setText("Cargando...");
             holder.userNameText.setText("Cargando...");
@@ -67,5 +68,31 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
         postList.clear();
         postList.addAll(posts);
         this.notifyDataSetChanged();
+    }
+
+    private void setBottomLineColor(final View line, int placeType) {
+        switch (placeType) {
+            case 1:
+                line.setBackgroundResource(R.color.featured);
+                break;
+            case 2:
+                line.setBackgroundResource(R.color.bars);
+                break;
+            case 3:
+                line.setBackgroundResource(R.color.food);
+                break;
+            case 4:
+                line.setBackgroundResource(R.color.gyms);
+                break;
+            case 5:
+                line.setBackgroundResource(R.color.supplies);
+                break;
+            case 6:
+                line.setBackgroundResource(R.color.residences);
+                break;
+            case 7:
+                line.setBackgroundResource(R.color.jobs);
+                break;
+        }
     }
 }

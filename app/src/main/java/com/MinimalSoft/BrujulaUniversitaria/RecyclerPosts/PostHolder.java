@@ -37,6 +37,7 @@ public class PostHolder extends RecyclerView.ViewHolder implements Callback<Like
     protected TextView likesText;
     protected ImageView stars[];
     protected Context context;
+    protected View bottomLine;
     protected int postID;
     protected int userID;
     private Interfaces minimalSoftAPI;
@@ -58,6 +59,7 @@ public class PostHolder extends RecyclerView.ViewHolder implements Callback<Like
         stars[3] = (ImageView) itemView.findViewById(R.id.post_star_4);
         stars[4] = (ImageView) itemView.findViewById(R.id.post_star_5);
 
+        bottomLine = itemView.findViewById(R.id.post_line);
         likesText = (TextView) itemView.findViewById(R.id.post_textLikes);
         reviewText = (TextView) itemView.findViewById(R.id.post_textReview);
         userNameText = (TextView) itemView.findViewById(R.id.post_textName);
