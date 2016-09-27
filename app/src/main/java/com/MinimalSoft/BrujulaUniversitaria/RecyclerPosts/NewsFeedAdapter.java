@@ -4,6 +4,7 @@ import com.MinimalSoft.BrujulaUniversitaria.R;
 
 import java.util.List;
 import java.util.ArrayList;
+
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -55,6 +56,8 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
             holder.placeNameText.setText("Cargando...");
             holder.userNameText.setText("Cargando...");
             holder.reviewText.setText("Cargando...");
+            holder.dislikesText.setText("0");
+            holder.likesText.setText("0");
         }
     }
 

@@ -32,6 +32,7 @@ public class NewsFeed extends Fragment implements SwipeRefreshLayout.OnRefreshLi
     private NewsFeedAdapter newsFeedAdapter;
     private List<Post> postList;
     private View inflatedView;
+    private int postCount;
 
     @Nullable
     @Override
@@ -48,6 +49,7 @@ public class NewsFeed extends Fragment implements SwipeRefreshLayout.OnRefreshLi
             swipeRefresh.setOnRefreshListener(this);
             recyclerView.setAdapter(newsFeedAdapter);
             recyclerView.setLayoutManager(layoutManager);
+            postCount = getResources().getInteger(R.integer.ten);
             onRefresh();
         }
 
@@ -63,6 +65,7 @@ public class NewsFeed extends Fragment implements SwipeRefreshLayout.OnRefreshLi
         } else if (!response.body().getResponse().equals("success")) {
             Toast.makeText(this.getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
         } else {
+            postCount += getResources().getInteger(R.integer.ten);
             int count = response.body().getData().size();
             postList = new ArrayList<>(count);
 
@@ -100,6 +103,6 @@ public class NewsFeed extends Fragment implements SwipeRefreshLayout.OnRefreshLi
         String urlAPI = getResources().getString(R.string.server_api);
         Retrofit retrofit = new Retrofit.Builder().baseUrl(urlAPI).addConverterFactory(GsonConverterFactory.create()).build();
         Interfaces minimalSoftAPI = retrofit.create(Interfaces.class);
-        minimalSoftAPI.getAllReviews("getLatest", "10").enqueue(this);
+        minimalSoftAPI.getAllReviews("getLatest", String.valueOf(postCount)).enqueue(this);
     }
 }

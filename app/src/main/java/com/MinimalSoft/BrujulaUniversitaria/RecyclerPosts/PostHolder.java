@@ -23,8 +23,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PostHolder extends RecyclerView.ViewHolder implements Callback<LikesResponse>, View.OnClickListener, OnLikeListener {
+class PostHolder extends RecyclerView.ViewHolder implements Callback<LikesResponse>, View.OnClickListener, OnLikeListener {
     private final int STARS_COUNT;
+    protected int postID;
+    protected int userID;
     protected CircleImageView profileImage;
     protected RelativeLayout reviewLayout;
     protected LikeButton dislikeButton;
@@ -38,9 +40,11 @@ public class PostHolder extends RecyclerView.ViewHolder implements Callback<Like
     protected ImageView stars[];
     protected Context context;
     protected View bottomLine;
-    protected int postID;
-    protected int userID;
     private Interfaces minimalSoftAPI;
+    private boolean dislikeOff;
+    private boolean dislikeOn;
+    private boolean likeOff;
+    private boolean likeOn;
     private boolean disliked;
     private boolean liked;
 
@@ -81,7 +85,9 @@ public class PostHolder extends RecyclerView.ViewHolder implements Callback<Like
     }
 
     protected void loadImage(String url) {
-        Picasso.with(context).load(Uri.parse(url)).into(profileImage);
+        if (url.length() > 0) {
+            Picasso.with(context).load(Uri.parse(url)).into(profileImage);
+        }
     }
 
     protected void setStars(int rating) {
@@ -98,12 +104,16 @@ public class PostHolder extends RecyclerView.ViewHolder implements Callback<Like
 
     @Override
     public void onResponse(Call<LikesResponse> call, Response<LikesResponse> response) {
-
+        if (response.isSuccessful()) {
+            onLikeSucceed();
+        } else {
+            onLikeFailed();
+        }
     }
 
     @Override
     public void onFailure(Call<LikesResponse> call, Throwable t) {
-
+        onLikeFailed();
     }
 
     /*----OnClickListener methods----*/
@@ -119,19 +129,23 @@ public class PostHolder extends RecyclerView.ViewHolder implements Callback<Like
     public void liked(LikeButton button) {
         switch (button.getId()) {
             case R.id.post_likeButton:
-                aLikeAdded(true);
                 if (disliked) {
-                    aLikeRemoved(false);
-                    dislikeButton.setLiked(false);
+                    dislikeOff = true;
+                    minimalSoftAPI.like("removeDislike", String.valueOf(userID), String.valueOf(postID)).enqueue(this);
                 }
+
+                likeOn = true;
+                minimalSoftAPI.like("like", String.valueOf(userID), String.valueOf(postID)).enqueue(this);
                 break;
 
             case R.id.post_dislikeButton:
-                aLikeAdded(false);
                 if (liked) {
-                    aLikeRemoved(true);
-                    likeButton.setLiked(false);
+                    likeOff = true;
+                    minimalSoftAPI.like("removeLike", String.valueOf(userID), String.valueOf(postID)).enqueue(this);
                 }
+
+                dislikeOn = true;
+                minimalSoftAPI.like("dislike", String.valueOf(userID), String.valueOf(postID)).enqueue(this);
                 break;
         }
     }
@@ -140,44 +154,60 @@ public class PostHolder extends RecyclerView.ViewHolder implements Callback<Like
     public void unLiked(LikeButton button) {
         switch (button.getId()) {
             case R.id.post_likeButton:
-                aLikeRemoved(true);
+                likeOff = true;
+                minimalSoftAPI.like("removeLike", String.valueOf(userID), String.valueOf(postID)).enqueue(this);
                 break;
 
             case R.id.post_dislikeButton:
-                aLikeRemoved(false);
+                dislikeOff = true;
+                minimalSoftAPI.like("removeDislike", String.valueOf(userID), String.valueOf(postID)).enqueue(this);
                 break;
         }
     }
 
-    private void aLikeAdded(boolean opc) {
+    private void onLikeSucceed() {
         int count;
 
-        if (opc) {
-            liked = true;
-            count = Integer.parseInt((String) likesText.getText());
-            minimalSoftAPI.like("like", String.valueOf(userID), String.valueOf(postID)).enqueue(this);
-            likesText.setText(String.valueOf(count + 1));
-        } else {
-            disliked = true;
+        if (dislikeOff) {
+            dislikeOff = false;
             count = Integer.parseInt((String) dislikesText.getText());
-            minimalSoftAPI.like("dislike", String.valueOf(userID), String.valueOf(postID)).enqueue(this);
+            dislikesText.setText(String.valueOf(count - 1));
+            dislikeButton.setLiked(false);
+            disliked = false;
+        } else if (dislikeOn) {
+            dislikeOn = false;
+            count = Integer.parseInt((String) dislikesText.getText());
             dislikesText.setText(String.valueOf(count + 1));
+            dislikeButton.setLiked(true);
+            disliked = true;
+        } else if (likeOff) {
+            likeOff = false;
+            count = Integer.parseInt((String) likesText.getText());
+            likesText.setText(String.valueOf(count - 1));
+            likeButton.setLiked(false);
+            liked = false;
+        } else if (likeOn) {
+            likeOn = false;
+            count = Integer.parseInt((String) likesText.getText());
+            likesText.setText(String.valueOf(count + 1));
+            likeButton.setLiked(true);
+            liked = true;
         }
     }
 
-    private void aLikeRemoved(boolean opc) {
-        int count;
-
-        if (opc) {
-            liked = false;
-            count = Integer.parseInt((String) likesText.getText());
-            minimalSoftAPI.like("removeLike", String.valueOf(userID), String.valueOf(postID)).enqueue(this);
-            likesText.setText(String.valueOf(count - 1));
-        } else {
-            disliked = false;
-            count = Integer.parseInt((String) dislikesText.getText());
-            minimalSoftAPI.like("removeDislike", String.valueOf(userID), String.valueOf(postID)).enqueue(this);
-            dislikesText.setText(String.valueOf(count - 1));
+    private void onLikeFailed() {
+        if (dislikeOff) {
+            dislikeOff = false;
+            dislikeButton.setLiked(true);
+        } else if (dislikeOn) {
+            dislikeOn = false;
+            dislikeButton.setLiked(false);
+        } else if (likeOff) {
+            likeOff = false;
+            likeButton.setLiked(true);
+        } else if (likeOn) {
+            likeOn = false;
+            likeButton.setLiked(false);
         }
     }
 }

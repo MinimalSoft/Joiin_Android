@@ -2,4 +2,5 @@
 <resources>
     <integer name="image_duration">200</integer>
     <integer name="page_count">4</integer>
+    <integer name="ten">10</integer>
 </resources>
