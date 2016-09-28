@@ -5,13 +5,13 @@ import com.MinimalSoft.BrujulaUniversitaria.R;
 import java.util.List;
 import java.util.ArrayList;
 
-import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
+
+import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 
 public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
     private final int userId;
@@ -22,6 +22,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
     public NewsFeedAdapter(Fragment fragment) {
         userId = fragment.getActivity().getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).getInt("USER_ID", 0);
         postList = new ArrayList<>();
+        postList.add(new Post());
         postList.add(new Post());
         postList.add(new Post());
         postList.add(new Post());
@@ -45,13 +46,13 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
             holder.postID = postList.get(position).postID;
             holder.loadImage(postList.get(position).imageURL);
             holder.setStars(postList.get(position).userRating);
+            holder.setTypeColors(postList.get(position).typeID);
             holder.reviewText.setText(postList.get(position).review);
             holder.userNameText.setText(postList.get(position).userName);
             holder.dateTimeText.setText(postList.get(position).dateTime);
             holder.placeNameText.setText(postList.get(position).placeName);
             holder.likesText.setText(String.valueOf(postList.get(position).likesCount));
             holder.dislikesText.setText(String.valueOf(postList.get(position).dislikesCount));
-            setBottomLineColor(holder.bottomLine, postList.get(position).typeID);
         } else {
             holder.placeNameText.setText("Cargando...");
             holder.userNameText.setText("Cargando...");
@@ -71,31 +72,5 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
         postList.clear();
         postList.addAll(posts);
         this.notifyDataSetChanged();
-    }
-
-    private void setBottomLineColor(final View line, int placeType) {
-        switch (placeType) {
-            case 1:
-                line.setBackgroundResource(R.color.featured);
-                break;
-            case 2:
-                line.setBackgroundResource(R.color.bars);
-                break;
-            case 3:
-                line.setBackgroundResource(R.color.food);
-                break;
-            case 4:
-                line.setBackgroundResource(R.color.gyms);
-                break;
-            case 5:
-                line.setBackgroundResource(R.color.supplies);
-                break;
-            case 6:
-                line.setBackgroundResource(R.color.residences);
-                break;
-            case 7:
-                line.setBackgroundResource(R.color.jobs);
-                break;
-        }
     }
 }

@@ -49,7 +49,7 @@ public class NewsFeed extends Fragment implements SwipeRefreshLayout.OnRefreshLi
             swipeRefresh.setOnRefreshListener(this);
             recyclerView.setAdapter(newsFeedAdapter);
             recyclerView.setLayoutManager(layoutManager);
-            postCount = getResources().getInteger(R.integer.ten);
+            postCount = getResources().getInteger(R.integer.refresh_count);
             onRefresh();
         }
 
@@ -65,7 +65,7 @@ public class NewsFeed extends Fragment implements SwipeRefreshLayout.OnRefreshLi
         } else if (!response.body().getResponse().equals("success")) {
             Toast.makeText(this.getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
         } else {
-            postCount += getResources().getInteger(R.integer.ten);
+            postCount += getResources().getInteger(R.integer.refresh_count);
             int count = response.body().getData().size();
             postList = new ArrayList<>(count);
 

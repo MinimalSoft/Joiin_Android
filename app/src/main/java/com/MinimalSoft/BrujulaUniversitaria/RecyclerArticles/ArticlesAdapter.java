@@ -1,15 +1,11 @@
 package com.MinimalSoft.BrujulaUniversitaria.RecyclerArticles;
 
-import com.MinimalSoft.BrujulaUniversitaria.Web.WebActivity;
 import com.MinimalSoft.BrujulaUniversitaria.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.ArrayList;
 
-import android.net.Uri;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.Context;
 
 import android.view.View;
@@ -21,7 +17,6 @@ import android.support.v7.widget.RecyclerView;
 public class ArticlesAdapter extends RecyclerView.Adapter<ArticleHolder> {
     private List<Article> articleList;
     private Activity activity;
-    private Context context;
     private boolean flag;
 
 
@@ -38,29 +33,20 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticleHolder> {
 
     @Override
     public ArticleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        context = parent.getContext();
+        Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View inflatedView = layoutInflater.inflate(R.layout.item_article, parent, false);
         return new ArticleHolder(inflatedView);
     }
 
     @Override
-    public void onBindViewHolder(ArticleHolder holder, final int position) {
+    public void onBindViewHolder(ArticleHolder holder, int position) {
         if (flag) {
-            Uri uri = Uri.parse(articleList.get(position).url);
-            Picasso.with(context).load(uri).into(holder.image);
+            holder.activity = activity;
+            holder.link = articleList.get(position).link;
+            holder.pageTitle = articleList.get(position).title;
             holder.title.setText(articleList.get(position).title);
-            holder.button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(activity, WebActivity.class);
-                    String title = articleList.get(position).title;
-                    String link = articleList.get(position).link;
-                    intent.putExtra("TITLE", title);
-                    intent.putExtra("LINK", link);
-                    activity.startActivity(intent);
-                }
-            });
+            holder.loadImage(articleList.get(position).url);
         } else {
             holder.title.setText(" Cargando...");
         }

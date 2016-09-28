@@ -1,9 +1,9 @@
 package com.MinimalSoft.BrujulaUniversitaria.RecyclerPosts;
 
+import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
 import com.MinimalSoft.BrujulaUniversitaria.Models.LikesResponse;
 import com.MinimalSoft.BrujulaUniversitaria.R;
 
-import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
 import com.squareup.picasso.Picasso;
 import com.like.OnLikeListener;
 import com.like.LikeButton;
@@ -13,8 +13,9 @@ import android.view.View;
 import android.content.Context;
 import android.widget.TextView;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.support.v7.widget.RecyclerView;
+import android.support.v4.content.ContextCompat;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import retrofit2.Call;
@@ -28,7 +29,7 @@ class PostHolder extends RecyclerView.ViewHolder implements Callback<LikesRespon
     protected int postID;
     protected int userID;
     protected CircleImageView profileImage;
-    protected RelativeLayout reviewLayout;
+    protected LinearLayout reviewLayout;
     protected LikeButton dislikeButton;
     protected LikeButton likeButton;
     protected TextView placeNameText;
@@ -73,7 +74,7 @@ class PostHolder extends RecyclerView.ViewHolder implements Callback<LikesRespon
         dateTimeText = (TextView) itemView.findViewById(R.id.post_textDateTime);
         profileImage = (CircleImageView) itemView.findViewById(R.id.post_image);
         dislikeButton = (LikeButton) itemView.findViewById(R.id.post_dislikeButton);
-        reviewLayout = (RelativeLayout) itemView.findViewById(R.id.post_reviewLayout);
+        reviewLayout = (LinearLayout) itemView.findViewById(R.id.post_reviewLayout);
 
         String urlAPI = context.getResources().getString(R.string.server_api);
         Retrofit retrofit = new Retrofit.Builder().baseUrl(urlAPI).addConverterFactory(GsonConverterFactory.create()).build();
@@ -82,22 +83,6 @@ class PostHolder extends RecyclerView.ViewHolder implements Callback<LikesRespon
         reviewLayout.setOnClickListener(this);
         dislikeButton.setOnLikeListener(this);
         likeButton.setOnLikeListener(this);
-    }
-
-    protected void loadImage(String url) {
-        if (url.length() > 0) {
-            Picasso.with(context).load(Uri.parse(url)).into(profileImage);
-        }
-    }
-
-    protected void setStars(int rating) {
-        for (int i = 0; i < STARS_COUNT; i++) {
-            if (i <= (rating - 1)) {
-                stars[i].setImageResource(R.drawable.star_on);
-            } else {
-                stars[i].setImageResource(R.drawable.star_off);
-            }
-        }
     }
 
     /*----Callback Methods----*/
@@ -163,6 +148,54 @@ class PostHolder extends RecyclerView.ViewHolder implements Callback<LikesRespon
                 minimalSoftAPI.like("removeDislike", String.valueOf(userID), String.valueOf(postID)).enqueue(this);
                 break;
         }
+    }
+
+    protected void setTypeColors(int placeType) {
+        int color;
+
+        switch (placeType) {
+            case 1:
+                color = ContextCompat.getColor(context, R.color.featured);
+                break;
+            case 2:
+                color = ContextCompat.getColor(context, R.color.bars);
+                break;
+            case 3:
+                color = ContextCompat.getColor(context, R.color.food);
+                break;
+            case 4:
+                color = ContextCompat.getColor(context, R.color.gyms);
+                break;
+            case 5:
+                color = ContextCompat.getColor(context, R.color.supplies);
+                break;
+            case 6:
+                color = ContextCompat.getColor(context, R.color.residences);
+                break;
+            case 7:
+                color = ContextCompat.getColor(context, R.color.jobs);
+                break;
+
+            default:
+                color = ContextCompat.getColor(context, R.color.iron);
+        }
+
+        bottomLine.setBackgroundColor(color);
+        placeNameText.setTextColor(color);
+    }
+
+    protected void setStars(int rating) {
+        for (int i = 0; i < STARS_COUNT; i++) {
+            if (i <= (rating - 1)) {
+                stars[i].setImageResource(R.drawable.star_on);
+            } else {
+                stars[i].setImageResource(R.drawable.star_off);
+            }
+        }
+    }
+
+    protected void loadImage(String url) {
+        Picasso.with(context).load(Uri.parse(url)).error(R.drawable.default_profile).into(profileImage);
     }
 
     private void onLikeSucceed() {

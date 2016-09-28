@@ -37,7 +37,7 @@ public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallba
     private String name;
 
     public FacebookDataCollector(LoginActivity loginActivity) {
-        FACEBOOK_API_FIELDS = "name,first_name,last_name,gender,birthday,email,picture.type(square)";
+        FACEBOOK_API_FIELDS = "name,first_name,last_name,email,picture.type(square)";
         API_URL = loginActivity.getResources().getString(R.string.server_api);
         this.loginActivity = loginActivity;
     }
@@ -60,35 +60,38 @@ public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallba
     @Override
     public void onError(FacebookException error) {
         loginActivity.displayError("Login error", error.getMessage());
+        LoginManager.getInstance().logOut();
     }
 
     @Override
     public void onCancel() {
+        LoginManager.getInstance().logOut();
     }
 
     /* GraphJSONObjectCallback methods */
 
     @Override
     public void onCompleted(JSONObject object, GraphResponse response) {
-        JSONObject json = response.getJSONObject();
+        if (response.getError() == null) {
+            JSONObject json = response.getJSONObject();
 
-        try {
-            name = json.getString("name");
-            email = json.getString("email");
-            //String birthday = json.getString("birthday"); // TODO: Fix getting the birthday
-            String lastName = json.getString("last_name");
-            String firstName = json.getString("first_name");
+            try {
+                name = json.getString("name");
+                email = json.getString("email");
+                String lastName = json.getString("last_name");
+                String firstName = json.getString("first_name");
+                String url = json.getJSONObject("picture").getJSONObject("data").getString("url");
 
-            String gender = String.valueOf(json.getString("gender").charAt(0)).toUpperCase();
-            String url = json.getJSONObject("picture").getJSONObject("data").getString("url");
-
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(API_URL).addConverterFactory(GsonConverterFactory.create()).build();
-            Interfaces minimalSoftAPI = retrofit.create(Interfaces.class);
-            minimalSoftAPI.registerUser("register", firstName, lastName, gender, "", "", email, "", url, idFacebook, facebookToken).enqueue(this);
-        } catch (NullPointerException exc) {
-            loginActivity.displayError("Server error", exc.getMessage());
-        } catch (JSONException exc) {
-            loginActivity.displayError("JSON error", exc.getMessage());
+                Retrofit retrofit = new Retrofit.Builder().baseUrl(API_URL).addConverterFactory(GsonConverterFactory.create()).build();
+                Interfaces minimalSoftAPI = retrofit.create(Interfaces.class);
+                minimalSoftAPI.registerUser("register", firstName, lastName, "", "", "", email, "", url, idFacebook, facebookToken).enqueue(this);
+            } catch (JSONException exc) {
+                loginActivity.displayError("JSON error", exc.getMessage());
+                LoginManager.getInstance().logOut();
+            }
+        } else {
+            loginActivity.displayError("Error", response.getError().getErrorMessage());
+            LoginManager.getInstance().logOut();
         }
     }
 

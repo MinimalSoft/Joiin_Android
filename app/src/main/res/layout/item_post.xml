@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
@@ -39,7 +40,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Nombre de usuario"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/black"
                         android:textStyle="bold" />
 
                     <TextView
@@ -47,77 +49,85 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="DD/MM/YYYY a las hh/mm/ss"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/black" />
                 </LinearLayout>
             </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/post_reviewLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/post_stars"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="5dp"
-                    android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:id="@+id/post_star_1"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/star_off" />
+                    <TextView
+                        android:id="@+id/post_textPlace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_toStartOf="@+id/post_stars"
+                        android:text="Nombre del lugar"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/post_star_2"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/star_off" />
+                    <LinearLayout
+                        android:id="@+id/post_stars"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/post_star_3"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/star_off" />
+                        <ImageView
+                            android:id="@+id/post_star_1"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/star_off" />
 
-                    <ImageView
-                        android:id="@+id/post_star_4"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/star_off" />
+                        <ImageView
+                            android:id="@+id/post_star_2"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/star_off" />
 
-                    <ImageView
-                        android:id="@+id/post_star_5"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/star_off" />
-                </LinearLayout>
+                        <ImageView
+                            android:id="@+id/post_star_3"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/star_off" />
 
-                <TextView
-                    android:id="@+id/post_textPlace"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/post_stars"
-                    android:layout_marginStart="5dp"
-                    android:text="Nombre del lugar"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textStyle="bold" />
+                        <ImageView
+                            android:id="@+id/post_star_4"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/star_off" />
+
+                        <ImageView
+                            android:id="@+id/post_star_5"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/star_off" />
+                    </LinearLayout>
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/post_textReview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/post_stars"
-                    android:layout_margin="5dp"
                     android:text="@string/review"
-                    android:textStyle="italic" />
-            </RelativeLayout>
+                    android:textColor="@color/black" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_margin="5dp"
                 android:background="@color/iron" />
 
             <LinearLayout
@@ -160,7 +170,7 @@
         <View
             android:id="@+id/post_line"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="3dp"
             android:background="@color/iron" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.MinimalSoft.BrujulaUniversitaria">
-
-    <uses-sdk
-        android:minSdkVersion="15"
-        android:targetSdkVersion="16"
-        tools:overrideLibrary="com.uber.sdk.android.rides" />
 
     <permission
         android:name="com.MinimalSoft.BrujulaUniversitaria.permission.MAPS_RECEIVE"
@@ -126,7 +120,7 @@
             android:name=".Maps.Categories_Map"
             android:label="@string/title_activity_map"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Maps.AddReview"></activity>
+        <activity android:name=".Maps.AddReview" />
 
         <activity
             android:name=".List.PlacesList"
