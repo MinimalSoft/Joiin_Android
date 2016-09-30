@@ -84,7 +84,7 @@ public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallba
 
                 Retrofit retrofit = new Retrofit.Builder().baseUrl(API_URL).addConverterFactory(GsonConverterFactory.create()).build();
                 Interfaces minimalSoftAPI = retrofit.create(Interfaces.class);
-                minimalSoftAPI.registerUser("register", firstName, lastName, "", "", "", email, "", url, idFacebook, facebookToken).enqueue(this);
+                minimalSoftAPI.registerUser("register", firstName, lastName, "", "", "", email, "", url, idFacebook, "").enqueue(this);
             } catch (JSONException exc) {
                 loginActivity.displayError("JSON error", exc.getMessage());
                 LoginManager.getInstance().logOut();
