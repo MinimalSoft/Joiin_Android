@@ -1,211 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="25dp"
+    android:weightSum="10">
 
     <LinearLayout
-        android:id="@+id/categories_top_vertical_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/categories_layout_vertical_margin"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="6">
 
             <ImageView
-                android:id="@+id/categories_featured_image"
+                android:id="@+id/categories_featuredImage"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="@dimen/categories_button_size"
-                android:layout_height="@dimen/categories_button_size"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
                 android:src="@drawable/category_featured" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/categories_featured_image"
-                android:layout_centerHorizontal="true"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="Destacados" />
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/categories_layout_horizontal_margin"
-            android:layout_marginRight="@dimen/categories_layout_horizontal_margin">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="6">
 
             <ImageView
-                android:id="@+id/categories_bars_image"
+                android:id="@+id/categories_barsImage"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="@dimen/categories_button_size"
-                android:layout_height="@dimen/categories_button_size"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
                 android:src="@drawable/category_bars" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/categories_bars_image"
-                android:layout_centerHorizontal="true"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="Bares" />
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="6">
 
             <ImageView
-                android:id="@+id/categories_food_image"
+                android:id="@+id/categories_foodImage"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="@dimen/categories_button_size"
-                android:layout_height="@dimen/categories_button_size"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
                 android:src="@drawable/category_food" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/categories_food_image"
-                android:layout_centerHorizontal="true"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="Comida" />
-        </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/categories_middle_vertical_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/categories_layout_vertical_margin"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/categories_layout_horizontal_margin"
-            android:layout_marginRight="@dimen/categories_layout_horizontal_margin">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="6">
 
             <ImageView
-                android:id="@+id/categories_gyms_image"
+                android:id="@+id/categories_gymsImage"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="@dimen/categories_button_size"
-                android:layout_height="@dimen/categories_button_size"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
                 android:src="@drawable/category_gyms" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/categories_gyms_image"
-                android:layout_centerHorizontal="true"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="Gimnasios" />
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="6">
 
             <ImageView
-                android:id="@+id/categories_supplies_image"
+                android:id="@+id/categories_suppliesImage"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="@dimen/categories_button_size"
-                android:layout_height="@dimen/categories_button_size"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
                 android:src="@drawable/category_suplies" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/categories_supplies_image"
-                android:layout_centerHorizontal="true"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="Materiales" />
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="6">
 
             <ImageView
-                android:id="@+id/categories_residence_image"
+                android:id="@+id/categories_residencesImage"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="@dimen/categories_button_size"
-                android:layout_height="@dimen/categories_button_size"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
                 android:src="@drawable/category_residence" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/categories_residence_image"
-                android:layout_centerHorizontal="true"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="Residencias" />
-        </RelativeLayout>
-
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/categories_bottom_vertical_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/categories_layout_vertical_margin"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/categories_layout_horizontal_margin"
-            android:layout_marginRight="@dimen/categories_layout_horizontal_margin">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="6">
 
             <ImageView
-                android:id="@+id/categories_jobs_image"
+                android:id="@+id/categories_jobsImage"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="@dimen/categories_button_size"
-                android:layout_height="@dimen/categories_button_size"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
                 android:src="@drawable/category_jobs" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/categories_jobs_image"
-                android:layout_centerHorizontal="true"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="Trabajos" />
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="6">
 
             <ImageView
-                android:id="@+id/categories_transport_image"
+                android:id="@+id/category_transportImage"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="@dimen/categories_button_size"
-                android:layout_height="@dimen/categories_button_size"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
                 android:src="@drawable/category_transport" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/categories_transport_image"
-                android:layout_centerHorizontal="true"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="Transporte" />
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="6">
 
             <ImageView
-                android:id="@+id/categories_promos_image"
+                android:id="@+id/categories_promosImage"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="@dimen/categories_button_size"
-                android:layout_height="@dimen/categories_button_size"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
                 android:src="@drawable/category_promos" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/categories_promos_image"
-                android:layout_centerHorizontal="true"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="Promociones" />
-        </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
-
-
 </LinearLayout>
