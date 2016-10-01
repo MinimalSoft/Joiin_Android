@@ -2,9 +2,17 @@ package com.MinimalSoft.BrujulaUniversitaria.Tabs;
 
 import com.MinimalSoft.BrujulaUniversitaria.R;
 import com.MinimalSoft.BrujulaUniversitaria.RecyclerPosts.Post;
+import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
+import com.MinimalSoft.BrujulaUniversitaria.Models.ReviewsResponse;
 import com.MinimalSoft.BrujulaUniversitaria.RecyclerPosts.NewsFeedAdapter;
 
 import java.util.List;
+import java.util.ArrayList;
+
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.LayoutInflater;
+
 import android.os.Bundle;
 import android.widget.Toast;
 import android.support.v4.app.Fragment;
@@ -13,14 +21,18 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.annotation.Nullable;
 
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.LayoutInflater;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-public class NewsFeed extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class NewsFeed extends Fragment implements SwipeRefreshLayout.OnRefreshListener, Callback<ReviewsResponse> {
     private SwipeRefreshLayout swipeRefresh;
     private NewsFeedAdapter newsFeedAdapter;
+    private List<Post> postList;
     private View inflatedView;
+    private int postCount;
 
     @Nullable
     @Override
@@ -37,23 +49,60 @@ public class NewsFeed extends Fragment implements SwipeRefreshLayout.OnRefreshLi
             swipeRefresh.setOnRefreshListener(this);
             recyclerView.setAdapter(newsFeedAdapter);
             recyclerView.setLayoutManager(layoutManager);
+            postCount = getResources().getInteger(R.integer.refresh_count);
             onRefresh();
         }
 
         return inflatedView;
     }
 
+    /*----Callback methods----*/
+
+    @Override
+    public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
+        if (response.code() == 404) {
+            Toast.makeText(this.getContext(), "Error al conectar con el servidor", Toast.LENGTH_LONG).show();
+        } else if (!response.body().getResponse().equals("success")) {
+            Toast.makeText(this.getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+        } else {
+            postCount += getResources().getInteger(R.integer.refresh_count);
+            int count = response.body().getData().size();
+            postList = new ArrayList<>(count);
+
+            for (int i = 0; i < count; i++) {
+                int stars = response.body().getData().get(i).getStars();
+                int likes = response.body().getData().get(i).getLikes();
+                int userID = response.body().getData().get(i).getIdUser();
+                int typeID = response.body().getData().get(i).getIdType();
+                int postID = response.body().getData().get(i).getIdReview();
+                int dislikes = response.body().getData().get(i).getDislikes();
+
+                String url = response.body().getData().get(i).getFbImage();
+                String review = response.body().getData().get(i).getText();
+                String userName = response.body().getData().get(i).getName();
+                String placeName = response.body().getData().get(i).getPlaceName();
+                String dateTime = response.body().getData().get(i).getDate().replace(" ", " a las ");
+
+                postList.add(new Post(userID, postID, typeID, stars, likes, dislikes, userName, placeName, review, dateTime, url));
+                newsFeedAdapter.updatePosts(postList);
+            }
+        }
+
+        swipeRefresh.setRefreshing(false);
+    }
+
+    @Override
+    public void onFailure(Call<ReviewsResponse> call, Throwable t) {
+        Toast.makeText(this.getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+        swipeRefresh.setRefreshing(false);
+    }
+
     /*----OnRefreshListener Methods*/
     @Override
     public void onRefresh() {
-    }
-
-    protected void onPostUpdateFailed(String message) {
-        Toast.makeText(this.getContext(), message, Toast.LENGTH_LONG).show();
-        swipeRefresh.setRefreshing(false);
-    }
-
-    protected void onPostUpdateSucceed(List<Post> list) {
-        swipeRefresh.setRefreshing(false);
+        String urlAPI = getResources().getString(R.string.server_api);
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(urlAPI).addConverterFactory(GsonConverterFactory.create()).build();
+        Interfaces minimalSoftAPI = retrofit.create(Interfaces.class);
+        minimalSoftAPI.getAllReviews("getLatest", String.valueOf(postCount)).enqueue(this);
     }
 }

@@ -1,27 +1,26 @@
 package com.MinimalSoft.BrujulaUniversitaria.Start;
 
-import com.MinimalSoft.BrujulaUniversitaria.R;
-import com.MinimalSoft.BrujulaUniversitaria.Main.MainActivity;
-import com.MinimalSoft.BrujulaUniversitaria.Models.UserResponse;
-import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
-import com.MinimalSoft.BrujulaUniversitaria.Facebook.FacebookDataCollector;
-
-import com.facebook.FacebookSdk;
-import com.facebook.CallbackManager;
-import com.facebook.login.widget.LoginButton;
-
-import android.os.Bundle;
-import android.view.View;
-import android.view.KeyEvent;
-import android.widget.EditText;
-import android.widget.Button;
-import android.widget.Toast;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.MinimalSoft.BrujulaUniversitaria.Facebook.FacebookDataCollector;
+import com.MinimalSoft.BrujulaUniversitaria.Main.MainActivity;
+import com.MinimalSoft.BrujulaUniversitaria.Models.UserResponse;
+import com.MinimalSoft.BrujulaUniversitaria.R;
+import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.login.widget.LoginButton;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -103,12 +102,13 @@ public class LoginActivity extends Activity implements View.OnClickListener, Cal
         } else if (response.body().getResponse().equals("alert")) {
             Toast.makeText(this, "Correo y/o contraseña incorrectos", Toast.LENGTH_LONG).show();
         } else {
-            SharedPreferences.Editor preferencesEditor = getSharedPreferences("FACEBOOK_PREF", Context.MODE_PRIVATE).edit();
+            SharedPreferences.Editor preferencesEditor = getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).edit();
             String fullName = response.body().getData().getName() + ' ' + response.body().getData().getLastName();
 
+            preferencesEditor.putInt("USER_ID", response.body().getData().getIdUser());
             preferencesEditor.putString("USER_NAME", fullName);
             preferencesEditor.putString("USER_EMAIL", email);
-            preferencesEditor.putBoolean("USER_PICS", false);
+            preferencesEditor.putBoolean("LOGGED_IN", true);
             preferencesEditor.apply();
             logIn();
         }

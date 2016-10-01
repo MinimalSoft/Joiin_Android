@@ -1,20 +1,20 @@
 package com.MinimalSoft.BrujulaUniversitaria.Facebook;
 
-import com.MinimalSoft.BrujulaUniversitaria.Models.UserResponse;
-import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
-import com.MinimalSoft.BrujulaUniversitaria.Start.LoginActivity;
-import com.MinimalSoft.BrujulaUniversitaria.R;
-
-import com.facebook.login.LoginResult;
-import com.facebook.FacebookException;
-import com.facebook.FacebookCallback;
-import com.facebook.GraphResponse;
-import com.facebook.GraphRequest;
-import com.facebook.AccessToken;
-
-import android.content.SharedPreferences;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import com.MinimalSoft.BrujulaUniversitaria.Models.UserResponse;
+import com.MinimalSoft.BrujulaUniversitaria.R;
+import com.MinimalSoft.BrujulaUniversitaria.Start.LoginActivity;
+import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
+import com.facebook.AccessToken;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,7 +29,6 @@ public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallba
     private final String FACEBOOK_API_FIELDS;
     private final String API_URL;
 
-    private SharedPreferences.Editor preferencesEditor;
     private LoginActivity loginActivity;
     private String facebookToken;
     private String idFacebook;
@@ -37,7 +36,7 @@ public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallba
     private String name;
 
     public FacebookDataCollector(LoginActivity loginActivity) {
-        FACEBOOK_API_FIELDS = "name,first_name,last_name,gender,birthday,email,picture.type(square)";
+        FACEBOOK_API_FIELDS = "name,first_name,last_name,email,picture.type(square)";
         API_URL = loginActivity.getResources().getString(R.string.server_api);
         this.loginActivity = loginActivity;
     }
@@ -60,43 +59,38 @@ public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallba
     @Override
     public void onError(FacebookException error) {
         loginActivity.displayError("Login error", error.getMessage());
+        LoginManager.getInstance().logOut();
     }
 
     @Override
     public void onCancel() {
+        LoginManager.getInstance().logOut();
     }
 
     /* GraphJSONObjectCallback methods */
 
     @Override
     public void onCompleted(JSONObject object, GraphResponse response) {
-        JSONObject json = response.getJSONObject();
+        if (response.getError() == null) {
+            JSONObject json = response.getJSONObject();
 
-        try {
-            name = json.getString("name");
-            email = json.getString("email");
-            //String birthday = json.getString("birthday"); // TODO: Fix getting the birthday
-            String lastName = json.getString("last_name");
-            String firstName = json.getString("first_name");
+            try {
+                name = json.getString("name");
+                email = json.getString("email");
+                String lastName = json.getString("last_name");
+                String firstName = json.getString("first_name");
+                String url = json.getJSONObject("picture").getJSONObject("data").getString("url");
 
-            String gender = String.valueOf(json.getString("gender").charAt(0)).toUpperCase();
-            String url = json.getJSONObject("picture").getJSONObject("data").getString("url");
-
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(API_URL).addConverterFactory(GsonConverterFactory.create()).build();
-            Interfaces minimalSoftAPI = retrofit.create(Interfaces.class);
-            minimalSoftAPI.registerUser("register", firstName, lastName, gender, "", "", email, "", url, idFacebook, facebookToken).enqueue(this);
-
-            preferencesEditor = loginActivity.getSharedPreferences("FACEBOOK_PREF", Context.MODE_PRIVATE).edit();
-            preferencesEditor.putString("FACEBOOK_TOKEN", facebookToken);
-            preferencesEditor.putString("FACEBOOK_ID", idFacebook);
-            preferencesEditor.putBoolean("USER_PICS", false);
-            preferencesEditor.putString("USER_EMAIL", email);
-            preferencesEditor.putString("USER_NAME", name);
-            preferencesEditor.apply();
-        } catch (NullPointerException exc) {
-            loginActivity.displayError("Server error", exc.getMessage());
-        } catch (JSONException exc) {
-            loginActivity.displayError("JSON error", exc.getMessage());
+                Retrofit retrofit = new Retrofit.Builder().baseUrl(API_URL).addConverterFactory(GsonConverterFactory.create()).build();
+                Interfaces minimalSoftAPI = retrofit.create(Interfaces.class);
+                minimalSoftAPI.registerUser("register", firstName, lastName, "", "", "", email, "", url, idFacebook, "").enqueue(this);
+            } catch (JSONException exc) {
+                loginActivity.displayError("JSON error", exc.getMessage());
+                LoginManager.getInstance().logOut();
+            }
+        } else {
+            loginActivity.displayError("Error", response.getError().getErrorMessage());
+            LoginManager.getInstance().logOut();
         }
     }
 
@@ -105,8 +99,17 @@ public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallba
     @Override
     public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
         if (response.code() == 404) {
+            LoginManager.getInstance().logOut();
             loginActivity.displayError("Server error", "Error al conectar con el servidor");
         } else {
+            SharedPreferences.Editor preferencesEditor = loginActivity.getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).edit();
+            preferencesEditor.putInt("USER_ID", response.body().getData().getIdUser());
+            //preferencesEditor.putString("FACEBOOK_TOKEN", facebookToken);
+            preferencesEditor.putString("FACEBOOK_ID", idFacebook);
+            preferencesEditor.putString("USER_EMAIL", email);
+            preferencesEditor.putString("USER_NAME", name);
+            preferencesEditor.putBoolean("LOGGED_IN", true);
+            preferencesEditor.apply();
             loginActivity.logIn();
         }
     }
@@ -114,7 +117,6 @@ public class FacebookDataCollector implements GraphRequest.GraphJSONObjectCallba
     @Override
     public void onFailure(Call<UserResponse> call, Throwable t) {
         loginActivity.displayError("Failure", t.getMessage());
-        // TODO: Fix API issues to get rid of this line
-        loginActivity.logIn();
+        LoginManager.getInstance().logOut();
     }
 }

@@ -20,8 +20,8 @@
     <color name= "golden">#FFCA28</color>
 
     //Colores
-    <color name="yellow">#ffea00</color>
     <color name="gray">#757575</color>
+    <color name="yellow">#ffea00</color>
     <color name="orange">#FB8C00</color>
     <color name="green">#1B5E20</color>
     <color name="black">#000000</color>
@@ -68,6 +68,14 @@
     //Colores Suburbano
     <color name="SUB_1">#B32016</color>
 
+    <!-- Categories Color -->
+    <color name="featured">#FFC107</color>
+    <color name="bars">#7E57C2</color>
+    <color name="food">#F57F17</color>
+    <color name="gyms">#00BFA5</color>
+    <color name="supplies">#2E7D32</color>
+    <color name="residences">#5C6BC0</color>
+    <color name="jobs">#AD1613</color>
 
     <color name="yellow_400">#ffea00</color>
     <color name="orange_600">#FB8C00</color>
@@ -76,4 +84,5 @@
     <color name="grey_300">#ffe0e0e0</color>
     <color name="grey_50">#fffafafa</color>
     <color name="red_900">#B71C1C</color>
+    <color name="iron">#CCCCCC</color>
 </resources>

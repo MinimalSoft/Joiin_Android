@@ -1,29 +1,28 @@
 package com.MinimalSoft.BrujulaUniversitaria.RecyclerPosts;
 
-import com.MinimalSoft.BrujulaUniversitaria.R;
-
-import java.util.List;
-import java.util.ArrayList;
-
-import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.LayoutInflater;
+
+import com.MinimalSoft.BrujulaUniversitaria.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
+    private final int userId;
     private List<Post> postList;
-    private Activity activity;
     private Context context;
     private boolean flag;
 
-
     public NewsFeedAdapter(Fragment fragment) {
-        activity = fragment.getActivity();
+        userId = fragment.getActivity().getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).getInt("USER_ID", 0);
         postList = new ArrayList<>();
+        postList.add(new Post());
+        postList.add(new Post());
         postList.add(new Post());
         postList.add(new Post());
         flag = false;
@@ -40,24 +39,25 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
     }
 
     @Override
-    public void onBindViewHolder(PostHolder holder, final int position) {
+    public void onBindViewHolder(PostHolder holder, int position) {
         if (flag) {
-            /*Uri uri = Uri.parse(postList.get(position).url);
-            Picasso.with(context).load(uri).into(holder.image);
-            holder.title.setText(postList.get(position).title);
-            holder.button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(activity, WebActivity.class);
-                    String title = postList.get(position).title;
-                    String link = postList.get(position).link;
-                    intent.putExtra("TITLE", title);
-                    intent.putExtra("LINK", link);
-                    activity.startActivity(intent);
-                }
-            });*/
+            holder.userID = userId;
+            holder.postID = postList.get(position).postID;
+            holder.loadImage(postList.get(position).imageURL);
+            holder.setStars(postList.get(position).userRating);
+            holder.setTypeColors(postList.get(position).typeID);
+            holder.reviewText.setText(postList.get(position).review);
+            holder.userNameText.setText(postList.get(position).userName);
+            holder.dateTimeText.setText(postList.get(position).dateTime);
+            holder.placeNameText.setText(postList.get(position).placeName);
+            holder.likesText.setText(String.valueOf(postList.get(position).likesCount));
+            holder.dislikesText.setText(String.valueOf(postList.get(position).dislikesCount));
         } else {
-            //holder.title.setText(" Loading...");
+            holder.placeNameText.setText("Cargando...");
+            holder.userNameText.setText("Cargando...");
+            holder.reviewText.setText("Cargando...");
+            holder.dislikesText.setText("0");
+            holder.likesText.setText("0");
         }
     }
 
@@ -66,10 +66,10 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
         return postList.size();
     }
 
-    protected void updateArticles(List<Post> articles) {
+    public void updatePosts(List<Post> posts) {
         flag = true;
         postList.clear();
-        postList.addAll(postList);
+        postList.addAll(posts);
         this.notifyDataSetChanged();
     }
 }

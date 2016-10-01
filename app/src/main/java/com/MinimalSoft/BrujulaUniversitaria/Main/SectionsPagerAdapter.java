@@ -83,7 +83,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter implements ViewPa
 
             case 3:
                 appCompatActivity.setTitle(resources.getString(R.string.title_page_3));
-                profileFragment.reloadPictures();
+                //profileFragment.reloadPictures();
                 break;
         }
     }

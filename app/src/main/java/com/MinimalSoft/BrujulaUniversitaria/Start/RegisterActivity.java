@@ -1,17 +1,19 @@
 package com.MinimalSoft.BrujulaUniversitaria.Start;
 
 import com.MinimalSoft.BrujulaUniversitaria.R;
+import com.MinimalSoft.BrujulaUniversitaria.Utilities.EntriesValidator;
 import com.MinimalSoft.BrujulaUniversitaria.Web.WebActivity;
 import com.MinimalSoft.BrujulaUniversitaria.Main.MainActivity;
 import com.MinimalSoft.BrujulaUniversitaria.Models.UserResponse;
 import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
-import com.MinimalSoft.BrujulaUniversitaria.Utilities.PromptedDataAnalyzer;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.KeyEvent;
+
+import android.widget.Toast;
 import android.widget.Spinner;
 import android.widget.EditText;
 import android.app.ProgressDialog;
@@ -94,7 +96,6 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        //Log.i(getClass().getSimpleName(), "keyCode;" + keyCode + "KeyEbent: " + event.toString());
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
             verifyData();
         }
@@ -110,20 +111,15 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
                 return true;
 
             case R.id.options_check:
-                // TODO: Verify data before sending to the Database
-                /*if (!isDataAccepted) {
-                    verifyData();
-                }
+                verifyData();
 
                 if (isDataAccepted) {
+                    alertDialog.setMessage("Al crear esta cuenta, estas aceptando los Términos de Privacidad.");
+                    alertDialog.setNegativeButton("Cancelar", null);
+                    alertDialog.setPositiveButton("Aceptar", this);
+                    alertDialog.setTitle("Advertencia");
                     alertDialog.show();
-                }*/
-
-                alertDialog.setMessage("Al crear esta cuenta, estas aceptando los Términos de Privacidad.");
-                alertDialog.setNegativeButton("Cancelar", null);
-                alertDialog.setPositiveButton("Aceptar", this);
-                alertDialog.setTitle("Advertencia");
-                alertDialog.show();
+                }
 
                 return true;
         }
@@ -152,17 +148,18 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
             alertDialog.setTitle("Error al conectar con el servidor");
             alertDialog.setMessage("¿Intentar de nuevo?");
         } else if (response.body().getResponse().equals("alert")) {
-            alertDialog.setMessage("Ya existe un usuario con la misma información");
+            alertDialog.setMessage("Ya existe un usuario con la misma información.");
             alertDialog.setNegativeButton(null, null);
             alertDialog.setPositiveButton("Ok", null);
-            alertDialog.setTitle("Verificar datos");
+            alertDialog.setTitle("Verifique los datos.");
         } else {
-            SharedPreferences.Editor preferencesEditor = getSharedPreferences("FACEBOOK_PREF", Context.MODE_PRIVATE).edit();
+            SharedPreferences.Editor preferencesEditor = getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).edit();
             Intent intent = new Intent(this.getApplicationContext(), MainActivity.class);
 
+            preferencesEditor.putInt("USER_ID", response.body().getData().getIdUser());
             preferencesEditor.putString("USER_NAME", name + ' ' + lastName);
             preferencesEditor.putString("USER_EMAIL", email);
-            preferencesEditor.putBoolean("USER_PICS", false);
+            preferencesEditor.putBoolean("LOGGED_IN", true);
             preferencesEditor.apply();
             progressDialog.hide();
             startActivity(intent);
@@ -192,13 +189,6 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
         intent.putExtra("TITLE", "Aviso de privacidad");
         intent.putExtra("LINK", link);
         startActivity(intent);
-
-        /*try {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://brujulauniversitaria.com.mx/aviso-de-privacidad"));
-            this.startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(this, "No application can handle this request, please install a Web browser.", Toast.LENGTH_LONG).show();
-        }*/
     }
 
     private void verifyData() {
@@ -208,17 +198,20 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
         lastName = lastField.getText().toString().trim();
         telephone = phoneField.getText().toString().trim();
 
-        int day = daySpinner.getSelectedItemPosition();
-        int year = yearSpinner.getSelectedItemPosition();
         int month = monthSpinner.getSelectedItemPosition();
         int genderId = genderSpinner.getSelectedItemPosition();
+        String day = String.valueOf(daySpinner.getSelectedItem());
+        String year = String.valueOf(yearSpinner.getSelectedItem());
         String confirmPassword = confirmField.getText().toString();
 
-        PromptedDataAnalyzer analyzer = new PromptedDataAnalyzer();
-        //isDataAccepted = analyzer.isAcceptable(name, lastName, telephone, email, password, confirmPassword, genderId, day, month, year);
+        EntriesValidator analyzer = new EntriesValidator();
+        birthday = String.format("%s-%02d-%s", year, month, day);
+        isDataAccepted = analyzer.isAcceptable(name, lastName, telephone, email, password, confirmPassword, genderId, birthday);
 
-        //TODO: verify before accepting
-        gender = genderId == 1 ? "F" : "M";
-        birthday = "" + (year + 1989) + '-' + month + '-' + day;
+        if (!isDataAccepted) {
+            Toast.makeText(this, analyzer.getMessage(), Toast.LENGTH_LONG).show();
+        } else {
+            gender = genderId == 1 ? "F" : "M";
+        }
     }
 }

@@ -24,6 +24,11 @@
 
     <string-array name="yearOptions">
         <item>Seleccionar</item>
+        <item>1985</item>
+        <item>1986</item>
+        <item>1987</item>
+        <item>1988</item>
+        <item>1989</item>
         <item>1990</item>
         <item>1991</item>
         <item>1992</item>
@@ -34,6 +39,11 @@
         <item>1997</item>
         <item>1998</item>
         <item>1999</item>
+        <item>2001</item>
+        <item>2002</item>
+        <item>2003</item>
+        <item>2004</item>
+        <item>2005</item>
     </string-array>
 
     <string-array name="dayOptions">

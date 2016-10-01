@@ -24,6 +24,12 @@ public interface Interfaces {
                                                 @Field("idPlace") String idPlace);
 
     @FormUrlEncoded
+    @POST("/controllers/reviews/review.php")
+    Call<LikesResponse> like(@Field("action") String action,
+                             @Field("idUser") String idUser,
+                             @Field("idReview") String idReview);
+
+    @FormUrlEncoded
     @POST("/app/controllers/place/place.php")
     Call<Response_General> getPlaces(@Field("action") String action,
                                      @Field("idType") String idType,
@@ -86,6 +92,11 @@ public interface Interfaces {
     @POST("/app/controllers/reviews/review.php")
     Call<Response_Reviews> getReview(@Field("action") String action,
                                      @Field("idPlace") String idPlace);
+
+    @FormUrlEncoded
+    @POST("/controllers/reviews/review.php")
+    Call<ReviewsResponse> getAllReviews(@Field("action") String action,
+                                        @Field("number") String number);
 
     @FormUrlEncoded
     @POST("/app/controllers/user/user.php")
