@@ -1,24 +1,26 @@
 package com.MinimalSoft.BrujulaUniversitaria.Start;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.content.Intent;
-
-import com.MinimalSoft.BrujulaUniversitaria.Models.Response_Start;
-import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
-import com.facebook.FacebookSdk;
-import com.facebook.CallbackManager;
-import com.facebook.login.widget.LoginButton;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.MinimalSoft.BrujulaUniversitaria.R;
-import com.MinimalSoft.BrujulaUniversitaria.Main.MainActivity;
 import com.MinimalSoft.BrujulaUniversitaria.Facebook.FacebookDataCollector;
+import com.MinimalSoft.BrujulaUniversitaria.Main.MainActivity;
+import com.MinimalSoft.BrujulaUniversitaria.Models.UserResponse;
+import com.MinimalSoft.BrujulaUniversitaria.R;
+import com.MinimalSoft.BrujulaUniversitaria.Utilities.Interfaces;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.login.widget.LoginButton;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,42 +28,105 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, Callback<Response_Start> {
+public class LoginActivity extends Activity implements View.OnClickListener, Callback<UserResponse> {
     private CallbackManager facebookCallbackManager;
     private LoginButton facebookLoginButton;
+    private AlertDialog.Builder alertDialog;
+    private ProgressDialog progressDialog;
     private EditText passwordField;
-    private ProgressDialog dialog;
     private EditText emailField;
-    private Intent intent;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FacebookSdk.sdkInitialize(this.getApplicationContext());
-        this.setContentView(R.layout.activity_login);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        setContentView(R.layout.activity_login);
 
-        facebookLoginButton = (LoginButton) this.findViewById(R.id.login_hidden_facebook_button);
-        Button fakeFacebookButton = (Button) this.findViewById(R.id.login_facebook_button);
-        Button registerButton = (Button) this.findViewById(R.id.login_registerButton);
-        Button loginButton = (Button) this.findViewById(R.id.login_accessButton);
-        passwordField = (EditText) this.findViewById(R.id.login_passwordField);
-        emailField = (EditText) this.findViewById(R.id.login_emailField);
+        Button fakeFacebookButton = (Button) findViewById(R.id.login_fakeFacebookButton);
+        Button registerButton = (Button) findViewById(R.id.login_registerButton);
+        Button loginButton = (Button) findViewById(R.id.login_accessButton);
+
+        emailField = (EditText) findViewById(R.id.login_emailField);
+        passwordField = (EditText) findViewById(R.id.login_passwordField);
+        facebookLoginButton = (LoginButton) findViewById(R.id.login_facebookButton);
         facebookCallbackManager = CallbackManager.Factory.create();
 
-        dialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
         FacebookDataCollector dataCollector = new FacebookDataCollector(this);
 
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage("Cargando. Espere...");
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setIndeterminate(true);
+        facebookLoginButton.registerCallback(facebookCallbackManager, dataCollector);
+        facebookLoginButton.setReadPermissions("public_profile email");
+
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Autenticando...");
+        progressDialog.setIndeterminate(true);
+
+        alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setPositiveButton("OK", null);
 
         loginButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
         fakeFacebookButton.setOnClickListener(this);
-        facebookLoginButton.setReadPermissions("public_profile email");
-        facebookLoginButton.registerCallback(facebookCallbackManager, dataCollector);
+    }
+
+    /*----OnClickListener methods----*/
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.login_fakeFacebookButton:
+                facebookLoginButton.performClick();
+                break;
+
+            case R.id.login_registerButton:
+                Intent intent = new Intent(this.getApplicationContext(), RegisterActivity.class);
+                this.startActivity(intent);
+                break;
+
+            case R.id.login_accessButton:
+                loginRequest();
+                break;
+        }
+    }
+
+    /*----Callback methods----*/
+
+    @Override
+    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+        progressDialog.hide();
+
+        if (response.code() == 404) {
+            Toast.makeText(this, "Error al conectar con el servidor", Toast.LENGTH_LONG).show();
+        } else if (response.body().getResponse().equals("alert")) {
+            Toast.makeText(this, "Correo y/o contraseña incorrectos", Toast.LENGTH_LONG).show();
+        } else {
+            SharedPreferences.Editor preferencesEditor = getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).edit();
+            String fullName = response.body().getData().getName() + ' ' + response.body().getData().getLastName();
+
+            preferencesEditor.putInt("USER_ID", response.body().getData().getIdUser());
+            preferencesEditor.putString("USER_NAME", fullName);
+            preferencesEditor.putString("USER_EMAIL", email);
+            preferencesEditor.putBoolean("LOGGED_IN", true);
+            preferencesEditor.apply();
+            logIn();
+        }
+    }
+
+    @Override
+    public void onFailure(Call<UserResponse> call, Throwable t) {
+        progressDialog.hide();
+        Toast.makeText(this, t.getMessage(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            loginRequest();
+        }
+
+        return super.onKeyUp(keyCode, event);
     }
 
     @Override
@@ -69,65 +134,35 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         facebookCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.login_facebook_button:
-                facebookLoginButton.performClick();
-                break;
+    private void loginRequest() {
+        email = emailField.getText().toString().trim();
+        String password = passwordField.getText().toString();
 
-            case R.id.login_registerButton:
-                intent = new Intent(this.getApplicationContext(), RegisterActivity.class);
-                this.startActivity(intent);
-                break;
-
-            case R.id.login_accessButton:
-                String email = emailField.getText().toString().trim();
-                String password = passwordField.getText().toString();
-
-                if (email.length() == 0) {
-                    Toast.makeText(this, "Inserte el correo", Toast.LENGTH_LONG).show();
-                } else if (password.length() == 0) {
-                    Toast.makeText(this, "Inserte la contraseña", Toast.LENGTH_LONG).show();
-                } else {
-                    String BASE_URL = "http://ec2-52-38-75-156.us-west-2.compute.amazonaws.com";
-                    Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
-                    Interfaces interfaces = retrofit.create(Interfaces.class);
-                    Call<Response_Start> call = interfaces.logInUser("login", email, password, "0", "0");
-                    call.enqueue(this);
-                    dialog.show();
-                }
-
-                break;
+        if (email.length() == 0) {
+            Toast.makeText(this, "Inserte el correo", Toast.LENGTH_LONG).show();
+        } else if (password.length() == 0) {
+            Toast.makeText(this, "Inserte la contraseña", Toast.LENGTH_LONG).show();
+        } else {
+            progressDialog.show();
+            String urlAPI = getResources().getString(R.string.server_api);
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(urlAPI).addConverterFactory(GsonConverterFactory.create()).build();
+            Interfaces minimalSoftAPI = retrofit.create(Interfaces.class);
+            minimalSoftAPI.logInUser("login", email, password, "", "").enqueue(this);
         }
+    }
+
+    public void displayError(String src, String msg) {
+        progressDialog.hide();
+
+        alertDialog.setMessage(msg);
+        alertDialog.setTitle(src);
+        alertDialog.show();
     }
 
     public void logIn() {
-        intent = new Intent(this.getApplicationContext(), MainActivity.class);
-        this.startActivity(intent);
-        this.finish();
-    }
-
-    /*----Retrofit Methods----*/
-
-    @Override
-    public void onResponse(Call<Response_Start> call, Response<Response_Start> response) {
-        dialog.hide();
-
-        if(response.code() == 404) {
-            Toast.makeText(this, "Error al conectar con el servidor", Toast.LENGTH_SHORT).show();
-        } else if (!response.body().getResponse().equals("success")) {
-            Toast.makeText(this, "El correo o la contraseña estan incorrectos", Toast.LENGTH_SHORT).show();
-        } else {
-            this.logIn();
-        }
-    }
-
-    @Override
-    public void onFailure(Call<Response_Start> call, Throwable t) {
-        Toast.makeText(this, t.getMessage(), Toast.LENGTH_LONG).show();
-        Log.e(this.getClass().getSimpleName(), "Message: " + t.getMessage());
-        t.printStackTrace();
-        dialog.hide();
+        Intent intent = new Intent(this.getApplicationContext(), MainActivity.class);
+        progressDialog.hide();
+        startActivity(intent);
+        finish();
     }
 }

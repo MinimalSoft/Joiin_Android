@@ -16,23 +16,22 @@ import com.MinimalSoft.BrujulaUniversitaria.Tabs.Categories;
 public class SectionsPagerAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener, AppBarLayout.OnOffsetChangedListener {
     private AppCompatActivity appCompatActivity;
     private Categories categoriesFragment;
+    private NewsFeed newsFeedFragment;
     private Articles articlesFragment;
     private Profile profileFragment;
-    private Resources resources;
 
-    private short pageSelected;
-    private int toolbarOffset;
+    private Resources resources;
 
     public SectionsPagerAdapter(final AppCompatActivity appCompatActivity) {
         super(appCompatActivity.getSupportFragmentManager());
         this.appCompatActivity = appCompatActivity;
 
         categoriesFragment = new Categories();
+        newsFeedFragment = new NewsFeed();
         articlesFragment = new Articles();
         profileFragment = new Profile();
-        toolbarOffset = 0;
 
-        resources = appCompatActivity.getApplicationContext().getResources();
+        resources = appCompatActivity.getResources();
         appCompatActivity.setTitle(resources.getString(R.string.title_page_0));
     }
 
@@ -44,7 +43,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter implements ViewPa
             case 0:
                 //this.getItem(2);
                 //this.getItem(3);
-                return NewsFeed.newInstance();
+                return newsFeedFragment;
             case 1:
                 //return Articles.newInstance();
                 return articlesFragment;
@@ -68,8 +67,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter implements ViewPa
 
     @Override
     public void onPageSelected(int position) {
-        pageSelected = (short) position;
-
         switch (position) {
             case 0:
                 appCompatActivity.setTitle(resources.getString(R.string.title_page_0));
@@ -81,12 +78,12 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter implements ViewPa
 
             case 2:
                 appCompatActivity.setTitle(resources.getString(R.string.title_page_2));
-                categoriesFragment.modifyVerticalPosition(toolbarOffset);
+                //categoriesFragment.modifyVerticalPosition(toolbarOffset);
                 break;
 
             case 3:
                 appCompatActivity.setTitle(resources.getString(R.string.title_page_3));
-                profileFragment.reloadPictures();
+                //profileFragment.reloadPictures();
                 break;
         }
     }
@@ -105,10 +102,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter implements ViewPa
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        toolbarOffset = verticalOffset;
+        /*toolbarOffset = verticalOffset;
 
         if (pageSelected == 2) {
             categoriesFragment.modifyVerticalPosition(toolbarOffset);
-        }
+        }*/
     }
 }

@@ -67,4 +67,23 @@
         <item name="colorControlActivated">@color/gray</item>
     </style>
 
+    <style name="BU" parent="Theme.AppCompat.Light">
+        <item name="android:windowBackground">@color/grey_300</item>
+        <item name="android:navigationBarColor">@color/primary_dark</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorPrimary">@color/primary</item>
+    </style>
+
+    <style name="BU.NoActionBar" parent="@style/BU">
+        <!--item name="android:windowContentOverlay">@null</item-->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="BU.LightBackground" parent="@style/BU">
+        <item name="android:windowBackground">@color/grey_50</item>
+    </style>
+
+    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 </resources>

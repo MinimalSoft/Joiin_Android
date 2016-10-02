@@ -46,12 +46,14 @@
         <activity
             android:name=".Start.LoginActivity"
             android:configChanges="keyboardHidden|screenSize"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.ActivityStart" />
+            android:theme="@style/BU.NoActionBar" />
         <activity
             android:name=".Start.RegisterActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme2.NoActionBar" >
+            android:theme="@style/BU.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Start.LoginActivity" />
@@ -64,11 +66,8 @@
         <activity
             android:name=".Web.WebActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme2.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Main.MainActivity" />
-        </activity>
+            android:theme="@style/BU.NoActionBar" />
+
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -128,6 +127,15 @@
             android:label="@string/title_activity_map"
             android:theme="@style/AppTheme" />
         <activity android:name=".Maps.AddReview"></activity>
-    </application>
 
+        <activity
+            android:name=".List.PlacesList"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme2.NoActionBar">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Maps.Categories_Map" />
+        </activity>
+    </application>
 </manifest>
