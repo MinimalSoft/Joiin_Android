@@ -1,10 +1,7 @@
 package com.MinimalSoft.BU.RecyclerPosts;
 
-import com.MinimalSoft.BU.Utilities.Interfaces;
 import com.MinimalSoft.BU.R;
-
 import com.squareup.picasso.Picasso;
-import com.like.OnLikeListener;
 import com.like.LikeButton;
 
 import android.net.Uri;
@@ -17,10 +14,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v4.content.ContextCompat;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener, OnLikeListener {
+class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private final int STARS_COUNT;
     protected CircleImageView profileImage;
     protected LinearLayout reviewLayout;
     protected LikeButton dislikeButton;
@@ -35,20 +30,10 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     protected Context context;
     protected View bottomLine;
 
-    private Interfaces minimalSoftAPI;
-    private final int STARS_COUNT;
-    protected int postID;
-    protected int userID;
-    private boolean disliked;
-    private boolean liked;
-
-    public PostHolder(View itemView) {
+    PostHolder(View itemView) {
         super(itemView);
 
         STARS_COUNT = 5;
-        liked = false;
-        disliked = false;
-
         context = itemView.getContext();
         stars = new ImageView[STARS_COUNT];
         stars[0] = (ImageView) itemView.findViewById(R.id.post_star_1);
@@ -69,13 +54,7 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
         dislikeButton = (LikeButton) itemView.findViewById(R.id.post_dislikeButton);
         reviewLayout = (LinearLayout) itemView.findViewById(R.id.post_reviewLayout);
 
-        String urlAPI = context.getResources().getString(R.string.server_api);
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(urlAPI).addConverterFactory(GsonConverterFactory.create()).build();
-        minimalSoftAPI = retrofit.create(Interfaces.class);
-
         reviewLayout.setOnClickListener(this);
-        dislikeButton.setOnLikeListener(this);
-        likeButton.setOnLikeListener(this);
     }
 
     /*----OnClickListener methods----*/
@@ -85,59 +64,7 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
         //TODO: Place the proper action...
     }
 
-    /*----OnLikeListener methods----*/
-
-    @Override
-    public void liked(LikeButton button) {
-        LikesCallback likesCallback;
-
-        switch (button.getId()) {
-            case R.id.post_likeButton:
-                if (disliked) {
-                    disliked = false;
-                    likesCallback = new LikesCallback(false, dislikeButton, dislikesText);
-                    minimalSoftAPI.like("removeDislike", String.valueOf(userID), String.valueOf(postID)).enqueue(likesCallback);
-                }
-
-                liked = true;
-                likesCallback = new LikesCallback(true, likeButton, likesText);
-                minimalSoftAPI.like("like", String.valueOf(userID), String.valueOf(postID)).enqueue(likesCallback);
-                break;
-
-            case R.id.post_dislikeButton:
-                if (liked) {
-                    liked = false;
-                    likesCallback = new LikesCallback(false, likeButton, likesText);
-                    minimalSoftAPI.like("removeLike", String.valueOf(userID), String.valueOf(postID)).enqueue(likesCallback);
-                }
-
-                disliked = true;
-                likesCallback = new LikesCallback(true, dislikeButton, dislikesText);
-                minimalSoftAPI.like("dislike", String.valueOf(userID), String.valueOf(postID)).enqueue(likesCallback);
-                break;
-        }
-    }
-
-    @Override
-    public void unLiked(LikeButton button) {
-        LikesCallback likesCallback;
-
-        switch (button.getId()) {
-            case R.id.post_likeButton:
-                liked = false;
-                likesCallback = new LikesCallback(false, likeButton, likesText);
-                minimalSoftAPI.like("removeLike", String.valueOf(userID), String.valueOf(postID)).enqueue(likesCallback);
-                break;
-
-            case R.id.post_dislikeButton:
-                disliked = false;
-                likesCallback = new LikesCallback(false, dislikeButton, dislikesText);
-                minimalSoftAPI.like("removeDislike", String.valueOf(userID), String.valueOf(postID)).enqueue(likesCallback);
-                break;
-        }
-    }
-
-    protected void setTypeColors(int placeType) {
+    void setTypeColors(int placeType) {
         int color;
 
         switch (placeType) {
@@ -171,7 +98,7 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
         placeNameText.setTextColor(color);
     }
 
-    protected void setStars(int rating) {
+    void setStars(int rating) {
         for (int i = 0; i < STARS_COUNT; i++) {
             if (i <= (rating - 1)) {
                 stars[i].setImageResource(R.drawable.star_on);
@@ -181,7 +108,13 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
         }
     }
 
-    protected void loadImage(String url) {
+    void loadImage(String url) {
         Picasso.with(context).load(Uri.parse(url)).error(R.drawable.default_profile).into(profileImage);
+    }
+
+    void setLikes() {
+        // Todo: Place code for the user likes
+        dislikeButton.setLiked(false);
+        likeButton.setLiked(false);
     }
 }

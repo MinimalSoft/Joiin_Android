@@ -20,7 +20,7 @@ public class StartActivity extends Activity implements Runnable {
         setContentView(R.layout.activity_start);
 
         ImageView imageView = (ImageView) findViewById(R.id.start_animation);
-        imageView.setBackgroundResource(R.drawable.animation_list);
+        imageView.setBackgroundResource(R.drawable.animation_loading);
         AnimationDrawable animation = (AnimationDrawable) imageView.getBackground();
 
         int imageDuration = getResources().getInteger(R.integer.image_duration);

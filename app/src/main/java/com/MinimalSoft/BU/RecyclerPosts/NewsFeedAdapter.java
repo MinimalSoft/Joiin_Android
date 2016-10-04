@@ -1,16 +1,19 @@
 package com.MinimalSoft.BU.RecyclerPosts;
 
+import com.MinimalSoft.BU.R;
+import com.like.OnLikeListener;
+import com.like.LikeButton;
+
+import java.util.List;
+import java.util.ArrayList;
+
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.LayoutInflater;
+
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.MinimalSoft.BU.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
     private final int userId;
@@ -41,8 +44,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
     @Override
     public void onBindViewHolder(PostHolder holder, int position) {
         if (flag) {
-            holder.userID = userId;
-            holder.postID = postList.get(position).postID;
+            holder.setLikes();
             holder.loadImage(postList.get(position).imageURL);
             holder.setStars(postList.get(position).userRating);
             holder.setTypeColors(postList.get(position).typeID);
@@ -52,6 +54,40 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
             holder.placeNameText.setText(postList.get(position).placeName);
             holder.likesText.setText(String.valueOf(postList.get(position).likesCount));
             holder.dislikesText.setText(String.valueOf(postList.get(position).dislikesCount));
+
+            final LikeCallback likeCallback = new LikeCallback(holder.dislikeButton, holder.likeButton, holder.likesText, postList.get(position).postID, userId);
+            final LikeCallback dislikeCallback = new LikeCallback(holder.likeButton, holder.dislikeButton, holder.dislikesText, postList.get(position).postID, userId);
+
+            holder.likeButton.setOnLikeListener(new OnLikeListener() {
+                @Override
+                public void liked(LikeButton likeButton) {
+                    if (dislikeCallback.isOn()) {
+                        dislikeCallback.removeLike("removeDislike");
+                    }
+
+                    likeCallback.addLike("like");
+                }
+
+                @Override
+                public void unLiked(LikeButton likeButton) {
+                    likeCallback.removeLike("removeLike");
+                }
+            });
+
+            holder.dislikeButton.setOnLikeListener(new OnLikeListener() {
+                public void liked(LikeButton likeButton) {
+                    if (likeCallback.isOn()) {
+                        likeCallback.removeLike("removeLike");
+                    }
+
+                    dislikeCallback.addLike("dislike");
+                }
+
+                @Override
+                public void unLiked(LikeButton likeButton) {
+                    dislikeCallback.removeLike("removeDislike");
+                }
+            });
         } else {
             holder.placeNameText.setText("Cargando...");
             holder.userNameText.setText("Cargando...");
