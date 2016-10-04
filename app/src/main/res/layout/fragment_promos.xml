@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.MinimalSoft.BrujulaUniversitaria.Promos.PromosFragment">
+    tools:context="com.MinimalSoft.BU.Promos.PromosFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.MinimalSoft.BrujulaUniversitaria.ViewerActivity">
+    tools:context="com.MinimalSoft.BU.ViewerActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="com.MinimalSoft.BrujulaUniversitaria.Transport.Map"
+                tools:context="com.MinimalSoft.BU.Transport.Map"
                 tools:layout="@layout/abc_action_bar_title_item" />
 
 

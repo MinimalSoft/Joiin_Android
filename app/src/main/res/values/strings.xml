@@ -22,7 +22,7 @@
     <string name="Settings_Item">Ajustes</string>
     <string name="title_activity_settings">Ajustes</string>
 
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyC_s01aQ2E0ZuoVxmfjn9Ng3TdeAdRVmOk</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAfqCfUX6TSxY01KNc9JdwiE4FsH7QUQZU</string>
     <!--string name="google_maps_key">AIzaSyBDU2JdP2pj258_SLAPR5vK6yjSdoZIwr4</string-->
     <string name="facebook_app_id">916058378464973</string>
 
@@ -49,4 +49,5 @@
     <string name="terms_url">http://buniversitaria.com/aviso-de-privacidad/</string>
     <string name="review">Esto es un ejemplo de una reseña bien elaborada con mucho esfuerzo y dedicación.</string>
     <string name="server_wp"><![CDATA[http://buniversitaria.com/wp-json/wp/v2/posts?_wp_json_nonce=4355d0c4b3&items=id,title,image,link]]></string>
+    <string name="title_activity_rueba">Map</string>
 </resources>
