@@ -10,6 +10,10 @@
           <option name="url" value="https://github.com/JairJacobo/BU.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/JairJacobo/BU_EXAMPLE.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="C:\Users\Jair-Jacobo\Developer\Android" />
