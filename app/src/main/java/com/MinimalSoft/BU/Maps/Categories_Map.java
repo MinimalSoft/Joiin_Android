@@ -95,7 +95,7 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
 
         setToolbar();
 
-        setActivityParams ();
+        setActivityParams();
 
         this.setTitle(activityTittle);
     }
@@ -263,7 +263,7 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
 
                 //TODO: Re-write the pass image to activity code
                 String baseURL = "http://api.buniversitaria.com/imagenes/";
-                placeImage = baseURL+data.getImage();
+                placeImage = baseURL + data.getImage();
                 Picasso.with(getApplicationContext())
                         .load(placeImage)
                         .placeholder(R.drawable.default_image)
@@ -392,8 +392,8 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public void onLocationChanged(Location location) {
 
-        userLat = location.getLatitude()+"";
-        userLong = location.getLongitude()+"";
+        userLat = location.getLatitude() + "";
+        userLong = location.getLongitude() + "";
         latLng = new LatLng(location.getLatitude(), location.getLongitude());
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(latLng).zoom(15).build();
@@ -444,8 +444,7 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
         }*/
     }
 
-    private void setActivityParams ()
-    {
+    private void setActivityParams() {
         frame = (FrameLayout) findViewById(R.id.page_view);
     }
 
