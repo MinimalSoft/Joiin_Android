@@ -1,5 +1,6 @@
 package com.MinimalSoft.BU.RecyclerPosts;
 
+import com.MinimalSoft.BU.Models.ReviewsData;
 import com.MinimalSoft.BU.R;
 import com.like.OnLikeListener;
 import com.like.LikeButton;
@@ -17,17 +18,16 @@ import android.support.v7.widget.RecyclerView;
 
 public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
     private final int userId;
-    private List<Post> postList;
-    private Context context;
+    private List<ReviewsData> postList;
     private boolean flag;
 
     public NewsFeedAdapter(Fragment fragment) {
         userId = fragment.getActivity().getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).getInt("USER_ID", 0);
         postList = new ArrayList<>();
-        postList.add(new Post());
-        postList.add(new Post());
-        postList.add(new Post());
-        postList.add(new Post());
+        postList.add(new ReviewsData());
+        postList.add(new ReviewsData());
+        postList.add(new ReviewsData());
+        postList.add(new ReviewsData());
         flag = false;
     }
 
@@ -35,8 +35,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
 
     @Override
     public PostHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        context = parent.getContext();
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View inflatedView = layoutInflater.inflate(R.layout.item_post, parent, false);
         return new PostHolder(inflatedView);
     }
@@ -44,19 +43,21 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
     @Override
     public void onBindViewHolder(PostHolder holder, int position) {
         if (flag) {
-            holder.setLikes();
-            holder.loadImage(postList.get(position).imageURL);
-            holder.setStars(postList.get(position).userRating);
-            holder.setTypeColors(postList.get(position).typeID);
-            holder.reviewText.setText(postList.get(position).review);
-            holder.userNameText.setText(postList.get(position).userName);
-            holder.dateTimeText.setText(postList.get(position).dateTime);
-            holder.placeNameText.setText(postList.get(position).placeName);
-            holder.likesText.setText(String.valueOf(postList.get(position).likesCount));
-            holder.dislikesText.setText(String.valueOf(postList.get(position).dislikesCount));
+            ReviewsData postData = postList.get(position);
 
-            final LikeCallback likeCallback = new LikeCallback(holder.dislikeButton, holder.likeButton, holder.likesText, postList.get(position).postID, userId);
-            final LikeCallback dislikeCallback = new LikeCallback(holder.likeButton, holder.dislikeButton, holder.dislikesText, postList.get(position).postID, userId);
+            holder.setLikes();
+            holder.setStars(postData.getStars());
+            holder.loadImage(postData.getFbImage());
+            holder.setTypeColors(postData.getIdType());
+            holder.reviewText.setText(postData.getText());
+            holder.userNameText.setText(postData.getName());
+            holder.placeNameText.setText(postData.getPlaceName());
+            holder.likesText.setText(String.valueOf(postData.getLikes()));
+            holder.dislikesText.setText(String.valueOf(postData.getDislikes()));
+            holder.dateTimeText.setText(postData.getDate().replace(" ", " a las "));
+
+            final LikeCallback likeCallback = new LikeCallback(holder.dislikeButton, holder.likeButton, holder.likesText, postData.getIdReview(), userId);
+            final LikeCallback dislikeCallback = new LikeCallback(holder.likeButton, holder.dislikeButton, holder.dislikesText, postData.getIdReview(), userId);
 
             holder.likeButton.setOnLikeListener(new OnLikeListener() {
                 @Override
@@ -102,7 +103,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
         return postList.size();
     }
 
-    public void updatePosts(List<Post> posts) {
+    public void updatePosts(List<ReviewsData> posts) {
         flag = true;
         postList.clear();
         postList.addAll(posts);

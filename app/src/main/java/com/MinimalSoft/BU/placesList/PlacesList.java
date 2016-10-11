@@ -1,22 +1,24 @@
-package com.MinimalSoft.BU.List;
+package com.MinimalSoft.BU.PlacesList;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-
+import com.MinimalSoft.BU.Maps.DetailsActivity;
 import com.MinimalSoft.BU.Models.PlaceData;
 import com.MinimalSoft.BU.R;
-import com.google.gson.Gson;
+
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.Gson;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
+
+import android.os.Bundle;
+import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.content.Intent;
+import android.widget.ListView;
+import android.widget.AdapterView;
+import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AppCompatActivity;
 
 public class PlacesList extends AppCompatActivity implements AdapterView.OnItemClickListener {
     @Override
@@ -31,35 +33,20 @@ public class PlacesList extends AppCompatActivity implements AdapterView.OnItemC
         setContentView(R.layout.activity_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.list_toolbar);
+        ListView listView = (ListView) findViewById(R.id.list_listView);
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        setTitle(getIntent().getExtras().getString("TITLE"));
-        String strGson = getIntent().getExtras().getString("GSON");
-        String serverURL = getResources().getString(R.string.server_api) + "/imagenes/";
+        toolbar.setTitle(getIntent().getStringExtra("TITLE"));
+        String strGson = getIntent().getStringExtra("GSON");
 
         Type type = new TypeToken<List<PlaceData>>() {
         }.getType();
-        List<PlaceData> placeDataList = new Gson().fromJson(strGson, type);
-        List<Place> placesList = new ArrayList<>();
-
-        for (short i = 0; i < placeDataList.size(); i++) {
-            String address = placeDataList.get(i).getStreet() +
-                    " # " + placeDataList.get(i).getNumber() +
-                    ", " + placeDataList.get(i).getNeighborhood();
-            String name = placeDataList.get(i).getPlaceName();
-            String link = placeDataList.get(i).getImage();
-            int rating = placeDataList.get(i).getStars();
-            String url = serverURL + link;
-
-            placesList.add(new Place(name, address, rating, url));
-        }
+        List<PlaceData> placesList = new Gson().fromJson(strGson, type);
 
         PlaceListAdapter listAdapter = new PlaceListAdapter(this, R.layout.item_place, placesList);
-        ListView listView = (ListView) findViewById(R.id.list_listView);
+
         listView.setOnItemClickListener(this);
         listView.setAdapter(listAdapter);
+        setSupportActionBar(toolbar);
     }
 
     @Override
@@ -82,6 +69,18 @@ public class PlacesList extends AppCompatActivity implements AdapterView.OnItemC
     /*----OnItemClickListener Methods----*/
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Bundle bundle = new Bundle();
 
+        PlaceData place = (PlaceData) parent.getAdapter().getItem(position);
+
+        String imageURL = view.getContext().getString(R.string.server_api) + "/imagenes/" + place.getImage();
+
+        bundle.putString("PLACE_NAME", String.valueOf(place.getPlaceName()));
+        bundle.putString("PLACE_ID", String.valueOf(place.getIdPlace()));
+        bundle.putString("IMAGE_URL", imageURL);
+
+        Intent intent = new Intent(view.getContext(), DetailsActivity.class);
+        intent.putExtras(bundle);
+        view.getContext().startActivity(intent);
     }
 }

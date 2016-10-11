@@ -120,7 +120,7 @@
             android:theme="@style/AppTheme" />
         <activity android:name="com.MinimalSoft.BU.Maps.AddReview" />
         <activity
-            android:name="com.MinimalSoft.BU.List.PlacesList"
+            android:name="com.MinimalSoft.BU.PlacesList.PlacesList"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme2.NoActionBar">
             <meta-data

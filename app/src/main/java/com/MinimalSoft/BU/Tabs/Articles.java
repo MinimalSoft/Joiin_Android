@@ -1,6 +1,12 @@
 package com.MinimalSoft.BU.Tabs;
 
+import com.MinimalSoft.BU.R;
+import com.MinimalSoft.BU.RecyclerArticles.Article;
+import com.MinimalSoft.BU.RecyclerArticles.ArticlesAdapter;
+import com.MinimalSoft.BU.RecyclerArticles.ArticlesCollector;
+
 import java.util.List;
+
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -12,11 +18,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-
-import com.MinimalSoft.BU.R;
-import com.MinimalSoft.BU.RecyclerArticles.Article;
-import com.MinimalSoft.BU.RecyclerArticles.ArticlesAdapter;
-import com.MinimalSoft.BU.RecyclerArticles.ArticlesCollector;
 
 public class Articles extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private SwipeRefreshLayout swipeRefresh;
@@ -32,7 +33,7 @@ public class Articles extends Fragment implements SwipeRefreshLayout.OnRefreshLi
             RecyclerView recyclerView = (RecyclerView) inflatedView.findViewById(R.id.refresher_recyclerView);
 
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(inflatedView.getContext());
-            articlesAdapter = new ArticlesAdapter(this);
+            articlesAdapter = new ArticlesAdapter();
 
             swipeRefresh.setColorSchemeResources(R.color.red_900, R.color.brown_500, R.color.green_900, R.color.orange_600);
             swipeRefresh.setOnRefreshListener(this);

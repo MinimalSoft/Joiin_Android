@@ -94,9 +94,9 @@ public interface Interfaces {
                                      @Field("idPlace") String idPlace);
 
     @FormUrlEncoded
-    @POST("/controllers/reviews/review")
-    Call<ReviewsResponse> getAllReviews(@Field("action") String action,
-                                        @Field("number") String number);
+    @POST("/controllers/reviews/review.php")
+    Call<AllReviewsResponse> getAllReviews(@Field("action") String action,
+                                           @Field("number") String number);
 
     @FormUrlEncoded
     @POST("/app/controllers/user/user.php")

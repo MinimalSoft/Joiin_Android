@@ -6,52 +6,54 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.MinimalSoft.BU.R;
-import com.MinimalSoft.BU.Utilities.ScreenUtility;
+import com.MinimalSoft.BU.Tabs.Articles;
+import com.MinimalSoft.BU.Tabs.Categories;
+import com.MinimalSoft.BU.Tabs.NewsFeed;
+import com.MinimalSoft.BU.Tabs.Profile;
+import com.MinimalSoft.BU.Utilities.FragmentsViewPagerAdapter;
 import com.google.android.gms.maps.MapView;
 
-public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener {
-    private ScreenUtility screenUtility;
-    private AppBarLayout appBarLayout;
-    private SectionsPagerAdapter pagerAdapter;
-    private ViewPager pagerView;
-    private TabLayout tabLayout;
+public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, DialogInterface.OnClickListener {
     private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        pagerView = (ViewPager) findViewById(R.id.page_view);
-        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        toolbar = (Toolbar) this.findViewById(R.id.main_toolbar);
+        TabLayout tabLayout = (TabLayout) this.findViewById(R.id.main_tabLayout);
+        ViewPager viewPager = (ViewPager) this.findViewById(R.id.main_viewPager);
 
-        this.setSupportActionBar(toolbar);
+        FragmentsViewPagerAdapter pageAdapter = new FragmentsViewPagerAdapter(getSupportFragmentManager(), false);
 
-        screenUtility = new ScreenUtility(this);
-        pagerAdapter = new SectionsPagerAdapter(this);
+        pageAdapter.addFragment(new NewsFeed(), getResources().getString(R.string.tab_news));
+        pageAdapter.addFragment(new Articles(), getResources().getString(R.string.tab_articles));
+        pageAdapter.addFragment(new Categories(), getResources().getString(R.string.tab_categories));
+        pageAdapter.addFragment(new Profile(), getResources().getString(R.string.tab_settings));
 
-        pagerView.setAdapter(pagerAdapter);
-        pagerView.addOnPageChangeListener(pagerAdapter);
-        appBarLayout.addOnOffsetChangedListener(pagerAdapter);
-        tabLayout.setupWithViewPager(pagerView);
+        viewPager.setAdapter(pageAdapter);
+        viewPager.addOnPageChangeListener(this);
+        tabLayout.setupWithViewPager(viewPager);
+
         tabLayout.getTabAt(0).setIcon(R.drawable.tab_newsfeed);
         tabLayout.getTabAt(1).setIcon(R.drawable.tab_explore);
         tabLayout.getTabAt(2).setIcon(R.drawable.tab_categories);
         tabLayout.getTabAt(3).setIcon(R.drawable.tab_profile);
 
-        prepareMap ();
+        prepareMap();
+        onPageSelected(0);
     }
 
-    public void verifyGPSStatus() {
+    @Override
+    public void onStart() {
+        super.onStart();
         LocationManager service = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
         boolean isEnabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
@@ -69,6 +71,35 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         }
     }
 
+    /*----OnPageChangeListener Methods----*/
+
+    @Override
+    public void onPageSelected(int position) {
+        switch (position) {
+            case 0:
+                toolbar.setTitle(R.string.tab_news);
+                break;
+            case 1:
+                toolbar.setTitle(R.string.tab_articles);
+                break;
+            case 2:
+                toolbar.setTitle(R.string.tab_categories);
+                break;
+            case 3:
+                toolbar.setTitle(R.string.tab_settings);
+                break;
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    }
+
+
     @Override
     public void onClick(DialogInterface dialog, int which) {
         switch (which) {
@@ -82,13 +113,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        this.verifyGPSStatus();
-    }
-
-    private void prepareMap (){
+    private void prepareMap() {
         // Fixing Later Map loading Delay
         new Thread(new Runnable() {
             @Override
@@ -98,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                     mv.onCreate(null);
                     mv.onPause();
                     mv.onDestroy();
-                }catch (Exception ignored){
+                } catch (Exception ignored) {
 
                 }
             }
