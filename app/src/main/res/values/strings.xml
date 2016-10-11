@@ -3,10 +3,12 @@
     <string name="slogan">¡Apuntando en la dirección correcta!</string>
     <string name="link">Consulta el <u>Aviso de Privacidad </u>.</string>
 
-    <string name="title_page_0">Novedades</string>
-    <string name="title_page_1">Explorar</string>
-    <string name="title_page_2">Categorias</string>
-    <string name="title_page_3">Perfil</string>
+    <string name="tab_news">Novedades</string>
+    <string name="tab_reviews">Reseñas</string>
+    <string name="tab_details">Información</string>
+    <string name="tab_settings">Perfil</string>
+    <string name="tab_articles">Explorar</string>
+    <string name="tab_categories">Categorias</string>
 
     <string name="Home_Item">Inicio</string>
     <string name="Bar_Item">Bares</string>
@@ -45,6 +47,7 @@
     <string name="title_activity_transportation__means">Medios de Transporte</string>
     <string name="title_activity_map">Transporte</string>
 
+    <string name="bu_url">http://buniversitaria.com/</string>
     <string name="server_api">http://api.buniversitaria.com</string>
     <string name="terms_url">http://buniversitaria.com/aviso-de-privacidad/</string>
     <string name="review">Esto es un ejemplo de una reseña bien elaborada con mucho esfuerzo y dedicación.</string>

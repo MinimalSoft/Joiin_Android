@@ -4,12 +4,12 @@ import android.os.AsyncTask;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
-public class LoadIndicator extends AsyncTask {
+class LoadIndicator extends AsyncTask {
     private int progress;
     private WebView webView;
     private ProgressBar progressBar;
 
-    public LoadIndicator(final ProgressBar progressBar, final WebView webView) {
+    LoadIndicator(final ProgressBar progressBar, final WebView webView) {
         this.progressBar = progressBar;
         this.webView = webView;
     }

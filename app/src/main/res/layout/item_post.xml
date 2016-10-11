@@ -8,7 +8,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
@@ -76,44 +75,13 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textStyle="bold" />
 
-                    <LinearLayout
+                    <include
                         android:id="@+id/post_stars"
+                        layout="@layout/rating_stars"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/post_star_1"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/star_off" />
-
-                        <ImageView
-                            android:id="@+id/post_star_2"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/star_off" />
-
-                        <ImageView
-                            android:id="@+id/post_star_3"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/star_off" />
-
-                        <ImageView
-                            android:id="@+id/post_star_4"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/star_off" />
-
-                        <ImageView
-                            android:id="@+id/post_star_5"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/star_off" />
-                    </LinearLayout>
+                        android:layout_centerVertical="true" />
                 </RelativeLayout>
 
                 <TextView

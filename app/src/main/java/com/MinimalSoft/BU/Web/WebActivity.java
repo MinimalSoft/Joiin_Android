@@ -1,26 +1,19 @@
 package com.MinimalSoft.BU.Web;
 
+import com.MinimalSoft.BU.R;
+
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 
-import com.MinimalSoft.BU.R;
-
-public class WebActivity extends AppCompatActivity {
+public class WebActivity extends AppCompatActivity implements View.OnClickListener {
     private WebView webView;
     private ProgressBar progressBar;
     private LoadIndicator loadIndicator;
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        this.getMenuInflater().inflate(R.menu.options_web, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,25 +30,17 @@ public class WebActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(this);
 
         webView.getSettings().setLoadWithOverviewMode(true);
-        //webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(link);
         loadIndicator.execute();
     }
 
+    /*----OnClickListener methods----*/
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                //onBackPressed();
-                finish();
-                return true;
-
-            case R.id.options_share:
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public void onClick(View v) {
+        onBackPressed();
     }
 }

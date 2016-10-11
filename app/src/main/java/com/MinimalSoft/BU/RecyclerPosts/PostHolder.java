@@ -1,11 +1,15 @@
 package com.MinimalSoft.BU.RecyclerPosts;
 
+import com.MinimalSoft.BU.Maps.DetailsActivity;
 import com.MinimalSoft.BU.R;
+
 import com.squareup.picasso.Picasso;
 import com.like.LikeButton;
 
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.View;
+import android.content.Intent;
 import android.content.Context;
 import android.widget.TextView;
 import android.widget.ImageView;
@@ -36,11 +40,11 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
         STARS_COUNT = 5;
         context = itemView.getContext();
         stars = new ImageView[STARS_COUNT];
-        stars[0] = (ImageView) itemView.findViewById(R.id.post_star_1);
-        stars[1] = (ImageView) itemView.findViewById(R.id.post_star_2);
-        stars[2] = (ImageView) itemView.findViewById(R.id.post_star_3);
-        stars[3] = (ImageView) itemView.findViewById(R.id.post_star_4);
-        stars[4] = (ImageView) itemView.findViewById(R.id.post_star_5);
+        stars[0] = (ImageView) itemView.findViewById(R.id.star_1);
+        stars[1] = (ImageView) itemView.findViewById(R.id.star_2);
+        stars[2] = (ImageView) itemView.findViewById(R.id.star_3);
+        stars[3] = (ImageView) itemView.findViewById(R.id.star_4);
+        stars[4] = (ImageView) itemView.findViewById(R.id.star_5);
 
         bottomLine = itemView.findViewById(R.id.post_line);
         likesText = (TextView) itemView.findViewById(R.id.post_textLikes);
@@ -61,7 +65,7 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        //TODO: Place the proper action...
+        //Todo: Place proper action...
     }
 
     void setTypeColors(int placeType) {
@@ -109,7 +113,7 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     }
 
     void loadImage(String url) {
-        Picasso.with(context).load(Uri.parse(url)).error(R.drawable.default_profile).into(profileImage);
+        Picasso.with(context).load(Uri.parse(url)).placeholder(R.drawable.default_profile).into(profileImage);
     }
 
     void setLikes() {

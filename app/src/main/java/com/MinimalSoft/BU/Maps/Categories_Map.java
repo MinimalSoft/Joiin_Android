@@ -21,7 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.MinimalSoft.BU.List.PlacesList;
+import com.MinimalSoft.BU.PlacesList.PlacesList;
 import com.MinimalSoft.BU.Models.Response_General;
 import com.MinimalSoft.BU.Models.Data_General;
 import com.MinimalSoft.BU.R;
@@ -474,15 +474,16 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
                 return true;
 
             case R.id.options_list:
-                if (placesData != null) {
+                /*if (placesData != null) {
                     Gson gson = new Gson();
                     Bundle bundle = getIntent().getExtras();
                     String gsonInfo = gson.toJson(placesData);
                     Intent intent = new Intent(this, PlacesList.class);
                     intent.putExtra("IMAGE", bundle.getString("MARKER"));
+                    intent.putExtra("TITLE", getIntent().getStringExtra("TITLE"));
                     intent.putExtra("GSON", gsonInfo);
                     startActivity(intent);
-                }
+                }*/
                 return true;
         }
 

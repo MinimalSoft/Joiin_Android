@@ -1,15 +1,17 @@
 package com.MinimalSoft.BU.Utilities;
 
-import android.content.Context;
+import android.renderscript.ScriptIntrinsicBlur;
+import android.renderscript.RenderScript;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
 import android.graphics.Bitmap;
-import android.support.v8.renderscript.*;
+import android.content.Context;
 
 public class ImageUtility {
-
     private static final float BITMAP_SCALE = 0.4f;
     private static final float BLUR_RADIUS = 5.0f;
 
-    public static Bitmap blur(Context context, Bitmap image) {
+    public static Bitmap blur(Context context, Bitmap image) throws NullPointerException {
         int width = Math.round(image.getWidth() * BITMAP_SCALE);
         int height = Math.round(image.getHeight() * BITMAP_SCALE);
 

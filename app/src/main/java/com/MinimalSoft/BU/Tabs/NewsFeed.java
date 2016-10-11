@@ -1,13 +1,9 @@
 package com.MinimalSoft.BU.Tabs;
 
-import com.MinimalSoft.BU.R;
-import com.MinimalSoft.BU.RecyclerPosts.Post;
-import com.MinimalSoft.BU.Utilities.Interfaces;
-import com.MinimalSoft.BU.Models.ReviewsResponse;
 import com.MinimalSoft.BU.RecyclerPosts.NewsFeedAdapter;
-
-import java.util.List;
-import java.util.ArrayList;
+import com.MinimalSoft.BU.Models.AllReviewsResponse;
+import com.MinimalSoft.BU.Utilities.Interfaces;
+import com.MinimalSoft.BU.R;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +23,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class NewsFeed extends Fragment implements SwipeRefreshLayout.OnRefreshListener, Callback<ReviewsResponse> {
+public class NewsFeed extends Fragment implements SwipeRefreshLayout.OnRefreshListener, Callback<AllReviewsResponse> {
     private SwipeRefreshLayout swipeRefresh;
     private NewsFeedAdapter newsFeedAdapter;
-    private List<Post> postList;
     private View inflatedView;
     private int postCount;
 
@@ -59,40 +54,21 @@ public class NewsFeed extends Fragment implements SwipeRefreshLayout.OnRefreshLi
     /*----Callback methods----*/
 
     @Override
-    public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
+    public void onResponse(Call<AllReviewsResponse> call, Response<AllReviewsResponse> response) {
         if (response.code() == 404) {
             Toast.makeText(this.getContext(), "Error al conectar con el servidor", Toast.LENGTH_LONG).show();
         } else if (!response.body().getResponse().equals("success")) {
             Toast.makeText(this.getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-        } else {
+        } else if (response.body().getData().size() > 0) {
             postCount += getResources().getInteger(R.integer.refresh_count);
-            int count = response.body().getData().size();
-            postList = new ArrayList<>(count);
-
-            for (int i = 0; i < count; i++) {
-                int stars = response.body().getData().get(i).getStars();
-                int likes = response.body().getData().get(i).getLikes();
-                int userID = response.body().getData().get(i).getIdUser();
-                int typeID = response.body().getData().get(i).getIdType();
-                int postID = response.body().getData().get(i).getIdReview();
-                int dislikes = response.body().getData().get(i).getDislikes();
-
-                String url = response.body().getData().get(i).getFbImage();
-                String review = response.body().getData().get(i).getText();
-                String userName = response.body().getData().get(i).getName();
-                String placeName = response.body().getData().get(i).getPlaceName();
-                String dateTime = response.body().getData().get(i).getDate().replace(" ", " a las ");
-
-                postList.add(new Post(userID, postID, typeID, stars, likes, dislikes, userName, placeName, review, dateTime, url));
-                newsFeedAdapter.updatePosts(postList);
-            }
+            newsFeedAdapter.updatePosts(response.body().getData());
         }
 
         swipeRefresh.setRefreshing(false);
     }
 
     @Override
-    public void onFailure(Call<ReviewsResponse> call, Throwable t) {
+    public void onFailure(Call<AllReviewsResponse> call, Throwable t) {
         Toast.makeText(this.getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
         swipeRefresh.setRefreshing(false);
     }
