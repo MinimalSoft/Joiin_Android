@@ -11,11 +11,13 @@ import android.widget.FrameLayout;
 
 import com.MinimalSoft.BU.Models.Data_Reviews;
 import com.MinimalSoft.BU.Models.Response_Reviews;
+import com.MinimalSoft.BU.Models.ReviewsResponse;
 import com.MinimalSoft.BU.R;
 import com.MinimalSoft.BU.Utilities.Interfaces;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,7 +30,7 @@ public class Details_Reviews extends Fragment implements Callback<Response_Revie
 
     private RecyclerView recyclerView;
     private ArrayList<Data_Reviews> data;
-    //private List<Data_Reviews> placeReviews;
+    //private List<Data_Reviews> data;
     private Data_Reviews placeReviews;
     private ReviewsAdapter adapter;
     private View rootView, superView;
@@ -57,6 +59,7 @@ public class Details_Reviews extends Fragment implements Callback<Response_Revie
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_details_reviews, container, false);
 
+        //Get all the data passed from the map activity
         getDataFromBundle();
         initViews();
 
@@ -87,8 +90,8 @@ public class Details_Reviews extends Fragment implements Callback<Response_Revie
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Interfaces inter = retrofit.create(Interfaces.class);
-        Call<Response_Reviews> call = inter.getReview("reviews",placeId);
-        call.enqueue(this);
+        //Call<Data_Reviews> call = inter.getReview("reviews",placeId);
+        //call.enqueue(this);
     }
 
     @Override
@@ -98,8 +101,8 @@ public class Details_Reviews extends Fragment implements Callback<Response_Revie
             placeReviews = response.body().getData();
 
             data = new ArrayList<>(Arrays.asList(placeReviews));
-            adapter = new ReviewsAdapter(data);
-            recyclerView.setAdapter(adapter);
+            //adapter = new ReviewsAdapter(data);
+            //recyclerView.setAdapter(adapter);
 
             FrameLayout frame = (FrameLayout) rootView.findViewById(R.id.reviews_message);
             frame.setVisibility(View.GONE);

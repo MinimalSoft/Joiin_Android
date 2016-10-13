@@ -90,7 +90,7 @@ public interface Interfaces {
 
     @FormUrlEncoded
     @POST("/controllers/reviews/review")
-    Call<Response_Reviews> getReview(@Field("action") String action,
+    Call<Response_General> getReview(@Field("action") String action,
                                      @Field("idPlace") String idPlace);
 
     @FormUrlEncoded

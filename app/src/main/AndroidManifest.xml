@@ -118,7 +118,6 @@
             android:name="com.MinimalSoft.BU.Maps.Categories_Map"
             android:label="@string/title_activity_map"
             android:theme="@style/AppTheme" />
-        <activity android:name="com.MinimalSoft.BU.Maps.AddReview" />
         <activity
             android:name="com.MinimalSoft.BU.PlacesList.PlacesList"
             android:screenOrientation="portrait"

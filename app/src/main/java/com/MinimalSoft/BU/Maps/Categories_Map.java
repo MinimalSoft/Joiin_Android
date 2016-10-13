@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.MinimalSoft.BU.PlacesList.PlacesList;
 import com.MinimalSoft.BU.Models.Response_General;
 import com.MinimalSoft.BU.Models.Data_General;
 import com.MinimalSoft.BU.R;

@@ -7,8 +7,8 @@ android {
         applicationId "com.MinimalSoft.BU"
         minSdkVersion 19
         targetSdkVersion 21
-        versionCode 1
-        versionName "1"
+        versionCode 4
+        versionName "1.4"
         renderscriptTargetApi 16
         renderscriptSupportModeEnabled true
         multiDexEnabled true
