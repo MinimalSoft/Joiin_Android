@@ -24,11 +24,12 @@ class LikeCallback implements Callback<LikesResponse> {
     private boolean flag;
     private boolean on;
 
-    LikeCallback(LikeButton otherButton, LikeButton likeButton, TextView textView, int postID, int userID) {
+    LikeCallback(LikeButton otherButton, LikeButton likeButton, TextView textView, int postID, int userID, int init) {
         String urlAPI = likeButton.getResources().getString(R.string.server_api);
         Retrofit retrofit = new Retrofit.Builder().baseUrl(urlAPI).addConverterFactory(GsonConverterFactory.create()).build();
         minimalSoftAPI = retrofit.create(Interfaces.class);
 
+        on = (init == 0) ? false : true;
         this.otherButton = otherButton;
         this.likeButton = likeButton;
         this.textView = textView;

@@ -45,19 +45,19 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<PostHolder> {
         if (flag) {
             ReviewsData postData = postList.get(position);
 
-            holder.setLikes();
             holder.setStars(postData.getStars());
             holder.loadImage(postData.getFbImage());
             holder.setTypeColors(postData.getIdType());
             holder.reviewText.setText(postData.getText());
             holder.userNameText.setText(postData.getName());
             holder.placeNameText.setText(postData.getPlaceName());
+            holder.setLikes(postData.getLiked(), postData.getDisliked());
             holder.likesText.setText(String.valueOf(postData.getLikes()));
             holder.dislikesText.setText(String.valueOf(postData.getDislikes()));
             holder.dateTimeText.setText(postData.getDate().replace(" ", " a las "));
 
-            final LikeCallback likeCallback = new LikeCallback(holder.dislikeButton, holder.likeButton, holder.likesText, postData.getIdReview(), userId);
-            final LikeCallback dislikeCallback = new LikeCallback(holder.likeButton, holder.dislikeButton, holder.dislikesText, postData.getIdReview(), userId);
+            final LikeCallback likeCallback = new LikeCallback(holder.dislikeButton, holder.likeButton, holder.likesText, postData.getIdReview(), userId, postData.getLiked());
+            final LikeCallback dislikeCallback = new LikeCallback(holder.likeButton, holder.dislikeButton, holder.dislikesText, postData.getIdReview(), userId, postData.getDisliked());
 
             holder.likeButton.setOnLikeListener(new OnLikeListener() {
                 @Override

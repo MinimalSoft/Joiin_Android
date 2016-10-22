@@ -96,6 +96,7 @@ public interface Interfaces {
     @FormUrlEncoded
     @POST("/controllers/reviews/review.php")
     Call<AllReviewsResponse> getAllReviews(@Field("action") String action,
+                                           @Field("idUser") String idUser,
                                            @Field("number") String number);
 
     @FormUrlEncoded
