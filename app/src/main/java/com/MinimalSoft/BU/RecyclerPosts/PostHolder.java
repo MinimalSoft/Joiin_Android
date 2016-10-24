@@ -116,9 +116,17 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
         Picasso.with(context).load(Uri.parse(url)).placeholder(R.drawable.default_profile).into(profileImage);
     }
 
-    void setLikes() {
-        // Todo: Place code for the user likes
-        dislikeButton.setLiked(false);
-        likeButton.setLiked(false);
+    void setLikes(int liked, int disliked) {
+        if (disliked == 0) {
+            dislikeButton.setLiked(false);
+        } else {
+            dislikeButton.setLiked(true);
+        }
+
+        if (liked == 0) {
+            likeButton.setLiked(false);
+        } else {
+            likeButton.setLiked(true);
+        }
     }
 }

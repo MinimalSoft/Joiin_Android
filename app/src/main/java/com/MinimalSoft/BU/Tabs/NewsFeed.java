@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 
 import android.os.Bundle;
 import android.widget.Toast;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -77,8 +78,9 @@ public class NewsFeed extends Fragment implements SwipeRefreshLayout.OnRefreshLi
     @Override
     public void onRefresh() {
         String urlAPI = getResources().getString(R.string.server_api);
+        int userID = getActivity().getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).getInt("USER_ID", -1);
         Retrofit retrofit = new Retrofit.Builder().baseUrl(urlAPI).addConverterFactory(GsonConverterFactory.create()).build();
         Interfaces minimalSoftAPI = retrofit.create(Interfaces.class);
-        minimalSoftAPI.getAllReviews("getLatest", String.valueOf(postCount)).enqueue(this);
+        minimalSoftAPI.getAllReviews("getLatest", String.valueOf(userID), String.valueOf(postCount)).enqueue(this);
     }
 }

@@ -11,7 +11,10 @@ public class ReviewsData {
     private Integer idUser;
     private String placeName;
     private Integer idType;
+    private Integer idPlace;
     private Integer idReview;
+    private Integer liked;
+    private Integer disliked;
 
     public String getName() {
         return name;
@@ -93,11 +96,35 @@ public class ReviewsData {
         this.idType = idType;
     }
 
+    public Integer getIdPlace() {
+        return idPlace;
+    }
+
+    public void setIdPlace(Integer idPlace) {
+        this.idPlace = idPlace;
+    }
+
     public Integer getIdReview() {
         return idReview;
     }
 
     public void setIdReview(Integer idReview) {
         this.idReview = idReview;
+    }
+
+    public Integer getLiked() {
+        return liked;
+    }
+
+    public void setLiked(Integer liked) {
+        this.liked = liked;
+    }
+
+    public Integer getDisliked() {
+        return disliked;
+    }
+
+    public void setDisliked(Integer disliked) {
+        this.disliked = disliked;
     }
 }
