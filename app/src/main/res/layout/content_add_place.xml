@@ -9,7 +9,7 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_add_place"
-    tools:context="com.MinimalSoft.BU.Maps.AddPlaceActivity">
+    tools:context="com.MinimalSoft.BUniversitaria.Maps.AddPlaceActivity">
 
     <TextView
         android:layout_width="wrap_content"
