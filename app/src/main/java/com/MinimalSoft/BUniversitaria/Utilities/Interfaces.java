@@ -2,7 +2,7 @@ package com.MinimalSoft.BUniversitaria.Utilities;
 
 import com.MinimalSoft.BUniversitaria.Models.AllReviewsResponse;
 import com.MinimalSoft.BUniversitaria.Models.Ecobici_Stop;
-import com.MinimalSoft.BUniversitaria.Models.LikesResponse;
+import com.MinimalSoft.BUniversitaria.Models.ReactionResponse;
 import com.MinimalSoft.BUniversitaria.Models.Response_General;
 import com.MinimalSoft.BUniversitaria.Models.Response_PlaceDetails;
 import com.MinimalSoft.BUniversitaria.Models.UserResponse;
@@ -30,10 +30,11 @@ public interface Interfaces {
                                                 @Field("idPlace") String idPlace);
 
     @FormUrlEncoded
-    @POST("/controllers/reviews/review")
-    Call<LikesResponse> like(@Field("action") String action,
-                             @Field("idUser") String idUser,
-                             @Field("idReview") String idReview);
+    @POST("/controllers/reviews/review.php")
+    Call<ReactionResponse> reaction(@Field("action") String action,
+                                    @Field("idUser") String idUser,
+                                    @Field("idReview") String idReview,
+                                    @Field("idReaction") String idReaction);
 
     @FormUrlEncoded
     @POST("/controllers/place/place")
