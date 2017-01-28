@@ -17,9 +17,12 @@ import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    /* There are only two types of reactions. */
+    /* A post can show a maximum of 100 characters long
+     * There are only two types of reactions. */
+    private final int MAX_CHARACTERS = 200;
     private final int REACTIONS_COUNT = 2;
     private final int STARS_COUNT = 5;
+    private ReviewsData postData;
 
     private ImageView stars[] = new ImageView[STARS_COUNT];
     private ReactionHandler reactionHandler;
@@ -28,6 +31,7 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     private TextView placeNameText;
     private TextView userNameText;
     private TextView dateTimeText;
+    private TextView reviewLabel;
     private TextView reviewText;
     private Context context;
     private View bottomLine;
@@ -47,6 +51,7 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
         profileImage = (CircleImageView) itemView.findViewById(R.id.post_image);
         dateTimeText = (TextView) itemView.findViewById(R.id.post_textDateTime);
         placeNameText = (TextView) itemView.findViewById(R.id.post_textPlace);
+        reviewLabel = (TextView) itemView.findViewById(R.id.post_reviewLabel);
         userNameText = (TextView) itemView.findViewById(R.id.post_textName);
         reviewText = (TextView) itemView.findViewById(R.id.post_textReview);
 
@@ -62,19 +67,44 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
         context = itemView.getContext();
     }
 
+    /*----OnClickListener methods----*/
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.post_textReview) {
+            reviewText.setText(postData.getText());
+            reviewLabel.setVisibility(View.GONE);
+            reviewText.setClickable(false);
+        } else {
+
+        }
+    }
+
     protected void setData(ReviewsData postData, int userId) {
         Picasso.with(context).load(Uri.parse(postData.getFbImage())).placeholder(R.drawable.default_profile).into(profileImage);
         dateTimeText.setText(postData.getDate().replace(" ", " a las "));
         placeNameText.setText(postData.getPlaceName());
         userNameText.setText(postData.getName());
-        reviewText.setText(postData.getText());
         setTypeColors(postData.getIdType());
         setStars(postData.getStars());
 
-        int amounts [] = new int[REACTIONS_COUNT];
+        int amounts[] = new int[REACTIONS_COUNT];
         amounts[1] = postData.getDislikes();
         amounts[0] = postData.getLikes();
+        String text = postData.getText();
 
+        if (text.length() > MAX_CHARACTERS) {
+            reviewText.setClickable(true);
+            reviewText.setOnClickListener(this);
+            reviewLabel.setVisibility(View.VISIBLE);
+            reviewText.setText(text.substring(0, MAX_CHARACTERS));
+        } else {
+            reviewLabel.setVisibility(View.GONE);
+            reviewText.setText(text);
+        }
+
+        this.postData = postData;
+        reviewLayout.setOnClickListener(this);
+        placeNameText.setOnClickListener(this);
         reactionHandler.setData(userId, postData.getIdReview(), postData.getReaction(), amounts);
     }
 
@@ -127,15 +157,5 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 
         bottomLine.setBackgroundColor(color);
         placeNameText.setTextColor(color);
-    }
-
-    /**
-     * Called when a view has been clicked.
-     *
-     * @param v The view that was clicked.
-     */
-    @Override
-    public void onClick(View v) {
-
     }
 }
