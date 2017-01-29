@@ -90,6 +90,13 @@
                     android:layout_height="wrap_content"
                     android:text="@string/review"
                     android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/post_reviewLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Toca el texto para leer reseña completa..."
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <View
@@ -124,8 +131,8 @@
                     android:layout_height="50dp"
                     android:layout_marginStart="5dp"
                     app:icon_size="22dp"
-                    app:like_drawable="@drawable/ic_thumb_down_black"
-                    app:unlike_drawable="@drawable/ic_thumb_down_gray" />
+                    app:like_drawable="@drawable/ic_thumb_down_red"
+                    app:unlike_drawable="@drawable/ic_thumb_down" />
 
                 <TextView
                     android:id="@+id/post_textDislikes"
