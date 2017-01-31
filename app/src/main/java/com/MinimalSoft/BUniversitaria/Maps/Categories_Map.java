@@ -1,6 +1,7 @@
 package com.MinimalSoft.BUniversitaria.Maps;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
@@ -11,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -21,8 +23,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.MinimalSoft.BUniversitaria.Models.Response_General;
 import com.MinimalSoft.BUniversitaria.Models.Data_General;
+import com.MinimalSoft.BUniversitaria.Models.Response_General;
 import com.MinimalSoft.BUniversitaria.R;
 import com.MinimalSoft.BUniversitaria.Utilities.Interfaces;
 import com.google.android.gms.common.ConnectionResult;
@@ -329,11 +331,22 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                        PackageManager.PERMISSION_GRANTED) {
+                        googleMap.setMyLocationEnabled(true);
+                        googleMap.getUiSettings().setCompassEnabled(true);
+                        googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+        } else {
+            Toast.makeText(this, "Cannot show current Location", Toast.LENGTH_LONG).show();
+        }
+
         mMap = googleMap;
 
-        mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setCompassEnabled(true);
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        //mMap.setMyLocationEnabled(true);
+        //mMap.getUiSettings().setCompassEnabled(true);
+        //mMap.getUiSettings().setMyLocationButtonEnabled(false);
         //mMap.getUiSettings().setRotateGesturesEnabled(true);
         //mMap.getUiSettings().setAllGesturesEnabled(true);
 
