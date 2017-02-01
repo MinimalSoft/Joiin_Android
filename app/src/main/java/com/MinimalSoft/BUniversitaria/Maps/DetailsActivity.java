@@ -349,7 +349,7 @@ public class DetailsActivity extends AppCompatActivity {
 
             case 1:
                 dialogBuilder.setTitle("Reseña enviada");
-                dialogBuilder.setMessage("Gracias por enviar tu reseña!! Te amamos");
+                dialogBuilder.setMessage("Gracias por enviar tu reseña!! \nTe amamos");
                 break;
 
             case 2:

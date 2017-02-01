@@ -80,7 +80,7 @@ public class Categories extends Fragment implements View.OnClickListener {
             case R.id.categories_suppliesImage:
                 bundle.putString("Titulo", "Materiales");
                 bundle.putString("Type", "5");
-                bundle.putString("Marker", "marker_suplies");
+                bundle.putString("Marker", "marker_supplies");
                 bundle.putString("stringType", "proveedor de material");
                 break;
 

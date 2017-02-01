@@ -28,8 +28,8 @@
     <color name="brown">#795548</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#B71C1C</color>
-    <color name="theme_grayLight">#74787e</color>
-    <color name="theme_grayDark">#52575e</color>
+    <color name="theme_grayLight">#414141</color>
+    <color name="theme_grayDark">#2F2F2F</color>
 
 
     //colores del Metro

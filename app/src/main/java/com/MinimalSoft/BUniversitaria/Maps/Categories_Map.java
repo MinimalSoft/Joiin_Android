@@ -3,6 +3,7 @@ package com.MinimalSoft.BUniversitaria.Maps;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -64,7 +65,7 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
     final private String cityCenterLong = "-99.141483", cityCenterLat = "19.409520";
     private String activityTittle, idType, marker, stringType, placeAddress, placeName,
             placeLat, placeLong, placeId, userLong, userLat;
-    BitmapDescriptor icon;
+    BitmapDescriptor icon,iconActive;
     //private Bitmap imageToPass;
     private String placeImage;
     private ImageView button_location;
@@ -257,8 +258,7 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
                 tempMarker = marker;
                 Data_General data = haspMap.get(marker);
                 placeData = data;
-                marker.setIcon(BitmapDescriptorFactory.fromResource(getResources().
-                        getIdentifier("marker_bu", "drawable", getPackageName())));
+                marker.setIcon(iconActive);
                 frame.setVisibility(View.VISIBLE);
 
                 //TODO: Re-write the pass image to activity code
@@ -344,9 +344,9 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
 
         mMap = googleMap;
 
-        //mMap.setMyLocationEnabled(true);
-        //mMap.getUiSettings().setCompassEnabled(true);
-        //mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setCompassEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
         //mMap.getUiSettings().setRotateGesturesEnabled(true);
         //mMap.getUiSettings().setAllGesturesEnabled(true);
 
@@ -432,8 +432,9 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
         this.idType = this.bundle.getString("Type");
         this.marker = this.bundle.getString("Marker");
         this.stringType = this.bundle.getString("stringType");
-        this.icon = BitmapDescriptorFactory.fromResource(getResources().
-                getIdentifier(this.marker, "drawable", getPackageName()));
+
+        icon = BitmapDescriptorFactory.fromBitmap(resizeMapIcons(marker, 65,120));
+        iconActive = BitmapDescriptorFactory.fromBitmap(resizeMapIcons(marker+"_active", 65,120));
     }
 
     private void setToolbar() {
@@ -499,5 +500,11 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public Bitmap resizeMapIcons(String iconName,int width, int height){
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getPackageName()));
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
+        return resizedBitmap;
     }
 }

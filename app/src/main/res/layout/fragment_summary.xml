@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:autofit="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:layout_marginRight="15dp"
@@ -38,26 +39,32 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:id="@+id/summary_placeName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="5dp"
-                    android:text="Nombre del lugar, puede"
-                    android:textColor="@color/colorWhite"
+                    android:text="Nombre del lugar"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:textSize="15dp" />
+                    android:maxLines="1"
+                    android:textSize="15dp"
+                    autofit:minTextSize="10sp"/>
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:id="@+id/summary_address"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="5dp"
+                    android:layout_margin="5dp"
                     android:text="Calle numero, colonia o delegacion"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="13dp" />
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:maxLines="1"
+                    android:textSize="13dp"
+                    autofit:minTextSize="10sp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

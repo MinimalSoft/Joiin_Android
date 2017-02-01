@@ -7,8 +7,8 @@ android {
         applicationId "com.MinimalSoft.BUniversitaria"
         minSdkVersion 23
         targetSdkVersion 21
-        versionCode 4
-        versionName "1.4"
+        versionCode 5
+        versionName "1.5.0"
         renderscriptTargetApi 16
         renderscriptSupportModeEnabled true
         multiDexEnabled true
@@ -49,5 +49,6 @@ dependencies {
     compile 'com.github.phajduk:RxValidator:94fdca4ec6504985d6187080f1d9e9580703c082'
     compile 'com.github.championswimmer:Android-SocialButtons:1.0'
     compile 'com.github.jd-alexander:LikeButton:0.2.0'
+    compile 'me.grantland:autofittextview:0.2.+'
 }
 
