@@ -1,24 +1,21 @@
 package com.MinimalSoft.BUniversitaria.PlacesList;
 
+import android.content.Context;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.MinimalSoft.BUniversitaria.Models.PlaceData;
 import com.MinimalSoft.BUniversitaria.R;
-
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-import android.net.Uri;
-
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.LayoutInflater;
-
-import android.content.Context;
-import android.widget.TextView;
-import android.widget.ImageView;
-import android.widget.ArrayAdapter;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 class PlaceListAdapter extends ArrayAdapter<PlaceData> {
     private List<PlaceData> placeList;
@@ -43,7 +40,7 @@ class PlaceListAdapter extends ArrayAdapter<PlaceData> {
 
             String url = serverURL + placeList.get(position).getImage();
             String name = placeList.get(position).getPlaceName();
-            int rating = placeList.get(position).getStars();
+            String rating = placeList.get(position).getStars();
             String address = placeList.get(position).getStreet() +
                     " # " + placeList.get(position).getNumber() +
                     ", " + placeList.get(position).getNeighborhood();

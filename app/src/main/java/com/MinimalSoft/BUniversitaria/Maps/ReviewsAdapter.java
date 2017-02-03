@@ -35,11 +35,10 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
         //TODO: Improve date parsing
         String date = reviews.get(i).getDate();
-        String dateFormated = date.substring(8,10)+"/"+date.substring(5,7)+"/"+date.substring(0,4);
+        String dateFormated = date.substring(8, 10) + "/" + date.substring(5, 7) + "/" + date.substring(0, 4);
         viewHolder.review_date.setText(dateFormated);
 
-        switch(reviews.get(i).getStars())
-        {
+        switch (reviews.get(i).getStars()) {
             case "1":
                 viewHolder.review_star1.setImageResource(R.drawable.star_on);
                 break;
@@ -87,15 +86,15 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         public ViewHolder(View view) {
             super(view);
 
-            review_name = (TextView) view.findViewById(R.id.review_name);
-            review_date = (TextView) view.findViewById(R.id.review_date);
-            review_text= (TextView) view.findViewById(R.id.review_text);
+            review_name = (TextView) view.findViewById(R.id.review_textName);
+            review_date = (TextView) view.findViewById(R.id.review_textDateTime);
+            review_text = (TextView) view.findViewById(R.id.review_textReview);
 
-            review_star1 = (ImageView) view.findViewById(R.id.review_star1);
-            review_star2 = (ImageView) view.findViewById(R.id.review_star2);
-            review_star3 = (ImageView) view.findViewById(R.id.review_star3);
-            review_star4 = (ImageView) view.findViewById(R.id.review_star4);
-            review_star5 = (ImageView) view.findViewById(R.id.review_star5);
+            review_star1 = (ImageView) view.findViewById(R.id.star_1);
+            review_star2 = (ImageView) view.findViewById(R.id.star_1);
+            review_star3 = (ImageView) view.findViewById(R.id.star_1);
+            review_star4 = (ImageView) view.findViewById(R.id.star_1);
+            review_star5 = (ImageView) view.findViewById(R.id.star_1);
 
         }
     }

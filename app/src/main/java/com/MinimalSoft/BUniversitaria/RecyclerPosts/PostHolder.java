@@ -1,6 +1,7 @@
 package com.MinimalSoft.BUniversitaria.RecyclerPosts;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.MinimalSoft.BUniversitaria.Models.ReviewsData;
+import com.MinimalSoft.BUniversitaria.PlaceDetails.DetailsActivity;
 import com.MinimalSoft.BUniversitaria.R;
 import com.like.LikeButton;
 import com.squareup.picasso.Picasso;
@@ -39,7 +41,7 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     public PostHolder(View itemView) {
         super(itemView);
 
-        TextView [] counterFields = new TextView[REACTIONS_COUNT];
+        TextView[] counterFields = new TextView[REACTIONS_COUNT];
         LikeButton[] reactionButtons = new LikeButton[REACTIONS_COUNT];
 
         reactionButtons[1] = (LikeButton) itemView.findViewById(R.id.post_dislikeButton);
@@ -75,7 +77,10 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
             reviewLabel.setVisibility(View.GONE);
             reviewText.setClickable(false);
         } else {
-
+            Intent intent = new Intent(context, DetailsActivity.class);
+            intent.putExtra("PLACE_NAME", postData.getPlaceName());
+            intent.putExtra("ID_PLACE", postData.getIdPlace());
+            context.startActivity(intent);
         }
     }
 

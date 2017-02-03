@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ReviewsResponse {
     private String response;
-    private Integer message;
+    private String message;
     private List<ReviewsData> data = new ArrayList<>();
 
     public String getResponse() {
@@ -16,11 +16,11 @@ public class ReviewsResponse {
         this.response = response;
     }
 
-    public Integer getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(Integer message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 

@@ -89,6 +89,11 @@
             android:value="@string/facebook_app_id" />
 
         <activity
+            android:name=".PlaceDetails.DetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BU.NoActionBar" />
+
+        <activity
             android:name="com.MinimalSoft.BUniversitaria.Maps.DetailsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

@@ -2,9 +2,10 @@ package com.MinimalSoft.BUniversitaria.Utilities;
 
 import com.MinimalSoft.BUniversitaria.Models.AllReviewsResponse;
 import com.MinimalSoft.BUniversitaria.Models.Ecobici_Stop;
+import com.MinimalSoft.BUniversitaria.Models.PlaceResponse;
 import com.MinimalSoft.BUniversitaria.Models.ReactionResponse;
 import com.MinimalSoft.BUniversitaria.Models.Response_General;
-import com.MinimalSoft.BUniversitaria.Models.Response_PlaceDetails;
+import com.MinimalSoft.BUniversitaria.Models.ReviewsResponse;
 import com.MinimalSoft.BUniversitaria.Models.UserResponse;
 
 import java.util.List;
@@ -23,11 +24,6 @@ public interface Interfaces {
 
     @GET("station/{id}")
     Call<List<Ecobici_Stop>> getStationById(@Path("id") String id);
-
-    @FormUrlEncoded
-    @POST("/controllers/place/place")
-    Call<Response_PlaceDetails> getPlaceDetails(@Field("action") String action,
-                                                @Field("idPlace") String idPlace);
 
     @FormUrlEncoded
     @POST("/controllers/reviews/review.php")
@@ -96,9 +92,14 @@ public interface Interfaces {
                                        @Field("stars") String stars);
 
     @FormUrlEncoded
-    @POST("/controllers/reviews/review")
-    Call<Response_General> getReview(@Field("action") String action,
+    @POST("/controllers/reviews/review.php")
+    Call<ReviewsResponse> getReviews(@Field("action") String action,
+                                     @Field("idUser") String idUser,
                                      @Field("idPlace") String idPlace);
+    @FormUrlEncoded
+    @POST("/controllers/place/place.php")
+    Call<PlaceResponse> getPlaceDetails(@Field("action") String action,
+                                        @Field("idPlace") String idPlace);
 
     @FormUrlEncoded
     @POST("/controllers/reviews/review.php")
