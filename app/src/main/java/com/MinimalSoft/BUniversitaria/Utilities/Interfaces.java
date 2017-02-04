@@ -2,8 +2,9 @@ package com.MinimalSoft.BUniversitaria.Utilities;
 
 import com.MinimalSoft.BUniversitaria.Models.AllReviewsResponse;
 import com.MinimalSoft.BUniversitaria.Models.DatalessResponse;
+import com.MinimalSoft.BUniversitaria.Models.DetailsResponse;
 import com.MinimalSoft.BUniversitaria.Models.Ecobici_Stop;
-import com.MinimalSoft.BUniversitaria.Models.PlaceResponse;
+import com.MinimalSoft.BUniversitaria.Models.PlacesResponse;
 import com.MinimalSoft.BUniversitaria.Models.ReactionResponse;
 import com.MinimalSoft.BUniversitaria.Models.Response_General;
 import com.MinimalSoft.BUniversitaria.Models.ReviewsResponse;
@@ -34,12 +35,12 @@ public interface Interfaces {
                                     @Field("idReaction") String idReaction);
 
     @FormUrlEncoded
-    @POST("/controllers/place/place")
-    Call<Response_General> getPlaces(@Field("action") String action,
-                                     @Field("idType") String idType,
-                                     @Field("latitude") String latitude,
-                                     @Field("longitude") String longitude,
-                                     @Field("radio") String radio);
+    @POST("/controllers/place/place.php")
+    Call<PlacesResponse> getPlaces(@Field("action") String action,
+                                   @Field("idType") String idType,
+                                   @Field("latitude") String latitude,
+                                   @Field("longitude") String longitude,
+                                   @Field("radio") String radio);
 
     @FormUrlEncoded
     @POST("/controllers/user/user")
@@ -83,6 +84,7 @@ public interface Interfaces {
                                          @Field("phone1") String phone1,
                                          @Field("email") String email,
                                          @Field("idPackage") String idPackage);
+
     @FormUrlEncoded
     @POST("/controllers/reviews/review")
     Call<DatalessResponse> putReview(@Field("action") String action,
@@ -90,6 +92,7 @@ public interface Interfaces {
                                      @Field("idPlace") String idPlace,
                                      @Field("text") String text,
                                      @Field("stars") String stars);
+
     @FormUrlEncoded
     @POST("/controllers/reviews/review")
     Call<Response_General> writeReview(@Field("action") String action,
@@ -103,10 +106,11 @@ public interface Interfaces {
     Call<ReviewsResponse> getReviews(@Field("action") String action,
                                      @Field("idUser") String idUser,
                                      @Field("idPlace") String idPlace);
+
     @FormUrlEncoded
     @POST("/controllers/place/place.php")
-    Call<PlaceResponse> getPlaceDetails(@Field("action") String action,
-                                        @Field("idPlace") String idPlace);
+    Call<DetailsResponse> getPlaceDetails(@Field("action") String action,
+                                          @Field("idPlace") String idPlace);
 
     @FormUrlEncoded
     @POST("/controllers/reviews/review.php")

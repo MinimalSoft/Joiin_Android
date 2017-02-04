@@ -1,4 +1,4 @@
-package com.MinimalSoft.BUniversitaria.PlaceDetails;
+package com.MinimalSoft.BUniversitaria.Details;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

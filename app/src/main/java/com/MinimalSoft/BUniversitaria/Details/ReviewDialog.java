@@ -1,4 +1,4 @@
-package com.MinimalSoft.BUniversitaria.PlaceDetails;
+package com.MinimalSoft.BUniversitaria.Details;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;

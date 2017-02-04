@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.MinimalSoft.BUniversitaria.Details.DetailsActivity;
 import com.MinimalSoft.BUniversitaria.Models.ReviewsData;
-import com.MinimalSoft.BUniversitaria.PlaceDetails.DetailsActivity;
 import com.MinimalSoft.BUniversitaria.R;
 import com.like.LikeButton;
 import com.squareup.picasso.Picasso;
@@ -79,7 +79,7 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
         } else {
             Intent intent = new Intent(context, DetailsActivity.class);
             intent.putExtra("PLACE_NAME", postData.getPlaceName());
-            intent.putExtra("ID_PLACE", postData.getIdPlace());
+            intent.putExtra("PLACE_ID", postData.getIdPlace());
             context.startActivity(intent);
         }
     }

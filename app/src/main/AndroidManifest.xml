@@ -89,7 +89,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name=".PlaceDetails.DetailsActivity"
+            android:name=".Details.DetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BU.NoActionBar" />
 
@@ -124,9 +124,9 @@
             android:label="@string/title_activity_map"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.MinimalSoft.BUniversitaria.PlacesList.PlacesList"
+            android:name=".Places.PlacesActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme2.NoActionBar">
+            android:theme="@style/BU.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.MinimalSoft.BUniversitaria.Maps.Categories_Map" />

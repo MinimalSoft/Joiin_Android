@@ -1,4 +1,4 @@
-package com.MinimalSoft.BUniversitaria.PlaceDetails;
+package com.MinimalSoft.BUniversitaria.Details;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

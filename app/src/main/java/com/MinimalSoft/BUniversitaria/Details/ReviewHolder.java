@@ -1,4 +1,4 @@
-package com.MinimalSoft.BUniversitaria.PlaceDetails;
+package com.MinimalSoft.BUniversitaria.Details;
 
 import android.content.Context;
 import android.net.Uri;

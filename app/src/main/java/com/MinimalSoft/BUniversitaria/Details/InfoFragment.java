@@ -1,4 +1,4 @@
-package com.MinimalSoft.BUniversitaria.PlaceDetails;
+package com.MinimalSoft.BUniversitaria.Details;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.MinimalSoft.BUniversitaria.Models.PlaceData;
+import com.MinimalSoft.BUniversitaria.Models.AllPlaceData;
 import com.MinimalSoft.BUniversitaria.R;
 import com.google.gson.Gson;
 
@@ -28,7 +28,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
     private View webPageButton;
     private View emailButton;
 
-    private PlaceData placeData;
+    private AllPlaceData placeData;
 
     @Nullable
     @Override
@@ -51,7 +51,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
         emailButton.setVisibility(View.GONE);
 
         /*String gsonData = getArguments().getString(KEY);
-        Type type = new TypeToken<PlaceData>() {}.getType();
+        Type type = new TypeToken<AllPlaceData>() {}.getType();
         placeData = new Gson().fromJson(gsonData, type);
         setData(placeData);*/
 
@@ -115,7 +115,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    protected static InfoFragment newInstance(PlaceData data) {
+    protected static InfoFragment newInstance(AllPlaceData data) {
         Gson gson = new Gson();
         Bundle bundle = new Bundle();
         String gsonData = gson.toJson(data);
@@ -127,7 +127,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
         return instance;
     }
 
-    protected void setData(PlaceData placeData) {
+    protected void setData(AllPlaceData placeData) {
         if (phoneTextView != null && aboutTextView != null && addressTextView != null) {
             String address = placeData.getStreet() + ' ' + placeData.getNumber() + ", " + placeData.getNeighborhood();
             phoneTextView.setText(String.valueOf(placeData.getPhone1()));

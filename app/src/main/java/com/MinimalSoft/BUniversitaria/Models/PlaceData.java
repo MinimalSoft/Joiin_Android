@@ -1,32 +1,23 @@
 package com.MinimalSoft.BUniversitaria.Models;
 
 public class PlaceData {
-    private Integer id;
+    private Integer idPlace;
     private String placeName;
     private String street;
     private Integer number;
     private String neighborhood;
     private Float latitude;
     private Float longitude;
-    private String stars;
     private String image;
-    private Integer phone1;
-    private Integer ext1;
-    private Integer phone2;
-    private Integer ext2;
-    private String email;
-    private String webPage;
-    private String facebook;
-    private String twitter;
-    private String instagram;
-    private String description;
+    private Integer idPackage;
+    private Float stars;
 
-    public Integer getId() {
-        return id;
+    public Integer getIdPlace() {
+        return idPlace;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdPlace(Integer idPlace) {
+        this.idPlace = idPlace;
     }
 
     public String getPlaceName() {
@@ -77,14 +68,6 @@ public class PlaceData {
         this.longitude = longitude;
     }
 
-    public String getStars() {
-        return stars;
-    }
-
-    public void setStars(String stars) {
-        this.stars = stars;
-    }
-
     public String getImage() {
         return image;
     }
@@ -93,83 +76,19 @@ public class PlaceData {
         this.image = image;
     }
 
-    public Integer getPhone1() {
-        return phone1;
+    public Integer getIdPackage() {
+        return idPackage;
     }
 
-    public void setPhone1(Integer phone1) {
-        this.phone1 = phone1;
+    public void setIdPackage(Integer idPackage) {
+        this.idPackage = idPackage;
     }
 
-    public Integer getExt1() {
-        return ext1;
+    public Float getStars() {
+        return stars;
     }
 
-    public void setExt1(Integer ext1) {
-        this.ext1 = ext1;
-    }
-
-    public Integer getPhone2() {
-        return phone2;
-    }
-
-    public void setPhone2(Integer phone2) {
-        this.phone2 = phone2;
-    }
-
-    public Integer getExt2() {
-        return ext2;
-    }
-
-    public void setExt2(Integer ext2) {
-        this.ext2 = ext2;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getWebPage() {
-        return webPage;
-    }
-
-    public void setWebPage(String webPage) {
-        this.webPage = webPage;
-    }
-
-    public String getFacebook() {
-        return facebook;
-    }
-
-    public void setFacebook(String facebook) {
-        this.facebook = facebook;
-    }
-
-    public String getTwitter() {
-        return twitter;
-    }
-
-    public void setTwitter(String twitter) {
-        this.twitter = twitter;
-    }
-
-    public String getInstagram() {
-        return instagram;
-    }
-
-    public void setInstagram(String instagram) {
-        this.instagram = instagram;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setStars(Float stars) {
+        this.stars = stars;
     }
 }

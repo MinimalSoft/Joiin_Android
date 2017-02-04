@@ -24,8 +24,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.MinimalSoft.BUniversitaria.Models.Data_General;
-import com.MinimalSoft.BUniversitaria.Models.Response_General;
+import com.MinimalSoft.BUniversitaria.Models.PlaceData;
+import com.MinimalSoft.BUniversitaria.Models.PlacesResponse;
+import com.MinimalSoft.BUniversitaria.Places.PlacesActivity;
 import com.MinimalSoft.BUniversitaria.R;
 import com.MinimalSoft.BUniversitaria.Utilities.Interfaces;
 import com.google.android.gms.common.ConnectionResult;
@@ -38,11 +39,11 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -59,13 +60,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Categories_Map extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, Callback<Response_General> {
+        LocationListener, Callback<PlacesResponse> {
 
     private Bundle bundle;
     final private String cityCenterLong = "-99.141483", cityCenterLat = "19.409520";
     private String activityTittle, idType, marker, stringType, placeAddress, placeName,
             placeLat, placeLong, placeId, userLong, userLat;
-    BitmapDescriptor icon,iconActive;
+    BitmapDescriptor icon, iconActive;
     //private Bitmap imageToPass;
     private String placeImage;
     private ImageView button_location;
@@ -73,9 +74,8 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
     private FrameLayout frame;
     private ImageView sum_image, sum_stars_image;
     private TextView sum_tittle, sum_address, sum_stars, sum_distance, sum_placeId;
-    List<Data_General> placesData;
-    Data_General placeData;
-    HashMap<Marker, Data_General> haspMap = new HashMap<Marker, Data_General>();
+    List<PlaceData> placesData;
+    HashMap<Marker, PlaceData> haspMap = new HashMap<>();
 
     private GoogleMap mMap;
     LocationRequest mLocationRequest;
@@ -107,8 +107,8 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
 
         for (int i = 0; i < placesData.size(); i++) {
 
-            Lat = Double.parseDouble(placesData.get(i).getLatitude());
-            Long = Double.parseDouble(placesData.get(i).getLongitude());
+            Lat = Double.valueOf(placesData.get(i).getLatitude());
+            Long = Double.valueOf(placesData.get(i).getLongitude());
 
             Marker marker = mMap.addMarker(new MarkerOptions()
                     .icon(icon)
@@ -126,22 +126,17 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
 //Retrofit Methods
 
     private void getDataFromServer() {
-
-        String BASE_URL = "http://api.buniversitaria.com";
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        String baseURL = getResources().getString(R.string.server_api);
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(baseURL).addConverterFactory(GsonConverterFactory.create()).build();
 
         Interfaces inter = retrofit.create(Interfaces.class);
-
-        Call<Response_General> call = inter.getPlaces("places", this.idType, cityCenterLat, cityCenterLong, "100");
+        Call<PlacesResponse> call = inter.getPlaces("places", idType, cityCenterLat, cityCenterLong, "20");
 
         call.enqueue(this);
     }
 
     @Override
-    public void onResponse(Call<Response_General> call, Response<Response_General> response) {
+    public void onResponse(Call<PlacesResponse> call, Response<PlacesResponse> response) {
 
         int code = response.code();
         if (code == 200 && response.body().getResponse().equals("success")) {
@@ -153,7 +148,7 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
     }
 
     @Override
-    public void onFailure(Call<Response_General> call, Throwable t) {
+    public void onFailure(Call<PlacesResponse> call, Throwable t) {
 
         Toast.makeText(this, "Error de red!", Toast.LENGTH_LONG).show();
     }
@@ -256,8 +251,7 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
                 }
 
                 tempMarker = marker;
-                Data_General data = haspMap.get(marker);
-                placeData = data;
+                PlaceData data = haspMap.get(marker);
                 marker.setIcon(iconActive);
                 frame.setVisibility(View.VISIBLE);
 
@@ -286,8 +280,8 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
                 placeAddress = data.getStreet() + " " + data.getNumber() + ", " + data.getNeighborhood();
                 placeName = data.getPlaceName();
                 placeId = data.getIdPlace() + "";
-                placeLat = data.getLatitude();
-                placeLong = data.getLongitude();
+                placeLat = String.valueOf(data.getLatitude());
+                placeLong = String.valueOf(data.getLongitude());
 
                 sum_tittle.setText(placeName);
                 sum_address.setText(placeAddress);
@@ -335,9 +329,9 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
                 PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
                         PackageManager.PERMISSION_GRANTED) {
-                        googleMap.setMyLocationEnabled(true);
-                        googleMap.getUiSettings().setCompassEnabled(true);
-                        googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+            googleMap.setMyLocationEnabled(true);
+            googleMap.getUiSettings().setCompassEnabled(true);
+            googleMap.getUiSettings().setMyLocationButtonEnabled(true);
         } else {
             Toast.makeText(this, "Cannot show current Location", Toast.LENGTH_LONG).show();
         }
@@ -414,12 +408,12 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
 
 //Utility methods
 
-    private String getDistance(String latitude, String longitude) {
+    private String getDistance(float latitude, float longitude) {
         float distance = 0;
 
         Location stopLocation = new Location("Distance");
-        stopLocation.setLatitude(Double.parseDouble(latitude));
-        stopLocation.setLongitude(Double.parseDouble(longitude));
+        stopLocation.setLatitude(latitude);
+        stopLocation.setLongitude(longitude);
 
         distance = mLastLocation.distanceTo(stopLocation) / 1000;
 
@@ -433,8 +427,9 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
         this.marker = this.bundle.getString("Marker");
         this.stringType = this.bundle.getString("stringType");
 
-        icon = BitmapDescriptorFactory.fromBitmap(resizeMapIcons(marker, 65,120));
-        iconActive = BitmapDescriptorFactory.fromBitmap(resizeMapIcons(marker+"_active", 65,120));
+        //TODO: Uncomment this lines
+        //icon = BitmapDescriptorFactory.fromBitmap(resizeMapIcons(marker, 65, 120));
+        //iconActive = BitmapDescriptorFactory.fromBitmap(resizeMapIcons(marker + "_active", 65, 120));
     }
 
     private void setToolbar() {
@@ -474,7 +469,7 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.options_map, menu);
+        getMenuInflater().inflate(R.menu.options_list, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -485,26 +480,23 @@ public class Categories_Map extends AppCompatActivity implements OnMapReadyCallb
                 onBackPressed();
                 return true;
 
-            case R.id.options_list:
-                /*if (placesData != null) {
-                    Gson gson = new Gson();
-                    Bundle bundle = getIntent().getExtras();
-                    String gsonInfo = gson.toJson(placesData);
-                    Intent intent = new Intent(this, PlacesList.class);
-                    intent.putExtra("IMAGE", bundle.getString("MARKER"));
-                    intent.putExtra("TITLE", getIntent().getStringExtra("TITLE"));
-                    intent.putExtra("GSON", gsonInfo);
+            case R.id.action_list:
+                if (placesData != null) {
+                    Intent intent = new Intent(this, PlacesActivity.class);
+                    String gsonInfo = new Gson().toJson(placesData);
+
+                    intent.putExtra("TITLE", "Lugares cerca de ti");
+                    intent.putExtra("GSON_DATA", gsonInfo);
                     startActivity(intent);
-                }*/
+                }
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public Bitmap resizeMapIcons(String iconName,int width, int height){
-        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getPackageName()));
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
-        return resizedBitmap;
+    public Bitmap resizeMapIcons(String iconName, int width, int height) {
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(), getResources().getIdentifier(iconName, "drawable", getPackageName()));
+        return Bitmap.createScaledBitmap(imageBitmap, width, height, false);
     }
 }

@@ -1,9 +1,9 @@
 package com.MinimalSoft.BUniversitaria.Models;
 
-public class PlaceResponse {
+public class DetailsResponse {
     private String response;
     private String message;
-    private PlaceData data;
+    private AllPlaceData data;
 
     public String getResponse() {
         return response;
@@ -21,11 +21,11 @@ public class PlaceResponse {
         this.message = message;
     }
 
-    public PlaceData getData() {
+    public AllPlaceData getData() {
         return data;
     }
 
-    public void setData(PlaceData data) {
+    public void setData(AllPlaceData data) {
         this.data = data;
     }
 }

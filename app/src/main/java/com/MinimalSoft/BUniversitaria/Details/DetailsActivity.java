@@ -1,4 +1,4 @@
-package com.MinimalSoft.BUniversitaria.PlaceDetails;
+package com.MinimalSoft.BUniversitaria.Details;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -18,8 +18,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.MinimalSoft.BUniversitaria.Models.PlaceData;
-import com.MinimalSoft.BUniversitaria.Models.PlaceResponse;
+import com.MinimalSoft.BUniversitaria.Models.AllPlaceData;
+import com.MinimalSoft.BUniversitaria.Models.DetailsResponse;
 import com.MinimalSoft.BUniversitaria.R;
 import com.MinimalSoft.BUniversitaria.Utilities.FragmentsViewPagerAdapter;
 import com.MinimalSoft.BUniversitaria.Utilities.Interfaces;
@@ -31,7 +31,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DetailsActivity extends AppCompatActivity implements Callback<PlaceResponse>, ViewPager.OnPageChangeListener, View.OnClickListener {
+public class DetailsActivity extends AppCompatActivity implements Callback<DetailsResponse>, ViewPager.OnPageChangeListener, View.OnClickListener {
     private final String[] TITLES = {"Información", "Reseñas"};
 
     private InfoFragment infoFragment = new InfoFragment();
@@ -42,7 +42,7 @@ public class DetailsActivity extends AppCompatActivity implements Callback<Place
     private FloatingActionButton fab;
     private ImageView imageView;
 
-    private PlaceData placeData;
+    private AllPlaceData placeData;
     private short page;
     private int userID;
 
@@ -65,7 +65,7 @@ public class DetailsActivity extends AppCompatActivity implements Callback<Place
 
         userID = getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).getInt("USER_ID", 50);
         collapsingToolbar.setTitle(getIntent().getStringExtra("PLACE_NAME"));
-        int placeID = getIntent().getIntExtra("ID_PLACE", -1);
+        int placeID = getIntent().getIntExtra("PLACE_ID", -1);
 
         reviewsFragment = ReviewsFragment.newInstance(placeID, userID);
 
@@ -88,7 +88,7 @@ public class DetailsActivity extends AppCompatActivity implements Callback<Place
 
     /*---------------------------------- Callback Methods ----------------------------------*/
     @Override
-    public void onResponse(Call<PlaceResponse> call, Response<PlaceResponse> response) {
+    public void onResponse(Call<DetailsResponse> call, Response<DetailsResponse> response) {
         if (response.isSuccessful()) {
             placeData = response.body().getData();
             String imageName = placeData.getImage();
@@ -102,7 +102,7 @@ public class DetailsActivity extends AppCompatActivity implements Callback<Place
     }
 
     @Override
-    public void onFailure(Call<PlaceResponse> call, Throwable t) {
+    public void onFailure(Call<DetailsResponse> call, Throwable t) {
         Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
     }
 
