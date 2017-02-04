@@ -21,7 +21,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/dialog_add_review" />
+    <include layout="@layout/dialog_review" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

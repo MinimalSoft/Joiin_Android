@@ -1,6 +1,7 @@
 package com.MinimalSoft.BUniversitaria.Utilities;
 
 import com.MinimalSoft.BUniversitaria.Models.AllReviewsResponse;
+import com.MinimalSoft.BUniversitaria.Models.DatalessResponse;
 import com.MinimalSoft.BUniversitaria.Models.Ecobici_Stop;
 import com.MinimalSoft.BUniversitaria.Models.PlaceResponse;
 import com.MinimalSoft.BUniversitaria.Models.ReactionResponse;
@@ -82,7 +83,13 @@ public interface Interfaces {
                                          @Field("phone1") String phone1,
                                          @Field("email") String email,
                                          @Field("idPackage") String idPackage);
-
+    @FormUrlEncoded
+    @POST("/controllers/reviews/review")
+    Call<DatalessResponse> putReview(@Field("action") String action,
+                                     @Field("idUser") String idUser,
+                                     @Field("idPlace") String idPlace,
+                                     @Field("text") String text,
+                                     @Field("stars") String stars);
     @FormUrlEncoded
     @POST("/controllers/reviews/review")
     Call<Response_General> writeReview(@Field("action") String action,

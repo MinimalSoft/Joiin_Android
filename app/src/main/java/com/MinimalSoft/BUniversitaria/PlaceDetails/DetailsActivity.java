@@ -1,12 +1,16 @@
 package com.MinimalSoft.BUniversitaria.PlaceDetails;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +18,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.MinimalSoft.BUniversitaria.Models.PlaceData;
 import com.MinimalSoft.BUniversitaria.Models.PlaceResponse;
 import com.MinimalSoft.BUniversitaria.R;
 import com.MinimalSoft.BUniversitaria.Utilities.FragmentsViewPagerAdapter;
@@ -27,10 +32,19 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DetailsActivity extends AppCompatActivity implements Callback<PlaceResponse>, ViewPager.OnPageChangeListener, View.OnClickListener {
-    private final InformationFragment informationFragment = new InformationFragment();
     private final String[] TITLES = {"Información", "Reseñas"};
 
+    private InfoFragment infoFragment = new InfoFragment();
+    private FragmentsViewPagerAdapter pagerAdapter;
+    private ReviewsFragment reviewsFragment;
+    private ViewPager viewPager;
+
+    private FloatingActionButton fab;
     private ImageView imageView;
+
+    private PlaceData placeData;
+    private short page;
+    private int userID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,24 +52,25 @@ public class DetailsActivity extends AppCompatActivity implements Callback<Place
         setContentView(R.layout.activity_place_details);
 
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.details_collapsingToolbar);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.details_fab);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.details_viewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.details_tabLayout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.details_toolbar);
+        viewPager = (ViewPager) findViewById(R.id.details_viewPager);
         imageView = (ImageView) findViewById(R.id.details_imageView);
+        fab = (FloatingActionButton) findViewById(R.id.details_fab);
 
+        fab.setOnClickListener(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(this);
 
-        int userID = getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).getInt("USER_ID", 50);
+        userID = getSharedPreferences("USER_PREF", Context.MODE_PRIVATE).getInt("USER_ID", 50);
+        collapsingToolbar.setTitle(getIntent().getStringExtra("PLACE_NAME"));
         int placeID = getIntent().getIntExtra("ID_PLACE", -1);
 
-        FragmentsViewPagerAdapter pagerAdapter = new FragmentsViewPagerAdapter(getSupportFragmentManager(), true);
-        ReviewsFragment reviewsFragment = ReviewsFragment.newInstance(placeID, userID);
+        reviewsFragment = ReviewsFragment.newInstance(placeID, userID);
 
-        collapsingToolbar.setTitle(getIntent().getStringExtra("PLACE_NAME"));
-        pagerAdapter.addFragment(informationFragment, TITLES[0]);
+        pagerAdapter = new FragmentsViewPagerAdapter(getSupportFragmentManager(), true);
+        pagerAdapter.addFragment(infoFragment, TITLES[0]);
         pagerAdapter.addFragment(reviewsFragment, TITLES[1]);
 
         viewPager.setAdapter(pagerAdapter);
@@ -67,16 +82,20 @@ public class DetailsActivity extends AppCompatActivity implements Callback<Place
         Retrofit retrofit = new Retrofit.Builder().baseUrl(urlAPI).addConverterFactory(GsonConverterFactory.create()).build();
         Interfaces minimalSoftAPI = retrofit.create(Interfaces.class);
         minimalSoftAPI.getPlaceDetails("placeDetails", String.valueOf(placeID)).enqueue(this);
+
+        onPageSelected(0);
     }
 
     /*---------------------------------- Callback Methods ----------------------------------*/
     @Override
     public void onResponse(Call<PlaceResponse> call, Response<PlaceResponse> response) {
         if (response.isSuccessful()) {
-            String imageName = response.body().getData().getImage();
+            placeData = response.body().getData();
+            String imageName = placeData.getImage();
             String imageURL = getString(R.string.server_api) + "/imagenes/" + imageName;
             Picasso.with(this).load(Uri.parse(imageURL)).placeholder(R.drawable.default_image).error(R.drawable.default_image).into(imageView);
-            informationFragment.setData(response.body().getData());
+
+            infoFragment.setData(placeData);
         } else {
             Toast.makeText(getApplicationContext(), response.message(), Toast.LENGTH_LONG).show();
         }
@@ -96,13 +115,32 @@ public class DetailsActivity extends AppCompatActivity implements Callback<Place
             case View.NO_ID: // Back button
                 onBackPressed();
                 break;
+
+            case R.id.details_fab:
+                if (page > 0) {
+                    new ReviewDialog(this, reviewsFragment, userID);
+                }
+                break;
         }
     }
 
     /*----OnPageChangeListener Methods----*/
     @Override
     public void onPageSelected(int position) {
+        ColorStateList color;
+        Bitmap bitmap;
 
+        if (position == 0) {
+            color = ContextCompat.getColorStateList(this, R.color.black);
+            bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.uber_white);
+        } else {
+            color = ContextCompat.getColorStateList(this, R.color.red);
+            bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.ic_action_create);
+        }
+
+        fab.setBackgroundTintList(color);
+        fab.setImageBitmap(bitmap);
+        page = (short) position;
     }
 
     @Override

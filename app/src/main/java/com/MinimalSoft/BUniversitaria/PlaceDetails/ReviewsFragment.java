@@ -40,7 +40,7 @@ public class ReviewsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(inflatedView.getContext());
 
-        //swipeRefresh.setColorSchemeResources(R.color.red_900, R.color.brown_500, R.color.green_900, R.color.orange_600);
+        swipeRefresh.setColorSchemeResources(R.color.red_900, R.color.brown_500, R.color.green_900, R.color.orange_600);
         swipeRefresh.setOnRefreshListener(this);
         reviewsAdapter = new ReviewAdapter();
         textView.setVisibility(View.VISIBLE);

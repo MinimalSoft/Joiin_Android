@@ -19,9 +19,9 @@ import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    /* A post can show a maximum of 100 characters long
+    /* A post can show a maximum of 256 characters long
      * There are only two types of reactions. */
-    private final int MAX_CHARACTERS = 200;
+    private final int MAX_CHARACTERS = 256;
     private final int REACTIONS_COUNT = 2;
     private final int STARS_COUNT = 5;
     private ReviewsData postData;

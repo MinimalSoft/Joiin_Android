@@ -282,7 +282,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
-        dialogView = inflater.inflate(R.layout.dialog_add_review, null);
+        dialogView = inflater.inflate(R.layout.dialog_review, null);
         dialogBuilder.setView(dialogView);
 
         dialogBuilder.setTitle(placeName);
@@ -388,7 +388,7 @@ public class DetailsActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-            final EditText eText = (EditText) dialogView.findViewById(R.id.review_comment);
+            final EditText eText = (EditText) dialogView.findViewById(R.id.review_inputText);
             final RatingBar rStars = (RatingBar) dialogView.findViewById(R.id.review_ratingBar);
 
             String sText, sStars;

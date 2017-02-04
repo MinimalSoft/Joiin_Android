@@ -13,8 +13,11 @@ import android.widget.Toast;
 
 import com.MinimalSoft.BUniversitaria.Models.PlaceData;
 import com.MinimalSoft.BUniversitaria.R;
+import com.google.gson.Gson;
 
-public class InformationFragment extends Fragment implements View.OnClickListener {
+public class InfoFragment extends Fragment implements View.OnClickListener {
+    private static final String KEY = "GSON_DATA";
+
     private TextView addressTextView;
     private TextView phoneTextView;
     private TextView aboutTextView;
@@ -41,14 +44,16 @@ public class InformationFragment extends Fragment implements View.OnClickListene
         webPageButton = inflatedView.findViewById(R.id.info_webPageButton);
         emailButton = inflatedView.findViewById(R.id.info_emailButton);
 
-        addressTextView.setOnClickListener(this);
-        phoneTextView.setOnClickListener(this);
-
         instagramButton.setVisibility(View.GONE);
         facebookButton.setVisibility(View.GONE);
         twitterButton.setVisibility(View.GONE);
         webPageButton.setVisibility(View.GONE);
         emailButton.setVisibility(View.GONE);
+
+        /*String gsonData = getArguments().getString(KEY);
+        Type type = new TypeToken<PlaceData>() {}.getType();
+        placeData = new Gson().fromJson(gsonData, type);
+        setData(placeData);*/
 
         return inflatedView;
     }
@@ -110,37 +115,54 @@ public class InformationFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    protected void setData(PlaceData data) {
-        String address = data.getStreet() + ' ' + data.getNumber() + ", " + data.getNeighborhood();
-        phoneTextView.setText(String.valueOf(data.getPhone1()));
-        aboutTextView.setText(data.getDescription());
-        addressTextView.setText(address);
+    protected static InfoFragment newInstance(PlaceData data) {
+        Gson gson = new Gson();
+        Bundle bundle = new Bundle();
+        String gsonData = gson.toJson(data);
+        InfoFragment instance = new InfoFragment();
 
-        if (data.getInstagram().length() > 0) {
-            instagramButton.setVisibility(View.VISIBLE);
-            instagramButton.setOnClickListener(this);
+        bundle.putString(KEY, gsonData);
+        instance.setArguments(bundle);
+
+        return instance;
+    }
+
+    protected void setData(PlaceData placeData) {
+        if (phoneTextView != null && aboutTextView != null && addressTextView != null) {
+            String address = placeData.getStreet() + ' ' + placeData.getNumber() + ", " + placeData.getNeighborhood();
+            phoneTextView.setText(String.valueOf(placeData.getPhone1()));
+            aboutTextView.setText(placeData.getDescription());
+            addressTextView.setText(address);
+
+            if (placeData.getInstagram().length() > 0) {
+                instagramButton.setVisibility(View.VISIBLE);
+                instagramButton.setOnClickListener(this);
+            }
+
+            if (placeData.getFacebook().length() > 0) {
+                facebookButton.setVisibility(View.VISIBLE);
+                facebookButton.setOnClickListener(this);
+            }
+
+            if (placeData.getTwitter().length() > 0) {
+                twitterButton.setVisibility(View.VISIBLE);
+                twitterButton.setOnClickListener(this);
+            }
+
+            if (placeData.getWebPage().length() > 0) {
+                webPageButton.setVisibility(View.VISIBLE);
+                webPageButton.setOnClickListener(this);
+            }
+
+            if (placeData.getEmail().length() > 0) {
+                emailButton.setVisibility(View.VISIBLE);
+                emailButton.setOnClickListener(this);
+            }
+
+            addressTextView.setOnClickListener(this);
+            phoneTextView.setOnClickListener(this);
+
+            this.placeData = placeData;
         }
-
-        if (data.getFacebook().length() > 0) {
-            facebookButton.setVisibility(View.VISIBLE);
-            facebookButton.setOnClickListener(this);
-        }
-
-        if (data.getTwitter().length() > 0) {
-            twitterButton.setVisibility(View.VISIBLE);
-            twitterButton.setOnClickListener(this);
-        }
-
-        if (data.getWebPage().length() > 0) {
-            webPageButton.setVisibility(View.VISIBLE);
-            webPageButton.setOnClickListener(this);
-        }
-
-        if (data.getEmail().length() > 0) {
-            emailButton.setVisibility(View.VISIBLE);
-            emailButton.setOnClickListener(this);
-        }
-
-        placeData = data;
     }
 }

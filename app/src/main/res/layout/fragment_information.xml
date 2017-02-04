@@ -166,7 +166,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:src="@drawable/circle"
-                                android:tint="@color/indicator" />
+                                android:tint="@color/googleplus" />
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -186,7 +186,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:src="@drawable/circle"
-                                android:tint="@color/red" />
+                                android:tint="@color/ripple" />
 
                             <ImageView
                                 android:layout_width="wrap_content"
