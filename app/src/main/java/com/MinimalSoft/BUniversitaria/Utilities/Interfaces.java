@@ -1,10 +1,13 @@
 package com.MinimalSoft.BUniversitaria.Utilities;
 
 import com.MinimalSoft.BUniversitaria.Models.AllReviewsResponse;
+import com.MinimalSoft.BUniversitaria.Models.DatalessResponse;
+import com.MinimalSoft.BUniversitaria.Models.DetailsResponse;
 import com.MinimalSoft.BUniversitaria.Models.Ecobici_Stop;
+import com.MinimalSoft.BUniversitaria.Models.PlacesResponse;
 import com.MinimalSoft.BUniversitaria.Models.ReactionResponse;
 import com.MinimalSoft.BUniversitaria.Models.Response_General;
-import com.MinimalSoft.BUniversitaria.Models.Response_PlaceDetails;
+import com.MinimalSoft.BUniversitaria.Models.ReviewsResponse;
 import com.MinimalSoft.BUniversitaria.Models.UserResponse;
 
 import java.util.List;
@@ -25,11 +28,6 @@ public interface Interfaces {
     Call<List<Ecobici_Stop>> getStationById(@Path("id") String id);
 
     @FormUrlEncoded
-    @POST("/controllers/place/place")
-    Call<Response_PlaceDetails> getPlaceDetails(@Field("action") String action,
-                                                @Field("idPlace") String idPlace);
-
-    @FormUrlEncoded
     @POST("/controllers/reviews/review.php")
     Call<ReactionResponse> reaction(@Field("action") String action,
                                     @Field("idUser") String idUser,
@@ -37,12 +35,12 @@ public interface Interfaces {
                                     @Field("idReaction") String idReaction);
 
     @FormUrlEncoded
-    @POST("/controllers/place/place")
-    Call<Response_General> getPlaces(@Field("action") String action,
-                                     @Field("idType") String idType,
-                                     @Field("latitude") String latitude,
-                                     @Field("longitude") String longitude,
-                                     @Field("radio") String radio);
+    @POST("/controllers/place/place.php")
+    Call<PlacesResponse> getPlaces(@Field("action") String action,
+                                   @Field("idType") String idType,
+                                   @Field("latitude") String latitude,
+                                   @Field("longitude") String longitude,
+                                   @Field("radio") String radio);
 
     @FormUrlEncoded
     @POST("/controllers/user/user")
@@ -89,6 +87,14 @@ public interface Interfaces {
 
     @FormUrlEncoded
     @POST("/controllers/reviews/review")
+    Call<DatalessResponse> putReview(@Field("action") String action,
+                                     @Field("idUser") String idUser,
+                                     @Field("idPlace") String idPlace,
+                                     @Field("text") String text,
+                                     @Field("stars") String stars);
+
+    @FormUrlEncoded
+    @POST("/controllers/reviews/review")
     Call<Response_General> writeReview(@Field("action") String action,
                                        @Field("idUser") String idUser,
                                        @Field("idPlace") String idPlace,
@@ -96,9 +102,15 @@ public interface Interfaces {
                                        @Field("stars") String stars);
 
     @FormUrlEncoded
-    @POST("/controllers/reviews/review")
-    Call<Response_General> getReview(@Field("action") String action,
+    @POST("/controllers/reviews/review.php")
+    Call<ReviewsResponse> getReviews(@Field("action") String action,
+                                     @Field("idUser") String idUser,
                                      @Field("idPlace") String idPlace);
+
+    @FormUrlEncoded
+    @POST("/controllers/place/place.php")
+    Call<DetailsResponse> getPlaceDetails(@Field("action") String action,
+                                          @Field("idPlace") String idPlace);
 
     @FormUrlEncoded
     @POST("/controllers/reviews/review.php")

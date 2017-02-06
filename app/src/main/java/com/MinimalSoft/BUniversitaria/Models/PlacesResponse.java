@@ -1,12 +1,11 @@
 package com.MinimalSoft.BUniversitaria.Models;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ReviewsResponse {
+public class PlacesResponse {
     private String response;
     private String message;
-    private List<ReviewsData> data = new ArrayList<>();
+    private List<PlaceData> data = null;
 
     public String getResponse() {
         return response;
@@ -24,11 +23,11 @@ public class ReviewsResponse {
         this.message = message;
     }
 
-    public List<ReviewsData> getData() {
+    public List<PlaceData> getData() {
         return data;
     }
 
-    public void setData(List<ReviewsData> data) {
+    public void setData(List<PlaceData> data) {
         this.data = data;
     }
 }

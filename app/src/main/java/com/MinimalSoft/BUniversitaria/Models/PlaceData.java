@@ -6,11 +6,11 @@ public class PlaceData {
     private String street;
     private Integer number;
     private String neighborhood;
-    private Double latitude;
-    private Double longitude;
+    private Float latitude;
+    private Float longitude;
     private String image;
     private Integer idPackage;
-    private Integer stars;
+    private Float stars;
 
     public Integer getIdPlace() {
         return idPlace;
@@ -52,19 +52,19 @@ public class PlaceData {
         this.neighborhood = neighborhood;
     }
 
-    public Double getLatitude() {
+    public Float getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Double latitude) {
+    public void setLatitude(Float latitude) {
         this.latitude = latitude;
     }
 
-    public Double getLongitude() {
+    public Float getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Double longitude) {
+    public void setLongitude(Float longitude) {
         this.longitude = longitude;
     }
 
@@ -84,11 +84,11 @@ public class PlaceData {
         this.idPackage = idPackage;
     }
 
-    public Integer getStars() {
+    public Float getStars() {
         return stars;
     }
 
-    public void setStars(Integer stars) {
+    public void setStars(Float stars) {
         this.stars = stars;
     }
 }

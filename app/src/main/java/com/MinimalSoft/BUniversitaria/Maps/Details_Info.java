@@ -14,8 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.MinimalSoft.BUniversitaria.Models.Data_General;
-import com.MinimalSoft.BUniversitaria.Models.Response_PlaceDetails;
+import com.MinimalSoft.BUniversitaria.Models.AllPlaceData;
+import com.MinimalSoft.BUniversitaria.Models.DetailsResponse;
 import com.MinimalSoft.BUniversitaria.R;
 import com.MinimalSoft.BUniversitaria.Utilities.Interfaces;
 import com.MinimalSoft.BUniversitaria.Web.WebActivity;
@@ -26,12 +26,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Details_Info extends Fragment implements Callback<Response_PlaceDetails> {
+public class Details_Info extends Fragment implements Callback<DetailsResponse> {
 
     private Bundle bundle;
     private View superView;
     private Context context;
-    private Data_General placeDetails;
+    private AllPlaceData placeDetails;
     private RelativeLayout details_twitter, details_instagram, details_facebook, details_email, details_webpage;
     private TextView details_phone, details_about, details_address;
     private String placePhone, placeEmail, placeWebPage, placeFacebook, placeTwitter, placeInstagram,
@@ -72,13 +72,13 @@ public class Details_Info extends Fragment implements Callback<Response_PlaceDet
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Interfaces inter = retrofit.create(Interfaces.class);
-        Call<Response_PlaceDetails> call = inter.getPlaceDetails("placeDetails", placeId);
+        Call<DetailsResponse> call = inter.getPlaceDetails("placeDetails", placeId);
         call.enqueue(this);
     }
 
     public void setActivityData() {
 
-        placePhone = placeDetails.getPhone1();
+        placePhone = String.valueOf(placeDetails.getPhone1());
         placeEmail = placeDetails.getEmail();
         placeWebPage = placeDetails.getWebPage();
         placeFacebook = placeDetails.getFacebook();
@@ -197,7 +197,7 @@ public class Details_Info extends Fragment implements Callback<Response_PlaceDet
     }
 
     @Override
-    public void onResponse(Call<Response_PlaceDetails> call, Response<Response_PlaceDetails> response) {
+    public void onResponse(Call<DetailsResponse> call, Response<DetailsResponse> response) {
         int code = response.code();
         if (code == 200 && response.body().getResponse().equals("success")) {
             placeDetails = response.body().getData();
@@ -208,7 +208,7 @@ public class Details_Info extends Fragment implements Callback<Response_PlaceDet
     }
 
     @Override
-    public void onFailure(Call<Response_PlaceDetails> call, Throwable t) {
+    public void onFailure(Call<DetailsResponse> call, Throwable t) {
         showSnackBar("Error de red!");
     }
 

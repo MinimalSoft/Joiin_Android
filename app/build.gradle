@@ -5,7 +5,7 @@ android {
     buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.MinimalSoft.BUniversitaria"
-        minSdkVersion 23
+        minSdkVersion 21
         targetSdkVersion 21
         versionCode 5
         versionName "1.5.0"

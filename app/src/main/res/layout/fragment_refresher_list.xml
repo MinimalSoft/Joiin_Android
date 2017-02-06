@@ -19,7 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="No items"
+        android:text="Sin información"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
         android:visibility="invisible" />
 </RelativeLayout>

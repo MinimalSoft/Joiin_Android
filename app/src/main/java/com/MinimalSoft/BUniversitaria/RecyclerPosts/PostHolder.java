@@ -1,6 +1,7 @@
 package com.MinimalSoft.BUniversitaria.RecyclerPosts;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.MinimalSoft.BUniversitaria.Details.DetailsActivity;
 import com.MinimalSoft.BUniversitaria.Models.ReviewsData;
 import com.MinimalSoft.BUniversitaria.R;
 import com.like.LikeButton;
@@ -17,9 +19,9 @@ import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    /* A post can show a maximum of 100 characters long
+    /* A post can show a maximum of 256 characters long
      * There are only two types of reactions. */
-    private final int MAX_CHARACTERS = 200;
+    private final int MAX_CHARACTERS = 256;
     private final int REACTIONS_COUNT = 2;
     private final int STARS_COUNT = 5;
     private ReviewsData postData;
@@ -39,7 +41,7 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     public PostHolder(View itemView) {
         super(itemView);
 
-        TextView [] counterFields = new TextView[REACTIONS_COUNT];
+        TextView[] counterFields = new TextView[REACTIONS_COUNT];
         LikeButton[] reactionButtons = new LikeButton[REACTIONS_COUNT];
 
         reactionButtons[1] = (LikeButton) itemView.findViewById(R.id.post_dislikeButton);
@@ -75,7 +77,10 @@ class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener
             reviewLabel.setVisibility(View.GONE);
             reviewText.setClickable(false);
         } else {
-
+            Intent intent = new Intent(context, DetailsActivity.class);
+            intent.putExtra("PLACE_NAME", postData.getPlaceName());
+            intent.putExtra("PLACE_ID", postData.getIdPlace());
+            context.startActivity(intent);
         }
     }
 

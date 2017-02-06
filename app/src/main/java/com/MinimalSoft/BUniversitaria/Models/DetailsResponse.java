@@ -1,12 +1,9 @@
 package com.MinimalSoft.BUniversitaria.Models;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class PlaceResponse {
+public class DetailsResponse {
     private String response;
     private String message;
-    private List<PlaceData> data = new ArrayList<>();
+    private AllPlaceData data;
 
     public String getResponse() {
         return response;
@@ -24,11 +21,11 @@ public class PlaceResponse {
         this.message = message;
     }
 
-    public List<PlaceData> getData() {
+    public AllPlaceData getData() {
         return data;
     }
 
-    public void setData(List<PlaceData> data) {
+    public void setData(AllPlaceData data) {
         this.data = data;
     }
 }

@@ -17,8 +17,5 @@
             app:popupTheme="@style/PopupOverlay" />
     </android.support.design.widget.AppBarLayout>
 
-    <ListView
-        android:id="@+id/list_listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <include layout="@layout/fragment_refresher_list" />
 </LinearLayout>

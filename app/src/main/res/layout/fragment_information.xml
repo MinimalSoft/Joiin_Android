@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp">
+
+                <!--The BACKGROUND color must be
+                    WHITE for API 21 and lower.-->
+
+                <LinearLayout
+                    style="@style/CardPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Un poco del lugar..."
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/info_aboutLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Cargando descripcion..."
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp">
+
+                <!--The BACKGROUND color must be
+                    WHITE for API 21 and lower.-->
+
+                <LinearLayout
+                    style="@style/CardPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="¡Ponte en contacto, dale click!"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/info_addressLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:drawablePadding="6dp"
+                        android:drawableStart="@drawable/ic_google_maps"
+                        android:gravity="center_vertical"
+                        android:text="Cargando dirección..."
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/info_telephoneLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:drawablePadding="6dp"
+                        android:drawableStart="@drawable/ic_phone_classic"
+                        android:gravity="center_vertical"
+                        android:text="Cargando teléfono..."
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="6dp"
+                        android:baselineAligned="false"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="5">
+
+                        <RelativeLayout
+                            android:id="@+id/info_facebookButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/circle"
+                                android:tint="@color/facebook" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/logo_facebook" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/info_twitterButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/circle"
+                                android:tint="@color/twitter" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/logo_twitter" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/info_instagramButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/circle"
+                                android:tint="@color/instagram" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/logo_instagram" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/info_emailButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/circle"
+                                android:tint="@color/googleplus" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_action_message" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/info_webPageButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/circle"
+                                android:tint="@color/ripple" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_web" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</FrameLayout>
