@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,16 +16,13 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="6dp">
-
-                <!--The BACKGROUND color must be
-                    WHITE for API 21 and lower.-->
+                app:cardBackgroundColor="@color/white"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="15dp">
 
                 <LinearLayout
-                    style="@style/CardPadding"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:orientation="vertical">
 
                     <TextView
@@ -34,28 +32,26 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                     <TextView
-                        android:id="@+id/info_aboutLabel"
+                        android:id="@+id/information_aboutLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Cargando descripcion..."
+                        android:text="Descripción del establecimiento."
                         android:textSize="16sp" />
                 </LinearLayout>
+
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="6dp">
-
-                <!--The BACKGROUND color must be
-                    WHITE for API 21 and lower.-->
+                app:cardBackgroundColor="@color/white"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="15dp">
 
                 <LinearLayout
-                    style="@style/CardPadding"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:orientation="vertical">
 
                     <TextView
@@ -65,135 +61,84 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                     <TextView
-                        android:id="@+id/info_addressLabel"
+                        android:id="@+id/information_addressLabel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
+                        android:clickable="true"
                         android:drawablePadding="6dp"
                         android:drawableStart="@drawable/ic_google_maps"
                         android:gravity="center_vertical"
-                        android:text="Cargando dirección..."
+                        android:text="Dirección del establecimiento."
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/info_telephoneLabel"
+                        android:id="@+id/information_phoneLabel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
+                        android:clickable="true"
                         android:drawablePadding="6dp"
                         android:drawableStart="@drawable/ic_phone_classic"
                         android:gravity="center_vertical"
-                        android:text="Cargando teléfono..."
+                        android:text="Teléfono del establecimiento."
                         android:textSize="16sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="6dp"
-                        android:baselineAligned="false"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:weightSum="5">
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
-                        <RelativeLayout
-                            android:id="@+id/info_facebookButton"
-                            android:layout_width="0dp"
+                        <ImageButton
+                            android:id="@+id/information_facebookButton"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1">
+                            android:layout_marginEnd="@dimen/social_button_margin"
+                            android:layout_marginStart="@dimen/social_button_margin"
+                            android:background="@drawable/circle"
+                            android:backgroundTint="@color/facebook"
+                            android:src="@drawable/logo_facebook" />
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/circle"
-                                android:tint="@color/facebook" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/logo_facebook" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/info_twitterButton"
-                            android:layout_width="0dp"
+                        <ImageButton
+                            android:id="@+id/information_twitterButton"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1">
+                            android:layout_marginEnd="@dimen/social_button_margin"
+                            android:layout_marginStart="@dimen/social_button_margin"
+                            android:background="@drawable/circle"
+                            android:backgroundTint="@color/twitter"
+                            android:src="@drawable/logo_twitter" />
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/circle"
-                                android:tint="@color/twitter" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/logo_twitter" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/info_instagramButton"
-                            android:layout_width="0dp"
+                        <ImageButton
+                            android:id="@+id/information_instagramButton"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1">
+                            android:layout_marginEnd="@dimen/social_button_margin"
+                            android:layout_marginStart="@dimen/social_button_margin"
+                            android:background="@drawable/circle"
+                            android:backgroundTint="@color/instagram"
+                            android:src="@drawable/logo_instagram" />
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/circle"
-                                android:tint="@color/instagram" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/logo_instagram" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/info_emailButton"
-                            android:layout_width="0dp"
+                        <ImageButton
+                            android:id="@+id/information_emailButton"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1">
+                            android:layout_marginEnd="@dimen/social_button_margin"
+                            android:layout_marginStart="@dimen/social_button_margin"
+                            android:background="@drawable/circle"
+                            android:backgroundTint="@color/googleplus"
+                            android:src="@drawable/ic_email" />
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/circle"
-                                android:tint="@color/googleplus" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/ic_action_message" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/info_webPageButton"
-                            android:layout_width="0dp"
+                        <ImageButton
+                            android:id="@+id/information_webButton"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/circle"
-                                android:tint="@color/ripple" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/ic_web" />
-                        </RelativeLayout>
+                            android:layout_marginEnd="@dimen/social_button_margin"
+                            android:layout_marginStart="@dimen/social_button_margin"
+                            android:background="@drawable/circle"
+                            android:backgroundTint="@color/ripple"
+                            android:src="@drawable/ic_web" />
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>

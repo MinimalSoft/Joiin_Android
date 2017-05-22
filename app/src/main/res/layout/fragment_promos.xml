@@ -1,44 +1,37 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.MinimalSoft.BUniversitaria.Promos.PromosFragment">
+    android:orientation="vertical"
+    android:weightSum="3">
 
-    <LinearLayout
+    <ImageButton
+        android:id="@+id/promo_barsButton"
+        style="@style/Base.Widget.AppCompat.ButtonBar.AlertDialog"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|top"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_margin="1dp"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"
+        android:src="@drawable/promo_bar" />
 
-        <ImageView
-            android:id="@+id/Promo_Bar"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="1dp"
-            android:layout_weight="1"
-            android:scaleType="centerCrop"
-            android:src="@drawable/promo_bar" />
+    <ImageButton
+        android:id="@+id/promo_foodButton"
+        style="@style/Base.Widget.AppCompat.ButtonBar.AlertDialog"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="1dp"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"
+        android:src="@drawable/promo_food" />
 
-        <ImageView
-            android:id="@+id/Promo_Food"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="1dp"
-            android:layout_weight="1"
-            android:scaleType="centerCrop"
-            android:src="@drawable/promo_food" />
-
-        <ImageView
-            android:id="@+id/Promo_Gym"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="1dp"
-            android:layout_weight="1"
-            android:scaleType="centerCrop"
-            android:src="@drawable/promo_gym" />
-
-    </LinearLayout>
-</FrameLayout>
+    <ImageButton
+        android:id="@+id/promo_gymsButton"
+        style="@style/Base.Widget.AppCompat.ButtonBar.AlertDialog"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="1dp"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"
+        android:src="@drawable/promo_gym" />
+</LinearLayout>

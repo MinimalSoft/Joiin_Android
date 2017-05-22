@@ -2,19 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.MinimalSoft.BUniversitaria">
 
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission-sdk-23 android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="com.MinimalSoft.BrujulaUniversitaria.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <permission
         android:name="com.MinimalSoft.BUniversitaria.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="com.MinimalSoft.BrujulaUniversitaria.permission.MAPS_RECEIVE" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -24,69 +27,81 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true">
-        <activity
-            android:name="com.MinimalSoft.BUniversitaria.Start.StartActivity"
-            android:configChanges="keyboardHidden|screenSize"
-            android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.ActivityStart">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        android:supportsRtl="true"
+        android:theme="@style/BU">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.MinimalSoft.BUniversitaria.Start.LoginActivity"
-            android:configChanges="keyboardHidden|screenSize"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/BU.NoActionBar" />
-        <activity
-            android:name="com.MinimalSoft.BUniversitaria.Start.RegisterActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/BU.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.MinimalSoft.BUniversitaria.Start.LoginActivity" />
-        </activity>
-        <activity
-            android:name="com.MinimalSoft.BUniversitaria.Main.MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name="com.MinimalSoft.BUniversitaria.Web.WebActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/BU.NoActionBar" />
-        <activity
-            android:name="com.MinimalSoft.BUniversitaria.SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName="com.MinimalSoft.BUniversitaria.Main.MainActivity"
-            android:theme="@style/AppTheme.Settings">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.MinimalSoft.BUniversitaria.Main.MainActivity" />
-        </activity>
-        <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider916058378464973"
             android:exported="true" />
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+        <!--activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /-->
+
+        <activity
+            android:name=".Start.LaunchActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".Start.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BU.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".Start.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BU.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Start.LoginActivity" />
+        </activity>
+
+        <activity
+            android:name=".Main.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BU.NoActionBar" />
+
+        <activity
+            android:name=".Places.PlacesMapActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BU.NoActionBar" />
+
+        <activity
+            android:name=".Web.WebActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BU.NoActionBar" />
 
         <activity
             android:name=".Details.DetailsActivity"
@@ -94,42 +109,23 @@
             android:theme="@style/BU.NoActionBar" />
 
         <activity
-            android:name="com.MinimalSoft.BUniversitaria.Maps.DetailsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.MinimalSoft.BUniversitaria.Maps.AddPlaceActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.MinimalSoft.BUniversitaria.Promos.Bars_Promo"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.MinimalSoft.BUniversitaria.Promos.Gyms_Promo"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.MinimalSoft.BUniversitaria.Promos.Food_Promo"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.MinimalSoft.BUniversitaria.ViewerActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.MinimalSoft.BUniversitaria.Transport.Routes"
-            android:label="Lineas"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.MinimalSoft.BUniversitaria.Transport.Map"
-            android:label="@string/title_activity_map"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name="com.MinimalSoft.BUniversitaria.Maps.Categories_Map"
-            android:label="@string/title_activity_map"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".Places.PlacesActivity"
+            android:name=".Viewer.ListViewerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BU.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.MinimalSoft.BUniversitaria.Maps.Categories_Map" />
-        </activity>
+            android:theme="@style/BU.NoActionBar" />
+
+        <activity
+            android:name=".Viewer.MenuViewerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BU.NoActionBar" />
+
+        <activity
+            android:name=".Transport.Routes"
+            android:label="Líneas"
+            android:screenOrientation="portrait"
+            android:theme="@style/BU.NoActionBar" />
+        <activity
+            android:name=".Transport.TransportMap"
+            android:screenOrientation="portrait"
+            android:theme="@style/BU.NoActionBar" />
     </application>
 </manifest>

@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.MinimalSoft.BUniversitaria.Models.Transport_Stop;
+import com.MinimalSoft.BUniversitaria.Responses.Transport_Stop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class DatabaseAccess {
      * @param context
      */
     private DatabaseAccess(Context context) {
-        this.openHelper = new DataBase (context);
+        this.openHelper = new DataBase(context);
     }
 
     /**
@@ -64,8 +64,8 @@ public class DatabaseAccess {
         Cursor cursor = database.rawQuery(sentence, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Transport_Stop stop = new Transport_Stop(cursor.getString(0),cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                    cursor.getString(4), cursor.getString(5), cursor.getString(6),cursor.getString(7),cursor.getString(8));
+            Transport_Stop stop = new Transport_Stop(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                    cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8));
 
             list.add(stop);
             cursor.moveToNext();
@@ -79,12 +79,10 @@ public class DatabaseAccess {
         Cursor cursor = database.rawQuery(sentence, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            list.add("Línea "+cursor.getString(0)+ "\n" +cursor.getString(1));
+            list.add("Línea " + cursor.getString(0) + "\n" + cursor.getString(1));
             cursor.moveToNext();
         }
         cursor.close();
         return list;
     }
-
 }
-

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.MinimalSoft.BUniversitaria.ViewerActivity">
+    android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -18,7 +17,6 @@
             android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
@@ -31,16 +29,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:map="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
+            <fragment
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context="com.MinimalSoft.BUniversitaria.Transport.Map"
                 tools:layout="@layout/abc_action_bar_title_item" />
-
 
             <ImageView
                 android:id="@+id/imgMyLocation"
@@ -55,9 +50,6 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/location"
                 android:visibility="visible" />
-
         </RelativeLayout>
-
     </FrameLayout>
-
 </LinearLayout>

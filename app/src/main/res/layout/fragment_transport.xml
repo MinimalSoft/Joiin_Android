@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    android:gravity="center"
+    android:padding="20dp">
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/layout_bars"
+        android:layout_alignParentStart="true"
+        android:padding="5dp"
+        app:layout_heightPercent="30%"
+        app:layout_widthPercent="50%">
+
+        <ImageButton
+            android:id="@+id/menu_metroButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/metro"
+            app:layout_heightPercent="85%"
+            app:layout_widthPercent="100%" />
+
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
+            android:text="Metro"
+            app:layout_heightPercent="15%"
+            app:layout_widthPercent="100%" />
+    </android.support.percent.PercentRelativeLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/layout_food"
+        android:layout_alignParentEnd="true"
+        android:padding="5dp"
+        app:layout_heightPercent="30%"
+        app:layout_widthPercent="50%">
+
+        <ImageButton
+            android:id="@+id/menu_metrobusButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/metrobus"
+            app:layout_heightPercent="85%"
+            app:layout_widthPercent="100%" />
+
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
+            android:text="Metrobús"
+            app:layout_heightPercent="15%"
+            app:layout_widthPercent="100%" />
+    </android.support.percent.PercentRelativeLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/layout_gyms"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/layout_bars"
+        android:padding="5dp"
+        app:layout_heightPercent="30%"
+        app:layout_widthPercent="50%">
+
+        <ImageButton
+            android:id="@+id/menu_trenButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/tren_ligero"
+            app:layout_heightPercent="85%"
+            app:layout_widthPercent="100%" />
+
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
+            android:text="Tren Ligero"
+            app:layout_heightPercent="15%"
+            app:layout_widthPercent="100%" />
+    </android.support.percent.PercentRelativeLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/layout_residences"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/layout_food"
+        android:padding="5dp"
+        app:layout_heightPercent="30%"
+        app:layout_widthPercent="50%">
+
+        <ImageButton
+            android:id="@+id/menu_trolebusButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/trolebus"
+            app:layout_heightPercent="85%"
+            app:layout_widthPercent="100%" />
+
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
+            android:text="Trolebus"
+            app:layout_heightPercent="15%"
+            app:layout_widthPercent="100%" />
+    </android.support.percent.PercentRelativeLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/layout_gyms"
+        android:padding="5dp"
+        app:layout_heightPercent="30%"
+        app:layout_widthPercent="50%">
+
+        <ImageButton
+            android:id="@+id/menu_suburbanoButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/suburbano"
+            app:layout_heightPercent="85%"
+            app:layout_widthPercent="100%" />
+
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
+            android:text="Suburbano"
+            app:layout_heightPercent="15%"
+            app:layout_widthPercent="100%" />
+    </android.support.percent.PercentRelativeLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/layout_residences"
+        android:padding="5dp"
+        app:layout_heightPercent="30%"
+        app:layout_widthPercent="50%">
+
+        <ImageButton
+            android:id="@+id/menu_ecobiciButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/ecobici"
+            app:layout_heightPercent="85%"
+            app:layout_widthPercent="100%" />
+
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
+            android:text="Ecobici"
+            app:layout_heightPercent="15%"
+            app:layout_widthPercent="100%" />
+    </android.support.percent.PercentRelativeLayout>
+</android.support.percent.PercentRelativeLayout>

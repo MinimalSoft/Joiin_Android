@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:mapActivity=".map.MapActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/map_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppBarOverlay"
+            app:title="Lugares cerca de ti" />
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fragment
+            android:id="@+id/map_fragment"
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cameraTargetLat="@dimen/ESIMECU_latitude"
+            app:cameraTargetLng="@dimen/ESIMECU_longitude"
+            app:cameraZoom="@integer/default_camera_zoom" />
+
+        <ImageButton
+            android:id="@+id/map_imageButton"
+            style="@style/Base.Widget.AppCompat.CompoundButton.Switch"
+            android:layout_width="35dp"
+            android:layout_height="64dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
+            android:onClick="onCurrentLocationFired"
+            android:scaleType="fitXY"
+            android:src="@drawable/location" />
+
+        <FrameLayout
+            android:id="@+id/map_summaryFragment"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:visibility="invisible">
+
+            <!--include layout="@layout/fragment_summary" /-->
+        </FrameLayout>
+    </RelativeLayout>
+</LinearLayout>

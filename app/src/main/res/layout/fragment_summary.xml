@@ -3,142 +3,115 @@
     xmlns:autofit="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:layout_marginRight="15dp"
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/summary_image"
+        android:id="@+id/summary_imageView"
         android:layout_width="110dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="15dp"
+        android:layout_height="100dp"
         android:scaleType="fitXY"
         android:src="@drawable/default_image" />
 
-    <TextView
-        android:id="@+id/summary_placeId"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="1" />
-
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/renglones"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/theme_grayLight"
-            android:orientation="horizontal">
+            android:layout_height="55dp"
+            android:background="@color/dark"
+            android:orientation="vertical"
+            android:padding="2dp"
+            android:weightSum="2">
 
-            <LinearLayout
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/summary_nameLabel"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="0dp"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:text="Nombre del lugar"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                autofit:minTextSize="12sp" />
 
-                <me.grantland.widget.AutofitTextView
-                    android:id="@+id/summary_placeName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_margin="5dp"
-                    android:text="Nombre del lugar"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:maxLines="1"
-                    android:textSize="15dp"
-                    autofit:minTextSize="10sp"/>
-
-                <me.grantland.widget.AutofitTextView
-                    android:id="@+id/summary_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_margin="5dp"
-                    android:text="Calle numero, colonia o delegacion"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:maxLines="1"
-                    android:textSize="13dp"
-                    autofit:minTextSize="10sp"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/theme_grayDark"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/summary_stars"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginRight="5dp"
-                            android:text="4.7"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="25dp"
-                            android:textStyle="bold" />
-
-                        <ImageView
-                            android:id="@+id/summary_stars_image"
-                            android:layout_width="25dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/star_on" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/summary_distance"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginRight="5dp"
-                            android:text="4.76"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="25dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginRight="5dp"
-                            android:text=" Km"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="17dp"
-                            android:textStyle="bold" />
-
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/summary_addressLabel"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Dirección del lugar"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                autofit:minTextSize="12sp" />
         </LinearLayout>
 
-    </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/black"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/summary_ratingLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="0.0"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/star_on" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <me.grantland.widget.AutofitTextView
+                    android:id="@+id/summary_distanceLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="0.0"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    autofit:minTextSize="14sp" />
+
+                <TextView
+                    android:id="@+id/summary_unitsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Km"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

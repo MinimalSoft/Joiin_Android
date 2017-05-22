@@ -17,7 +17,7 @@ import java.util.List;
 public class Routes extends AppCompatActivity {
 
     Bundle bundle;
-    String titulo,agency;
+    String titulo, agency;
     Intent intent;
 
     @Override
@@ -31,8 +31,7 @@ public class Routes extends AppCompatActivity {
         this.titulo = bundle.getString("Titulo");
         this.agency = null;
 
-        switch (this.titulo)
-        {
+        switch (this.titulo) {
             case "Metro":
                 this.agency = "METRO";
                 break;
@@ -53,7 +52,7 @@ public class Routes extends AppCompatActivity {
                 break;
         }
 
-        String sentence = "SELECT route, routeName FROM stops WHERE agency = '"+ agency + "' GROUP BY routeName order by length(route), route ASC";
+        String sentence = "SELECT route, routeName FROM stops WHERE agency = '" + agency + "' GROUP BY routeName order by length(route), route ASC";
 
         ListView listView;
         listView = (ListView) findViewById(R.id.listView);
@@ -69,15 +68,13 @@ public class Routes extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // When clicked, show a toast with the TextView text
-                bundle.putString("Route", position+1+"");
-                intent = new Intent(getApplicationContext(), Map.class);
+                bundle.putString("Route", position + 1 + "");
+                intent = new Intent(getApplicationContext(), TransportMap.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 //Toast.makeText(getApplicationContext(),((TextView) view).getText(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
     private void setToolbar() {
@@ -97,6 +94,4 @@ public class Routes extends AppCompatActivity {
             });
         }
     }
-
-
 }

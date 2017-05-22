@@ -1,11 +1,11 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
-    android:text="Línea"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="3dp"
-    android:paddingTop="2dp"
     android:paddingLeft="7dp"
+    android:paddingTop="2dp"
+    android:text="Línea"
     android:textColor="@color/cardview_dark_background"
     android:textSize="20dp" />
 

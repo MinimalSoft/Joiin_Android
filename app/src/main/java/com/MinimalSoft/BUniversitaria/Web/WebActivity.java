@@ -1,19 +1,17 @@
 package com.MinimalSoft.BUniversitaria.Web;
 
-import com.MinimalSoft.BUniversitaria.R;
-
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.app.AppCompatActivity;
+
+import com.MinimalSoft.BUniversitaria.BU;
+import com.MinimalSoft.BUniversitaria.R;
 
 public class WebActivity extends AppCompatActivity implements View.OnClickListener {
-    private WebView webView;
-    private ProgressBar progressBar;
-    private LoadIndicator loadIndicator;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -21,12 +19,12 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_web);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.web_toolbar);
-        progressBar = (ProgressBar) findViewById(R.id.web_progress);
-        webView = (WebView) findViewById(R.id.web_webView);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.web_progress);
+        WebView webView = (WebView) findViewById(R.id.web_webView);
 
-        loadIndicator = new LoadIndicator(progressBar, webView);
-        toolbar.setTitle(getIntent().getStringExtra("TITLE"));
-        String link = getIntent().getStringExtra("LINK");
+        LoadIndicator loadIndicator = new LoadIndicator(progressBar, webView);
+        toolbar.setTitle(getIntent().getStringExtra(BU.ACTIVITY_TITLE_KEY));
+        String link = getIntent().getStringExtra(BU.WP_URL);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

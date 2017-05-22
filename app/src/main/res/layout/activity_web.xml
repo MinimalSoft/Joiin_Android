@@ -21,8 +21,8 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="4dp"
-            android:progressBackgroundTint="@color/red_900"
-            android:progressTint="@color/yellow_400" />
+            android:progressBackgroundTint="@color/primary"
+            android:progressTint="@color/indicator" />
     </android.support.design.widget.AppBarLayout>
 
     <WebView
