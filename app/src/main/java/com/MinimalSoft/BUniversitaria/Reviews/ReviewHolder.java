@@ -3,11 +3,15 @@ package com.MinimalSoft.BUniversitaria.Reviews;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,7 +19,10 @@ import com.MinimalSoft.BUniversitaria.BU;
 import com.MinimalSoft.BUniversitaria.Details.DetailsActivity;
 import com.MinimalSoft.BUniversitaria.Facebook.FacebookData;
 import com.MinimalSoft.BUniversitaria.R;
+import com.MinimalSoft.BUniversitaria.Responses.ReviewsResponse;
+import com.MinimalSoft.BUniversitaria.Services.MinimalSoftServices;
 import com.MinimalSoft.BUniversitaria.Utilities.UnitFormatterUtility;
+import com.MinimalSoft.BUniversitaria.Widgets.CircleImageView;
 import com.bumptech.glide.Glide;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -27,25 +34,37 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-class ReviewHolder extends RecyclerView.ViewHolder implements GraphRequest.Callback, View.OnClickListener {
+class ReviewHolder extends RecyclerView.ViewHolder implements GraphRequest.Callback, View.OnClickListener, PopupMenu.OnMenuItemClickListener, Callback<ReviewsResponse> {
     private final int STARS_COUNT = 5;
     private int placeType;
+    private int reviewID;
     private int placeID;
+    private int userID;
+    private int position;
 
     private Context context;
     private View bottomLine;
+    private Snackbar snackbar;
+
     private TextView moreLabel;
     private TextView dateLabel;
     private TextView reviewText;
     private TextView userNameLabel;
     private TextView placeNameLabel;
+    private ImageButton imageButton;
     private CircleImageView profileImage;
     private ReactionsHandler reactionHandler;
     private ImageView imageView, stars[] = new ImageView[STARS_COUNT];
 
-    ReviewHolder(View itemView, boolean singlePlaceReviews) {
+    private ReviewsAdapter adapter;
+
+    ReviewHolder(View itemView, boolean singlePlaceReviews, ReviewsAdapter reviewsAdapter) {
         super(itemView);
 
         int REACTIONS_COUNT = 2; // There are only two types of reactions.
@@ -70,13 +89,17 @@ class ReviewHolder extends RecyclerView.ViewHolder implements GraphRequest.Callb
         profileImage = (CircleImageView) itemView.findViewById(R.id.review_profileImage);
         placeNameLabel = (TextView) itemView.findViewById(R.id.review_placeLabel);
         userNameLabel = (TextView) itemView.findViewById(R.id.review_nameLabel);
+        imageButton = (ImageButton) itemView.findViewById(R.id.review_button);
         imageView = (ImageView) itemView.findViewById(R.id.review_imageView);
         reviewText = (TextView) itemView.findViewById(R.id.review_textLabel);
         dateLabel = (TextView) itemView.findViewById(R.id.review_dateLabel);
         moreLabel = (TextView) itemView.findViewById(R.id.review_moreLabel);
-
         bottomLine = itemView.findViewById(R.id.review_line);
         context = itemView.getContext();
+
+        snackbar = Snackbar.make(itemView, "¿Seguro que desea eliminar este review?"
+                , Snackbar.LENGTH_LONG).setAction("SI", this);
+        imageButton.setOnClickListener(this);
 
         if (singlePlaceReviews) {
             placeNameLabel.setVisibility(View.GONE);
@@ -84,6 +107,8 @@ class ReviewHolder extends RecyclerView.ViewHolder implements GraphRequest.Callb
         } else {
             layout.setOnClickListener(this);
         }
+
+        this.adapter = reviewsAdapter;
     }
 
     /**
@@ -93,23 +118,87 @@ class ReviewHolder extends RecyclerView.ViewHolder implements GraphRequest.Callb
      */
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.review_textLabel) {
-            reviewText.setEllipsize(null);
-            reviewText.setClickable(false);
-            reviewText.setMaxLines(Integer.MAX_VALUE);
+        switch (v.getId()) {
+            case R.id.review_textLabel:
+                reviewText.setEllipsize(null);
+                reviewText.setClickable(false);
+                reviewText.setMaxLines(Integer.MAX_VALUE);
 
-            moreLabel.setVisibility(View.GONE);
-        } else {
-            Bundle bundle = new Bundle();
-            bundle.putInt(BU.PLACE_ID_KEY, placeID);
-            bundle.putInt(BU.PLACE_TYPE_KEY, placeType);
-            bundle.putString(BU.PLACE_NAME_KEY, placeNameLabel.getText().toString());
+                moreLabel.setVisibility(View.GONE);
+                break;
 
-            Intent intent = new Intent(context, DetailsActivity.class);
-            intent.putExtras(bundle);
+            case R.id.review_button:
+                PopupMenu popupMenu = new PopupMenu(context, imageButton);
+                popupMenu.getMenuInflater().inflate(R.menu.actions_review, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(this);
+                popupMenu.show();
+                break;
 
-            context.startActivity(intent);
+            case R.id.review_layout:
+                Bundle bundle = new Bundle();
+                bundle.putInt(BU.PLACE_ID_KEY, placeID);
+                bundle.putInt(BU.PLACE_TYPE_KEY, placeType);
+                bundle.putString(BU.PLACE_NAME_KEY, placeNameLabel.getText().toString());
+
+                Intent intent = new Intent(context, DetailsActivity.class);
+                intent.putExtras(bundle);
+
+                context.startActivity(intent);
+                break;
+
+            default: // Snackbar button
+                Retrofit retrofit = new Retrofit.Builder().baseUrl(BU.API_URL)
+                        .addConverterFactory(GsonConverterFactory.create()).build();
+                MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
+                api.deleteReview("deleteReview", String.valueOf(reviewID), String.valueOf(userID)).enqueue(this);
         }
+    }
+
+    /**
+     * This method will be invoked when a menu item is clicked if the item
+     * itself did not already handle the event.
+     *
+     * @param item the menu item that was clicked
+     * @return {@code true} if the event was handled, {@code false}
+     * otherwise
+     */
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        snackbar.show();
+        return true;
+    }
+
+    /*---------------------------------- Callback Methods ----------------------------------*/
+
+    /**
+     * Invoked for a received HTTP response.
+     * <p>
+     * Note: An HTTP response may still indicate an application-level failure such as a 404 or 500.
+     * Call {@link Response#isSuccessful()} to determine if the response indicates success.
+     *
+     * @param call
+     * @param response
+     */
+    @Override
+    public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
+        if (response.isSuccessful()) {
+            adapter.removeAtPosition(position);
+            Toast.makeText(context, "Review eliminado.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Invoked when a network exception occurred talking to the server or when an unexpected
+     * exception occurred creating the request or processing the response.
+     *
+     * @param call
+     * @param t
+     */
+    @Override
+    public void onFailure(Call<ReviewsResponse> call, Throwable t) {
+        t.printStackTrace();
     }
 
     /*---------------- GraphRequest Methods ----------------*/
@@ -134,16 +223,16 @@ class ReviewHolder extends RecyclerView.ViewHolder implements GraphRequest.Callb
     }
 
     protected void setImages(String facebookID, String url) {
+        int size = (int) context.getResources().getDimension(R.dimen.profile_image_size);
+
         if (facebookID != null) {
-            url = "http://graph.facebook.com/" + facebookID + "/picture?width="
-                    + profileImage.getWidth() + "&height=" + profileImage.getHeight();
+            url = "http://graph.facebook.com/" + facebookID + "/picture?width=" + size + "&height=" + size;
             Glide.with(context).load(url).placeholder(R.drawable.default_profile).into(profileImage);
         } else {
             /* This code shouldn't exist! */
             String[] chunks = url.split(String.valueOf('/'));
             if (chunks.length == 5) {
-                url = "http://graph.facebook.com/" + chunks[3] + "/picture?width="
-                        + profileImage.getWidth() + "&height=" + profileImage.getHeight();
+                url = "http://graph.facebook.com/" + chunks[3] + "/picture?width=" + size + "&height=" + size;
             }
 
             Glide.with(context).load(url).placeholder(R.drawable.default_profile).into(profileImage);
@@ -160,7 +249,7 @@ class ReviewHolder extends RecyclerView.ViewHolder implements GraphRequest.Callb
         //new GraphRequest(AccessToken.getCurrentAccessToken(), "/1333050543419193/picture", parameters, HttpMethod.GET, this).executeAsync();
     }
 
-    protected void setReactionsData(int userID, int reviewID, int reaction, int likes, int dislikes) {
+    protected void setReactionsData(int reviewID, int reaction, int likes, int dislikes) {
         List<Integer> amounts = Arrays.asList(likes, dislikes);
         reactionHandler.setData(userID, reviewID, reaction, amounts);
     }
@@ -192,9 +281,21 @@ class ReviewHolder extends RecyclerView.ViewHolder implements GraphRequest.Callb
         }
     }
 
-    protected void setBasicInfo(String userName, String date) {
+    protected void setBasicInfo(int reviewID, String userName, String date, int reviewUserID, int userID, int position) {
         dateLabel.setText(UnitFormatterUtility.getTimeDescription(date));
         userNameLabel.setText(userName);
+
+        if (userID != reviewUserID) {
+            imageButton.setVisibility(View.INVISIBLE);
+            imageButton.setEnabled(false);
+        } else {
+            imageButton.setVisibility(View.VISIBLE);
+            imageButton.setEnabled(true);
+        }
+
+        this.position = position;
+        this.reviewID = reviewID;
+        this.userID = userID;
     }
 
     protected void setPlaceInfo(int placeID, String placeName, int typeID) {

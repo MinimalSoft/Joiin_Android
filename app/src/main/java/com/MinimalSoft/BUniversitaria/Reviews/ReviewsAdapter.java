@@ -57,7 +57,7 @@ class ReviewsAdapter extends RecyclerView.Adapter<ReviewHolder> {
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View inflatedView = layoutInflater.inflate(R.layout.item_review, parent, false);
-        return new ReviewHolder(inflatedView, singlePlaceReviews);
+        return new ReviewHolder(inflatedView, singlePlaceReviews, this);
     }
 
     /**
@@ -88,8 +88,8 @@ class ReviewsAdapter extends RecyclerView.Adapter<ReviewHolder> {
             holder.setStars(data.getStars());
             holder.setReview(data.getText());
             holder.setImages(null, data.getFbImage());
-            holder.setBasicInfo(data.getName(), data.getDate());
-            holder.setReactionsData(userID, data.getIdReview(), data.getReaction(), data.getLikes(), data.getDislikes());
+            holder.setBasicInfo(data.getIdReview(), data.getName(), data.getDate(), data.getIdUser(), userID, position);
+            holder.setReactionsData(data.getIdReview(), data.getReaction(), data.getLikes(), data.getDislikes());
 
             if (placeID == BU.NO_VALUE) {
                 holder.setPlaceInfo(data.getIdPlace(), data.getPlaceName(), data.getIdType());
@@ -111,6 +111,11 @@ class ReviewsAdapter extends RecyclerView.Adapter<ReviewHolder> {
     void updateItems(List<ReviewsData> reviews) {
         reviewsList.clear();
         reviewsList.addAll(reviews);
+        notifyDataSetChanged();
+    }
+
+    void removeAtPosition(int position) {
+        reviewsList.remove(position);
         notifyDataSetChanged();
     }
 }

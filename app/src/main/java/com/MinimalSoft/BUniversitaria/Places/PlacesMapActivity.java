@@ -8,11 +8,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.MinimalSoft.BUniversitaria.BU;
-import com.MinimalSoft.BUniversitaria.Interfaces.MappingServices;
-import com.MinimalSoft.BUniversitaria.Interfaces.MinimalSoftServices;
 import com.MinimalSoft.BUniversitaria.R;
 import com.MinimalSoft.BUniversitaria.Responses.PlaceData;
 import com.MinimalSoft.BUniversitaria.Responses.PlacesResponse;
+import com.MinimalSoft.BUniversitaria.Services.MappingServices;
+import com.MinimalSoft.BUniversitaria.Services.MinimalSoftServices;
 import com.MinimalSoft.BUniversitaria.Viewer.ListViewerActivity;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -39,7 +39,7 @@ public class PlacesMapActivity extends MappingServices implements Callback<Place
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.options_map, menu);
+        getMenuInflater().inflate(R.menu.actions_map, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -56,7 +56,7 @@ public class PlacesMapActivity extends MappingServices implements Callback<Place
                 onBackPressed();
                 break;
 
-            case R.id.action_mapList:
+            case R.id.map_showList:
                 if (!placesDictionary.isEmpty()) {
                     int typeID = getIntent().getIntExtra(BU.PLACE_TYPE_KEY, BU.NO_VALUE);
                     String title = BU.getCategoryName(typeID) + " cerca de ti";

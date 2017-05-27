@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -86,11 +87,15 @@
         android:layout_margin="5dp"
         android:background="@color/iron" />
 
-    <Button
-        android:id="@+id/promo_button"
+    <com.MinimalSoft.BUniversitaria.Widgets.SlideView
+        android:id="@+id/promo_slideButton"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="@color/promos"
-        android:text="Canjear"
-        android:textColor="@color/black" />
+        android:layout_height="36dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginStart="6dp"
+        android:background="@drawable/round_rect_bordered"
+        app:slideSrc="@drawable/arrow_box"
+        app:slideSuccessPercent="90"
+        app:slideText="Desliza para canjear"
+        app:slideTextSize="10sp" />
 </LinearLayout>

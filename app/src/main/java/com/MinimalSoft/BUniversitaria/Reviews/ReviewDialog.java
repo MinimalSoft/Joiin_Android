@@ -10,9 +10,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.MinimalSoft.BUniversitaria.BU;
-import com.MinimalSoft.BUniversitaria.Interfaces.MinimalSoftServices;
 import com.MinimalSoft.BUniversitaria.R;
 import com.MinimalSoft.BUniversitaria.Responses.ReviewsResponse;
+import com.MinimalSoft.BUniversitaria.Services.MinimalSoftServices;
 
 import retrofit2.Call;
 import retrofit2.Callback;

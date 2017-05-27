@@ -67,4 +67,7 @@
     <color name="iron">#CCCCCC</color>
     <color name="grey">#FAFAFA</color>
     <color name="red">#DE1D26</color>
+
+
+    <color name="grey_300">#FAFAFA</color>
 </resources>

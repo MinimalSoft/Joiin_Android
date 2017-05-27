@@ -14,10 +14,10 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.MinimalSoft.BUniversitaria.BU;
-import com.MinimalSoft.BUniversitaria.Interfaces.MinimalSoftServices;
 import com.MinimalSoft.BUniversitaria.R;
 import com.MinimalSoft.BUniversitaria.Responses.PromoData;
 import com.MinimalSoft.BUniversitaria.Responses.PromosResponse;
+import com.MinimalSoft.BUniversitaria.Services.MinimalSoftServices;
 import com.MinimalSoft.BUniversitaria.Viewer.ListViewerActivity;
 import com.google.gson.Gson;
 

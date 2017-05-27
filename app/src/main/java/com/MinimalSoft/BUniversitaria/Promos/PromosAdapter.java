@@ -15,10 +15,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.MinimalSoft.BUniversitaria.BU;
-import com.MinimalSoft.BUniversitaria.Interfaces.MinimalSoftServices;
 import com.MinimalSoft.BUniversitaria.R;
 import com.MinimalSoft.BUniversitaria.Responses.PromoData;
 import com.MinimalSoft.BUniversitaria.Responses.TransactionResponse;
+import com.MinimalSoft.BUniversitaria.Services.MinimalSoftServices;
 import com.bumptech.glide.Glide;
 
 import retrofit2.Call;
@@ -29,6 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PromosAdapter extends ArrayAdapter<PromoData> implements AdapterView.OnItemClickListener, Callback<TransactionResponse> {
     private int coins = 0;
+    private int userID;
 
     /**
      * Constructor
@@ -42,7 +43,7 @@ public class PromosAdapter extends ArrayAdapter<PromoData> implements AdapterVie
         super(context, resource, objects);
 
         SharedPreferences settings = getContext().getSharedPreferences(BU.PREFERENCES, Context.MODE_PRIVATE);
-        int userID = settings.getInt(BU.USER_ID, BU.NO_VALUE);
+        userID = settings.getInt(BU.USER_ID, BU.NO_VALUE);
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BU.API_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
@@ -97,7 +98,7 @@ public class PromosAdapter extends ArrayAdapter<PromoData> implements AdapterVie
         PromoData data = getItem(position);
 
         if (coins >= data.getPrice()) {
-            PromoDialog dialog = new PromoDialog(getContext(), getItem(position));
+            PromoDialog dialog = new PromoDialog(getContext(), getItem(position), userID);
             dialog.display();
         }
     }

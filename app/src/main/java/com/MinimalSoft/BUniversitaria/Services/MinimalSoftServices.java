@@ -1,4 +1,4 @@
-package com.MinimalSoft.BUniversitaria.Interfaces;
+package com.MinimalSoft.BUniversitaria.Services;
 
 import com.MinimalSoft.BUniversitaria.Responses.DetailsResponse;
 import com.MinimalSoft.BUniversitaria.Responses.Ecobici_Stop;
@@ -61,6 +61,12 @@ public interface MinimalSoftServices {
     Call<ReviewsResponse> getReviews(@Field("action") String action,
                                      @Field("idUser") String userID,
                                      @Field("idPlace") String placeID);
+
+    @FormUrlEncoded
+    @POST("/controllers/reviews/review.php")
+    Call<ReviewsResponse> deleteReview(@Field("action") String action,
+                                       @Field("idReview") String reviewID,
+                                       @Field("idUser") String userID);
 
     @FormUrlEncoded
     @POST("/controllers/reviews/review.php")

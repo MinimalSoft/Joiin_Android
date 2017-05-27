@@ -7,6 +7,7 @@
     <dimen name="profile_image_size">120dp</dimen>
     <dimen name="menu_drawable_padding">5dp</dimen>
     <dimen name="social_button_margin">3dp</dimen>
+    <dimen name="review_profile_thumb_size">50dp</dimen>
 
     <item name="ESIMECU_latitude" format="float" type="dimen">19.329263</item>
     <item name="ESIMECU_longitude" format="float" type="dimen">-99.112118</item>

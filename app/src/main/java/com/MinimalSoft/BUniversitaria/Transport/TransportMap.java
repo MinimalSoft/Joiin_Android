@@ -13,10 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.MinimalSoft.BUniversitaria.Interfaces.MinimalSoftServices;
 import com.MinimalSoft.BUniversitaria.R;
 import com.MinimalSoft.BUniversitaria.Responses.Ecobici_Stop;
 import com.MinimalSoft.BUniversitaria.Responses.Transport_Stop;
+import com.MinimalSoft.BUniversitaria.Services.MinimalSoftServices;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;

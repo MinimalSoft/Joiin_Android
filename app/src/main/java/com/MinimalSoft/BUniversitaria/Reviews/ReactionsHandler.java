@@ -3,8 +3,8 @@ package com.MinimalSoft.BUniversitaria.Reviews;
 import android.widget.TextView;
 
 import com.MinimalSoft.BUniversitaria.BU;
-import com.MinimalSoft.BUniversitaria.Interfaces.MinimalSoftServices;
 import com.MinimalSoft.BUniversitaria.Responses.ReactionResponse;
+import com.MinimalSoft.BUniversitaria.Services.MinimalSoftServices;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 

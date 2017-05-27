@@ -12,9 +12,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.MinimalSoft.BUniversitaria.BU;
-import com.MinimalSoft.BUniversitaria.Interfaces.MinimalSoftServices;
 import com.MinimalSoft.BUniversitaria.R;
+import com.MinimalSoft.BUniversitaria.Responses.ReviewsData;
 import com.MinimalSoft.BUniversitaria.Responses.ReviewsResponse;
+import com.MinimalSoft.BUniversitaria.Services.MinimalSoftServices;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -90,8 +93,11 @@ public class ReviewsFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @Override
     public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
         if (response.isSuccessful()) {
-            reviewsAdapter.updateItems(response.body().getData());
-            textView.setVisibility(View.INVISIBLE);
+            List<ReviewsData> dataList = response.body().getData();
+            if (dataList.size() > 0) {
+                reviewsAdapter.updateItems(response.body().getData());
+                textView.setVisibility(View.INVISIBLE);
+            }
         } else {
             textView.setText(response.message());
         }

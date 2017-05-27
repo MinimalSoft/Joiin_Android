@@ -23,6 +23,7 @@ import com.MinimalSoft.BUniversitaria.R;
 import com.MinimalSoft.BUniversitaria.Responses.TransactionResponse;
 import com.MinimalSoft.BUniversitaria.Start.LoginActivity;
 import com.MinimalSoft.BUniversitaria.Web.WebActivity;
+import com.MinimalSoft.BUniversitaria.Widgets.CircleImageView;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -36,7 +37,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

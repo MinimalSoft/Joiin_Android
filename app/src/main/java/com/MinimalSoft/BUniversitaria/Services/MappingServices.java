@@ -1,4 +1,4 @@
-package com.MinimalSoft.BUniversitaria.Interfaces;
+package com.MinimalSoft.BUniversitaria.Services;
 
 import android.Manifest;
 import android.app.Fragment;

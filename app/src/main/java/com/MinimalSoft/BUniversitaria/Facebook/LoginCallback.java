@@ -9,9 +9,9 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.MinimalSoft.BUniversitaria.BU;
-import com.MinimalSoft.BUniversitaria.Interfaces.MinimalSoftServices;
 import com.MinimalSoft.BUniversitaria.Main.MainActivity;
 import com.MinimalSoft.BUniversitaria.Responses.UserResponse;
+import com.MinimalSoft.BUniversitaria.Services.MinimalSoftServices;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
