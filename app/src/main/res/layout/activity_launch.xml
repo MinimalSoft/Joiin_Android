@@ -8,7 +8,9 @@
 
     <VideoView
         android:id="@+id/launch_videoView"
-        android:layout_width="250dp"
-        android:layout_height="125dp"
-        android:layout_gravity="center" />
+        android:layout_width="176dp"
+        android:layout_height="91dp"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/white"
+        android:visibility="invisible" />
 </FrameLayout>

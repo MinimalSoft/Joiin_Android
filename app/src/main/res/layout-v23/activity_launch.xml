@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Start.LaunchActivity">
+
+    <VideoView
+        android:id="@+id/launch_videoView"
+        android:layout_width="231dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/white"
+        android:visibility="invisible" />
+</FrameLayout>

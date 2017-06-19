@@ -40,7 +40,7 @@
                 android:paddingStart="10dp"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textColorHint="@color/grey"
+                android:textColorHint="@color/iron"
                 android:textStyle="bold" />
 
             <android.support.v7.widget.AppCompatEditText
@@ -56,7 +56,7 @@
                 android:paddingStart="10dp"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textColorHint="@color/grey" />
+                android:textColorHint="@color/iron" />
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/login_accessButton"

@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.MinimalSoft.BUniversitaria.Widgets.CircleImageView
+                <com.MinimalSoft.JOIIN.Widgets.CircleImageView
                     android:id="@+id/review_profileImage"
                     android:layout_width="@dimen/review_profile_thumb_size"
                     android:layout_height="@dimen/review_profile_thumb_size"
@@ -29,33 +29,30 @@
                     android:layout_margin="5dp"
                     android:src="@drawable/default_profile" />
 
-                <TextView
-                    android:id="@+id/review_nameLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/review_profileImage"
-                    android:layout_toEndOf="@+id/review_profileImage"
-                    android:text="Usuario de BU"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toEndOf="@id/review_profileImage">
-
-                    <include layout="@layout/widget_stars" />
-                </FrameLayout>
-
-                <TextView
-                    android:id="@+id/review_dateLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/review_profileImage"
+                    android:layout_margin="2dp"
                     android:layout_toEndOf="@+id/review_profileImage"
-                    android:text="DD/MM/YYYY"
-                    android:textSize="12sp" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/review_nameLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Usuario de BU"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/review_dateLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DD/MM/YYYY"
+                        android:textSize="13sp" />
+                </LinearLayout>
 
                 <ImageButton
                     android:id="@+id/review_button"
@@ -66,45 +63,15 @@
                     android:layout_alignParentTop="true"
                     android:src="@drawable/ic_menu_down" />
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/review_profileImage"
                     android:layout_alignParentEnd="true"
-                    android:layout_below="@id/review_nameLabel"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:layout_marginEnd="5dp">
 
-                    <com.like.LikeButton
-                        android:id="@+id/review_likeButton"
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:layout_margin="5dp"
-                        app:icon_size="16dp"
-                        app:icon_type="thumb" />
-
-                    <TextView
-                        android:id="@+id/review_likesLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:text="0" />
-
-                    <com.like.LikeButton
-                        android:id="@+id/review_dislikeButton"
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:layout_margin="5dp"
-                        app:icon_size="18dp"
-                        app:like_drawable="@drawable/ic_thumb_down_red"
-                        app:unlike_drawable="@drawable/ic_thumb_down" />
-
-                    <TextView
-                        android:id="@+id/review_dislikesLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:text="0" />
-                </LinearLayout>
+                    <include layout="@layout/widget_stars" />
+                </FrameLayout>
             </RelativeLayout>
 
             <LinearLayout
@@ -113,22 +80,6 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:orientation="vertical">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginStart="5dp"
-                    android:background="@color/iron" />
-
-                <ImageView
-                    android:id="@+id/review_imageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="130dp"
-                    android:layout_margin="5dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/default_image" />
 
                 <TextView
                     android:id="@+id/review_placeLabel"
@@ -158,6 +109,62 @@
                     android:text="Leer más..."
                     android:textSize="12sp"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/review_imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    android:layout_margin="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/default_image" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/iron" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.like.LikeButton
+                    android:id="@+id/review_likeButton"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginStart="5dp"
+                    app:icon_size="16dp"
+                    app:icon_type="thumb" />
+
+                <TextView
+                    android:id="@+id/review_likesLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="5dp"
+                    android:text="0" />
+
+                <com.like.LikeButton
+                    android:id="@+id/review_dislikeButton"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginStart="5dp"
+                    app:icon_size="18dp"
+                    app:like_drawable="@drawable/ic_thumb_down_red"
+                    app:unlike_drawable="@drawable/ic_thumb_down" />
+
+                <TextView
+                    android:id="@+id/review_dislikesLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="0" />
             </LinearLayout>
         </LinearLayout>
 

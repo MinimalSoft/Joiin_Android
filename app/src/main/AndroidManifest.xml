@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.MinimalSoft.BUniversitaria">
+    package="com.MinimalSoft.JOIIN">
 
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -10,13 +10,13 @@
 
     <uses-permission-sdk-23 android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <uses-permission android:name="com.MinimalSoft.BrujulaUniversitaria.permission.MAPS_RECEIVE" />
+    <!--uses-permission android:name="com.MinimalSoft.JOIIN.permission.MAPS_RECEIVE" /-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <permission
-        android:name="com.MinimalSoft.BUniversitaria.permission.MAPS_RECEIVE"
+        android:name="${packageName}.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
     <uses-feature
@@ -27,8 +27,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/BU">
+
+        <uses-library android:name="com.google.android.maps" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -85,7 +88,7 @@
             android:windowSoftInputMode="stateAlwaysHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Start.LoginActivity" />
+                android:value="com.MinimalSoft.JOIIN.Start.LoginActivity" />
         </activity>
 
         <activity

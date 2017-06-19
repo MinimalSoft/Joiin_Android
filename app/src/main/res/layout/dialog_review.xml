@@ -1,36 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="12dp">
+    android:paddingBottom="5dp"
+    android:paddingEnd="10dp"
+    android:paddingStart="10dp"
+    android:scrollbarThumbVertical="@null">
 
-    <RatingBar
-        android:id="@+id/review_ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:progressTint="@color/golden"
-        android:stepSize="1" />
-
-    <EditText
-        android:id="@+id/review_inputText"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="start|top"
-        android:hint="Deja tu comentario..."
-        android:inputType="textMultiLine"
-        android:lines="10"
-        android:minLines="5">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        <requestFocus />
+        <RatingBar
+            android:id="@+id/review_ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:stepSize="1" />
 
-    </EditText>
+        <TextView
+            android:id="@+id/review_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Asigna una calificación" />
 
-    <TextView
-        android:id="@+id/review_errorLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:hint="Error Message."
-        android:textColor="@color/red" />
-</LinearLayout>
+        <EditText
+            android:id="@+id/review_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey"
+            android:gravity="start|top"
+            android:hint="Deja tu comentario..."
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:padding="10dp"
+            android:scrollbars="vertical"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/review_imageButton"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_add_photo" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/review_removeButton"
+                style="@style/Base.Widget.AppCompat.CompoundButton.CheckBox"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_centerVertical="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_delete" />
+
+            <Button
+                android:id="@+id/review_cancelButton"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toStartOf="@+id/review_submitButton"
+                android:text="Cancelar" />
+
+            <Button
+                android:id="@+id/review_submitButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:text="Enviar"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

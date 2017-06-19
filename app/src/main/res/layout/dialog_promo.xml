@@ -87,15 +87,16 @@
         android:layout_margin="5dp"
         android:background="@color/iron" />
 
-    <com.MinimalSoft.BUniversitaria.Widgets.SlideView
+    <com.MinimalSoft.JOIIN.Widgets.SlideView
         android:id="@+id/promo_slideButton"
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="6dp"
         android:layout_marginStart="6dp"
         android:background="@drawable/round_rect_bordered"
         app:slideSrc="@drawable/arrow_box"
         app:slideSuccessPercent="90"
         app:slideText="Desliza para canjear"
+        app:slideTextColor="@color/white"
         app:slideTextSize="10sp" />
 </LinearLayout>
