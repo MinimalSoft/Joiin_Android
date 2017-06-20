@@ -15,7 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Details.DetailsActivity;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.PlaceData;
@@ -66,7 +66,7 @@ public class PlacesListAdapter extends ArrayAdapter<PlaceData> implements Adapte
         if (getCount() > 0) {
             PlaceData data = getItem(position);
 
-            String imageURL = BU.API_URL + "/imagenes/places/" + data.getImage();
+            String imageURL = Joiin.API_URL + "/imagenes/places/" + data.getImage();
             String address = data.getStreet() + " # " + data.getNumber() + ", " + data.getNeighborhood();
 
             Glide.with(getContext()).load(imageURL).placeholder(R.drawable.default_image).into(imageView);
@@ -96,9 +96,9 @@ public class PlacesListAdapter extends ArrayAdapter<PlaceData> implements Adapte
         PlaceData data = (PlaceData) parent.getItemAtPosition(position);
 
         Bundle bundle = new Bundle();
-        bundle.putInt(BU.PLACE_TYPE_KEY, typeID);
-        bundle.putInt(BU.PLACE_ID_KEY, data.getIdPlace());
-        bundle.putString(BU.PLACE_NAME_KEY, data.getPlaceName());
+        bundle.putInt(Joiin.PLACE_TYPE_KEY, typeID);
+        bundle.putInt(Joiin.PLACE_ID_KEY, data.getIdPlace());
+        bundle.putString(Joiin.PLACE_NAME_KEY, data.getPlaceName());
 
         Intent intent = new Intent(getContext(), DetailsActivity.class);
         intent.putExtras(bundle);

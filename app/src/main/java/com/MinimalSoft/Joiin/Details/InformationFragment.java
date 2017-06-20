@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.DetailsResponse;
 import com.MinimalSoft.Joiin.Responses.PlaceData;
@@ -39,7 +39,7 @@ public class InformationFragment extends Fragment implements Callback<DetailsRes
     protected static InformationFragment newInstance(int placeID) {
         InformationFragment instance = new InformationFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(BU.PLACE_ID_KEY, placeID);
+        bundle.putInt(Joiin.PLACE_ID_KEY, placeID);
         instance.setArguments(bundle);
         return instance;
     }
@@ -58,9 +58,9 @@ public class InformationFragment extends Fragment implements Callback<DetailsRes
         aboutLabel = (TextView) inflatedView.findViewById(R.id.information_aboutLabel);
         phoneLabel = (TextView) inflatedView.findViewById(R.id.information_phoneLabel);
 
-        int placeID = getArguments().getInt(BU.PLACE_ID_KEY);
+        int placeID = getArguments().getInt(Joiin.PLACE_ID_KEY);
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(BU.API_URL)
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Joiin.API_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
         apiCall = api.getPlaceDetails("placeDetails", String.valueOf(placeID));

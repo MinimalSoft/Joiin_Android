@@ -2,6 +2,7 @@ package com.MinimalSoft.Joiin.Start;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,17 +11,20 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.VideoView;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Main.MainActivity;
 import com.MinimalSoft.Joiin.R;
 
 public class LaunchActivity extends Activity implements Runnable {
+
+    private VideoView mVideoView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
 
+        /*
         String videoPath;
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -35,6 +39,21 @@ public class LaunchActivity extends Activity implements Runnable {
 
         videoView.setVisibility(View.VISIBLE);
         new Handler().postDelayed(this, 2500);
+*/
+
+        mVideoView = (VideoView) findViewById(R.id.launch_videoView);
+
+        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.splash);
+
+        mVideoView.setVideoURI(uri);
+        mVideoView.start();
+
+        mVideoView.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(this, 2500);
+
+
+
+
     }
 
     /**
@@ -51,10 +70,10 @@ public class LaunchActivity extends Activity implements Runnable {
     @Override
     public void run() {
         Intent intent;
-        int id = getSharedPreferences(BU.PREFERENCES, MODE_PRIVATE)
-                .getInt(BU.USER_ID, BU.NO_VALUE);
+        int id = getSharedPreferences(Joiin.PREFERENCES, MODE_PRIVATE)
+                .getInt(Joiin.USER_ID, Joiin.NO_VALUE);
 
-        if (id == BU.NO_VALUE) {
+        if (id == Joiin.NO_VALUE) {
             intent = new Intent(this, LoginActivity.class);
         } else {
             intent = new Intent(this, MainActivity.class);

@@ -129,9 +129,32 @@
             android:label="Líneas"
             android:screenOrientation="portrait"
             android:theme="@style/BU.NoActionBar" />
+
         <activity
             android:name=".Transport.TransportMap"
             android:screenOrientation="portrait"
             android:theme="@style/BU.NoActionBar" />
+
+        <service
+            android:name=".Notifications.MiFirebaseInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".Notifications.MiFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/joiin_notification" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/primary_dark" />
+
     </application>
 </manifest>

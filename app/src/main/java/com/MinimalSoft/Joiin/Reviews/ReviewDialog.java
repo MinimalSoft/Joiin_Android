@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Details.DetailsActivity;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.ReviewsResponse;
@@ -59,9 +59,9 @@ public class ReviewDialog implements Callback<ReviewsResponse>, View.OnClickList
         textView = (TextView) inflatedView.findViewById(R.id.review_textView);
         editText = (EditText) inflatedView.findViewById(R.id.review_editText);
 
-        String place = activity.getIntent().getExtras().getString(BU.PLACE_NAME_KEY);
-        int typeID = activity.getIntent().getExtras().getInt(BU.PLACE_TYPE_KEY);
-        int color = BU.getCategoryColor(activity, typeID);
+        String place = activity.getIntent().getExtras().getString(Joiin.PLACE_NAME_KEY);
+        int typeID = activity.getIntent().getExtras().getInt(Joiin.PLACE_TYPE_KEY);
+        int color = Joiin.getCategoryColor(activity, typeID);
 
         progressDialog = new ProgressDialog(activity, ProgressDialog.STYLE_SPINNER);
         dialog = new AlertDialog.Builder(activity).setView(inflatedView)
@@ -139,10 +139,10 @@ public class ReviewDialog implements Callback<ReviewsResponse>, View.OnClickList
                     dialog.dismiss();
                     progressDialog.show();
 
-                    Retrofit retrofit = new Retrofit.Builder().baseUrl(BU.API_URL)
+                    Retrofit retrofit = new Retrofit.Builder().baseUrl(Joiin.API_URL)
                             .addConverterFactory(GsonConverterFactory.create()).build();
                     MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
-                    int placeID = activity.getIntent().getExtras().getInt(BU.PLACE_ID_KEY);
+                    int placeID = activity.getIntent().getExtras().getInt(Joiin.PLACE_ID_KEY);
 
                     if (bitmap != null) {
                         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -171,8 +171,8 @@ public class ReviewDialog implements Callback<ReviewsResponse>, View.OnClickList
                 //dialog.hide();
 
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT).setType("image/*");
-                activity.startActivityForResult(intent, BU.IMAGE_PICKER_REQUEST);
-                //activity.startActivityForResult(Intent.createChooser(intent, "Selecciona una imagen"), BU.IMAGE_PICKER_REQUEST);
+                activity.startActivityForResult(intent, Joiin.IMAGE_PICKER_REQUEST);
+                //activity.startActivityForResult(Intent.createChooser(intent, "Selecciona una imagen"), Joiin.IMAGE_PICKER_REQUEST);
                 break;
 
             case R.id.review_cancelButton:
@@ -218,7 +218,7 @@ public class ReviewDialog implements Callback<ReviewsResponse>, View.OnClickList
     }
 
     public void setImage(Bitmap bitmap) {
-        int placeID = activity.getIntent().getExtras().getInt(BU.PLACE_ID_KEY);
+        int placeID = activity.getIntent().getExtras().getInt(Joiin.PLACE_ID_KEY);
         String date = UnitFormatterUtility.getCurrentTime().replace(" ", "_");
         fileName = String.format(Locale.getDefault(), "%d_%d_%s", placeID, userID, date);
 

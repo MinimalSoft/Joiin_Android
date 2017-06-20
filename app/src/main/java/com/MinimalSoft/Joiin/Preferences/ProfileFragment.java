@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Facebook.FacebookData;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.TransactionResponse;
@@ -62,9 +62,9 @@ public class ProfileFragment extends Fragment implements GraphRequest.GraphJSONO
         TextView emailLabel = (TextView) inflatedView.findViewById(R.id.preferences_emailLabel);
         TextView nameLabel = (TextView) inflatedView.findViewById(R.id.preferences_nameLabel);
 
-        SharedPreferences settings = getContext().getSharedPreferences(BU.PREFERENCES, Context.MODE_PRIVATE);
-        emailLabel.setText(settings.getString(BU.USER_EMAIL, "loading..."));
-        nameLabel.setText(settings.getString(BU.USER_NAME, "loading..."));
+        SharedPreferences settings = getContext().getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE);
+        emailLabel.setText(settings.getString(Joiin.USER_EMAIL, "loading..."));
+        nameLabel.setText(settings.getString(Joiin.USER_NAME, "loading..."));
 
         disclaimerButton.setOnClickListener(this);
         settingsButton.setOnClickListener(this);
@@ -80,10 +80,10 @@ public class ProfileFragment extends Fragment implements GraphRequest.GraphJSONO
         //serviceCall.enqueue(this);
 
         try {
-            FileInputStream fileInputStream = getContext().openFileInput(BU.USER_PHOTO);
+            FileInputStream fileInputStream = getContext().openFileInput(Joiin.USER_PHOTO);
             Bitmap profileBitmap = BitmapFactory.decodeStream(fileInputStream);
 
-            fileInputStream = getContext().openFileInput(BU.USER_COVER);
+            fileInputStream = getContext().openFileInput(Joiin.USER_COVER);
             Bitmap coverBitmap = BitmapFactory.decodeStream(fileInputStream);
 
             profilePicture.setImageBitmap(profileBitmap);
@@ -114,11 +114,11 @@ public class ProfileFragment extends Fragment implements GraphRequest.GraphJSONO
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.preferences_disclaimerButton:
-                String link = BU.WP_URL + "/aviso-de-privacidad/";
+                String link = Joiin.WP_URL + "/aviso-de-privacidad/";
                 Intent intent = new Intent(this.getActivity(), WebActivity.class);
 
-                intent.putExtra(BU.ACTIVITY_TITLE_KEY, "Aviso de privacidad");
-                intent.putExtra(BU.WP_URL, link);
+                intent.putExtra(Joiin.ACTIVITY_TITLE_KEY, "Aviso de privacidad");
+                intent.putExtra(Joiin.WP_URL, link);
                 startActivity(intent);
                 break;
 
@@ -147,11 +147,11 @@ public class ProfileFragment extends Fragment implements GraphRequest.GraphJSONO
             LoginManager.getInstance().logOut();
         }
 
-        getActivity().deleteFile(BU.USER_COVER);
-        getActivity().deleteFile(BU.USER_PHOTO);
+        getActivity().deleteFile(Joiin.USER_COVER);
+        getActivity().deleteFile(Joiin.USER_PHOTO);
         //getActivity().deleteSharedPreferences("BU_PREF"); //Min API v24.
 
-        getActivity().getSharedPreferences(BU.PREFERENCES, Context.MODE_PRIVATE)
+        getActivity().getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE)
                 .edit().clear().apply();
 
         Intent intent = new Intent(getActivity(), LoginActivity.class);

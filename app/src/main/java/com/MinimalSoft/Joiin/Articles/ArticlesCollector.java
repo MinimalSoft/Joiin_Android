@@ -5,7 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.TextView;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -46,7 +46,7 @@ class ArticlesCollector extends AsyncTask<Void, Void, String> {
      */
     @Override
     protected String doInBackground(Void... params) {
-        String apiURL = BU.WP_URL + "/wp-json/wp/v2/posts?items=title,image,link";
+        String apiURL = Joiin.WP_URL + "/wp-json/wp/v2/posts?items=title,image,link";
 
         try {
             //OkHttpClient client = new OkHttpClient();

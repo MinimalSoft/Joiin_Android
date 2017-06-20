@@ -6,19 +6,20 @@ import android.util.SparseArray;
 
 import java.util.HashMap;
 
-public class BU {
+public class Joiin {
     /* URL's for Wordpress and API servers. */
     public static final String WP_URL = "http://buniversitaria.com";
     public static final String API_URL = "http://api.buniversitaria.com";
     /* Name for the SQLite database. */
     public static final String TRANSPORT_DATABASE = "transporte.db";
     /* Shared preferences keys. */
-    public static final String PREFERENCES = "BU_PREFERENCES";
+    public static final String PREFERENCES = "JOIIN_PREFERENCES";
     public static final String USER_PHOTO = "PROFILE IMAGE";
     public static final String USER_COVER = "COVER IMAGE";
     public static final String USER_EMAIL = "USER EMAIL";
     public static final String USER_NAME = "USER NAME";
     public static final String USER_ID = "USER ID";
+    public static final String USER_FCM_TOKEN = "FCM TOKEN";
     /* Activities extras and bundles keys. */
     public static final String PLACE_ID_KEY = "ID";
     public static final String JSON_DATA_KEY = "JSON";

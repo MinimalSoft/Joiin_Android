@@ -7,8 +7,8 @@ android {
         applicationId "com.MinimalSoft.Joiin"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0 Beta"
+        versionCode 3
+        versionName "1.2 Beta"
         renderscriptTargetApi 16
         renderscriptSupportModeEnabled true
         multiDexEnabled true
@@ -49,5 +49,8 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'me.grantland:autofittextview:0.2.1'
     compile 'joda-time:joda-time:2.9.9'
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
     testCompile 'junit:junit:4.12'
 }
+apply plugin: 'com.google.gms.google-services'

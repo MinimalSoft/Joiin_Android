@@ -15,7 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Reviews.ReviewDialog;
 import com.MinimalSoft.Joiin.Reviews.ReviewsFragment;
@@ -48,10 +48,10 @@ public class DetailsActivity extends AppCompatActivity implements TabLayout.OnTa
         fab = (FloatingActionButton) findViewById(R.id.details_fab);
 
         Bundle extras = getIntent().getExtras();
-        int placeID = extras.getInt(BU.PLACE_ID_KEY);
-        int typeID = extras.getInt(BU.PLACE_TYPE_KEY);
-        String title = extras.getString(BU.PLACE_NAME_KEY);
-        int userID = getSharedPreferences(BU.PREFERENCES, MODE_PRIVATE).getInt(BU.USER_ID, BU.NO_VALUE);
+        int placeID = extras.getInt(Joiin.PLACE_ID_KEY);
+        int typeID = extras.getInt(Joiin.PLACE_TYPE_KEY);
+        String title = extras.getString(Joiin.PLACE_NAME_KEY);
+        int userID = getSharedPreferences(Joiin.PREFERENCES, MODE_PRIVATE).getInt(Joiin.USER_ID, Joiin.NO_VALUE);
 
         ViewSectionsPagerAdapter pagerAdapter = new ViewSectionsPagerAdapter(getSupportFragmentManager(), true);
 
@@ -103,8 +103,8 @@ public class DetailsActivity extends AppCompatActivity implements TabLayout.OnTa
         tabIndex = tab.getPosition();
 
         if (tabIndex > 0) {
-            int typeID = getIntent().getExtras().getInt(BU.PLACE_TYPE_KEY);
-            fab.setColorNormal(BU.getCategoryColor(this, typeID));
+            int typeID = getIntent().getExtras().getInt(Joiin.PLACE_TYPE_KEY);
+            fab.setColorNormal(Joiin.getCategoryColor(this, typeID));
             fab.setImageResource(R.drawable.ic_create);
         } else {
             fab.setImageResource(R.drawable.ic_uber);
@@ -152,7 +152,7 @@ public class DetailsActivity extends AppCompatActivity implements TabLayout.OnTa
                     goToUber();
                 }
             /*case R.id.action_share:
-                String message = "Gracias a BU, descrubri "+ placeName+ "\nBaja la app, !esta genial! \n " +
+                String message = "Gracias a Joiin, descrubri "+ placeName+ "\nBaja la app, !esta genial! \n " +
                         "http://brujulauniversitaria.com.mx";
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("text/plain");
@@ -189,7 +189,7 @@ public class DetailsActivity extends AppCompatActivity implements TabLayout.OnTa
     }
 
     protected void loadImage(String source) {
-        String imageURL = BU.API_URL + "/imagenes/places/" + source;
+        String imageURL = Joiin.API_URL + "/imagenes/places/" + source;
         Glide.with(this).load(imageURL).placeholder(R.drawable.default_image).into(imageView);
         //Picasso.with(this).load(imageURL).resize(imageView.getWidth(), imageView.getHeight()).placeholder(R.drawable.default_image).into(imageView);
     }

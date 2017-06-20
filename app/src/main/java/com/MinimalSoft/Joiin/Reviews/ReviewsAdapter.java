@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.ReviewsData;
 
@@ -53,7 +53,7 @@ class ReviewsAdapter extends RecyclerView.Adapter<ReviewHolder> {
         /* This adapter is generic, for multiple or for a single place.
           * If placeID holds a value it means this adapter will handle data for a single place.
           * If it has no value, the adapter will handle data for multiple places. */
-        boolean singlePlaceReviews = (placeID != BU.NO_VALUE);
+        boolean singlePlaceReviews = (placeID != Joiin.NO_VALUE);
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View inflatedView = layoutInflater.inflate(R.layout.item_review, parent, false);
@@ -91,7 +91,7 @@ class ReviewsAdapter extends RecyclerView.Adapter<ReviewHolder> {
             holder.setBasicInfo(data.getIdReview(), data.getName(), data.getDate(), data.getIdUser(), userID, position);
             holder.setReactionsData(data.getIdReview(), data.getReaction(), data.getLikes(), data.getDislikes());
 
-            if (placeID == BU.NO_VALUE) {
+            if (placeID == Joiin.NO_VALUE) {
                 holder.setPlaceInfo(data.getIdPlace(), data.getPlaceName(), data.getIdType());
             }
         }

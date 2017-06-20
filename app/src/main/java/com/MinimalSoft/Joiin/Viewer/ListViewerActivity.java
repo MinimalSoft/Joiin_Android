@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Places.PlacesListAdapter;
 import com.MinimalSoft.Joiin.Promos.PromosAdapter;
 import com.MinimalSoft.Joiin.R;
@@ -67,10 +67,10 @@ public class ListViewerActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
 
-        int typeID = extras.getInt(BU.PLACE_TYPE_KEY);
-        int resource = extras.getInt(BU.RESOURCE_KEY);
-        String json = extras.getString(BU.JSON_DATA_KEY);
-        String title = extras.getString(BU.ACTIVITY_TITLE_KEY);
+        int typeID = extras.getInt(Joiin.PLACE_TYPE_KEY);
+        int resource = extras.getInt(Joiin.RESOURCE_KEY);
+        String json = extras.getString(Joiin.JSON_DATA_KEY);
+        String title = extras.getString(Joiin.ACTIVITY_TITLE_KEY);
 
         switch (resource) {
             case R.layout.item_promo:

@@ -5,7 +5,7 @@
         <item name="android:navigationBarColor">@color/primary_dark</item>
         <item name="android:colorBackground">@color/primary_background</item>
         <!--
-        * The android colorAccent matches the desire BU color accent.
+        * The android colorAccent matches the desire Joiin color accent.
         * Uncomment when don't.
         <item name="colorAccent">@color/accent</item>
         -->

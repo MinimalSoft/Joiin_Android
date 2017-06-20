@@ -19,13 +19,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Main.MainActivity;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.UserResponse;
 import com.MinimalSoft.Joiin.Services.MinimalSoftServices;
 import com.MinimalSoft.Joiin.Utilities.UnitFormatterUtility;
 import com.MinimalSoft.Joiin.Web.WebActivity;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -132,18 +133,20 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
                 String date = String.format(UnitFormatterUtility.MEXICAN_LOCALE, "%d-%d-%d", year, month, day);
                 String gender = (gen != 0) ? (String.valueOf(genderSpinner.getSelectedItem()).substring(0, 1)) : "O";
 
-                Retrofit retrofit = new Retrofit.Builder().baseUrl(BU.API_URL)
+                String deviceToken = FirebaseInstanceId.getInstance().getToken();
+
+                Retrofit retrofit = new Retrofit.Builder().baseUrl(Joiin.API_URL)
                         .addConverterFactory(GsonConverterFactory.create()).build();
                 MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
-                api.registerUser("register", name, lastName, gender.toUpperCase(), date, phone, email, password, "", "", "").enqueue(this);
+                api.registerUser("register", name, lastName, gender.toUpperCase(), date, phone, email, password, "", "", deviceToken).enqueue(this);
                 break;
 
             case DialogInterface.BUTTON_NEUTRAL:
-                String link = BU.WP_URL + "/aviso-de-privacidad/";
+                String link = Joiin.WP_URL + "/aviso-de-privacidad/";
                 Intent intent = new Intent(this, WebActivity.class);
 
-                intent.putExtra(BU.ACTIVITY_TITLE_KEY, "Aviso de privacidad");
-                intent.putExtra(BU.WP_URL, link);
+                intent.putExtra(Joiin.ACTIVITY_TITLE_KEY, "Aviso de privacidad");
+                intent.putExtra(Joiin.WP_URL, link);
                 startActivity(intent);
                 break;
         }
@@ -173,10 +176,10 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
             } else {
                 String fullName = nameField.getText().toString() + ' ' + lastNameField.getText().toString();
 
-                SharedPreferences.Editor preferencesEditor = getSharedPreferences(BU.PREFERENCES, Context.MODE_PRIVATE).edit();
-                preferencesEditor.putInt(BU.USER_ID, response.body().getData().getIdUser());
-                preferencesEditor.putString(BU.USER_EMAIL, emailField.getText().toString());
-                preferencesEditor.putString(BU.USER_NAME, fullName);
+                SharedPreferences.Editor preferencesEditor = getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE).edit();
+                preferencesEditor.putInt(Joiin.USER_ID, response.body().getData().getIdUser());
+                preferencesEditor.putString(Joiin.USER_EMAIL, emailField.getText().toString());
+                preferencesEditor.putString(Joiin.USER_NAME, fullName);
 
                 //preferencesEditor.putString("FACEBOOK_ID", facebookData.getId());
                 preferencesEditor.apply();

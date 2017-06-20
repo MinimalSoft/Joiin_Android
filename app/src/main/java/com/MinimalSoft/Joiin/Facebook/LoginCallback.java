@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Main.MainActivity;
 import com.MinimalSoft.Joiin.Responses.UserResponse;
 import com.MinimalSoft.Joiin.Services.MinimalSoftServices;
@@ -18,6 +18,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -85,7 +86,7 @@ public class LoginCallback implements FacebookCallback<LoginResult>, GraphReques
     public void onCompleted(JSONObject object, GraphResponse response) {
         if (response.getError() == null) {
             progressDialog = new ProgressDialog(activity, ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage("Autenticando con BU...");
+            progressDialog.setMessage("Autenticando con Joiin...");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.setIndeterminate(true);
             progressDialog.show();
@@ -99,11 +100,13 @@ public class LoginCallback implements FacebookCallback<LoginResult>, GraphReques
             String birthday = (facebookData.getBirthday() != null) ? (facebookData.getBirthday()) : "";
             String gender = (facebookData.getGender() != null) ? (facebookData.getGender().substring(0, 1)) : "O";
 
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(BU.API_URL)
+            String deviceToken = FirebaseInstanceId.getInstance().getToken();
+
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(Joiin.API_URL)
                     .addConverterFactory(GsonConverterFactory.create()).build();
             MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
             api.registerUser("register", facebookData.getFirstName(), facebookData.getLastName(),
-                    gender.toUpperCase(), birthday, "", email, "", picture, facebookData.getId(), "").enqueue(this);
+                    gender.toUpperCase(), birthday, "", email, "", picture, facebookData.getId(), deviceToken).enqueue(this);
         } else {
             Toast.makeText(activity, response.getError().getErrorMessage(), Toast.LENGTH_SHORT).show();
             LoginManager.getInstance().logOut();
@@ -124,10 +127,10 @@ public class LoginCallback implements FacebookCallback<LoginResult>, GraphReques
         progressDialog.dismiss();
 
         if (response.isSuccessful()) {
-            SharedPreferences.Editor preferencesEditor = activity.getSharedPreferences(BU.PREFERENCES, Context.MODE_PRIVATE).edit();
-            preferencesEditor.putString(BU.USER_EMAIL, facebookData.getEmail() != null ? facebookData.getEmail() : "");
-            preferencesEditor.putInt(BU.USER_ID, response.body().getData().getIdUser());
-            preferencesEditor.putString(BU.USER_NAME, facebookData.getFullName());
+            SharedPreferences.Editor preferencesEditor = activity.getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE).edit();
+            preferencesEditor.putString(Joiin.USER_EMAIL, facebookData.getEmail() != null ? facebookData.getEmail() : "");
+            preferencesEditor.putInt(Joiin.USER_ID, response.body().getData().getIdUser());
+            preferencesEditor.putString(Joiin.USER_NAME, facebookData.getFullName());
             //preferencesEditor.putString("FACEBOOK_ID", facebookData.getId());
             preferencesEditor.apply();
 

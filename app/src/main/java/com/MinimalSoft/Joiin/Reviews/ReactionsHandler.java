@@ -2,7 +2,7 @@ package com.MinimalSoft.Joiin.Reviews;
 
 import android.widget.TextView;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Responses.ReactionResponse;
 import com.MinimalSoft.Joiin.Services.MinimalSoftServices;
 import com.like.LikeButton;
@@ -28,7 +28,7 @@ class ReactionsHandler implements OnLikeListener, Callback<ReactionResponse> {
     private int index;
 
     ReactionsHandler(LikeButton[] buttons, TextView[] textViews) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(BU.API_URL)
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Joiin.API_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         api = retrofit.create(MinimalSoftServices.class);
 

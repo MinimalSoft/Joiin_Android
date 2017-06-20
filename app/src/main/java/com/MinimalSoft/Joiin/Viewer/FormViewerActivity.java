@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Menu.TransportFragment;
 import com.MinimalSoft.Joiin.Promos.PromosFragment;
 import com.MinimalSoft.Joiin.R;
@@ -18,8 +18,8 @@ public class FormViewerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewer);
 
-        int menuType = getIntent().getIntExtra(BU.PLACE_TYPE_KEY, BU.NO_VALUE);
-        String title = getIntent().getStringExtra(BU.ACTIVITY_TITLE_KEY);
+        int menuType = getIntent().getIntExtra(Joiin.PLACE_TYPE_KEY, Joiin.NO_VALUE);
+        String title = getIntent().getStringExtra(Joiin.ACTIVITY_TITLE_KEY);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.viewer_toolbar);
 
@@ -31,11 +31,11 @@ public class FormViewerActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
         switch (menuType) {
-            case BU.FEATURED_ID:
+            case Joiin.FEATURED_ID:
                 fragmentTransaction.add(R.id.viewer_fragmentLayout, new PromosFragment());
                 break;
 
-            case BU.SUPPLIES_ID:
+            case Joiin.SUPPLIES_ID:
                 fragmentTransaction.add(R.id.viewer_fragmentLayout, new TransportFragment());
                 break;
         }

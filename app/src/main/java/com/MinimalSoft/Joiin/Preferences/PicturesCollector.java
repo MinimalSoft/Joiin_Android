@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Utilities.ImageUtility;
 import com.bumptech.glide.Glide;
 
@@ -56,8 +56,8 @@ class PicturesCollector extends AsyncTask<Integer, Void, Boolean> {
             Bitmap bitmapARGB = bitmapRGB.copy(Bitmap.Config.ARGB_8888, false);
             coverBitmap = ImageUtility.blur(fragment.getContext(), bitmapARGB);
 
-            savePicture(profileBitmap, BU.USER_PHOTO);
-            savePicture(coverBitmap, BU.USER_COVER);
+            savePicture(profileBitmap, Joiin.USER_PHOTO);
+            savePicture(coverBitmap, Joiin.USER_COVER);
 
             return true;
         } catch (InterruptedException | ExecutionException | IOException e) {

@@ -15,7 +15,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Details.DetailsActivity;
 import com.MinimalSoft.Joiin.Facebook.FacebookData;
 import com.MinimalSoft.Joiin.R;
@@ -136,9 +136,9 @@ class ReviewHolder extends RecyclerView.ViewHolder implements GraphRequest.Callb
 
             case R.id.review_layout:
                 Bundle bundle = new Bundle();
-                bundle.putInt(BU.PLACE_ID_KEY, placeID);
-                bundle.putInt(BU.PLACE_TYPE_KEY, placeType);
-                bundle.putString(BU.PLACE_NAME_KEY, placeNameLabel.getText().toString());
+                bundle.putInt(Joiin.PLACE_ID_KEY, placeID);
+                bundle.putInt(Joiin.PLACE_TYPE_KEY, placeType);
+                bundle.putString(Joiin.PLACE_NAME_KEY, placeNameLabel.getText().toString());
 
                 Intent intent = new Intent(context, DetailsActivity.class);
                 intent.putExtras(bundle);
@@ -147,7 +147,7 @@ class ReviewHolder extends RecyclerView.ViewHolder implements GraphRequest.Callb
                 break;
 
             default: // Snackbar button
-                Retrofit retrofit = new Retrofit.Builder().baseUrl(BU.API_URL)
+                Retrofit retrofit = new Retrofit.Builder().baseUrl(Joiin.API_URL)
                         .addConverterFactory(GsonConverterFactory.create()).build();
                 MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
                 api.deleteReview("deleteReview", String.valueOf(reviewID), String.valueOf(userID)).enqueue(this);
@@ -241,7 +241,7 @@ class ReviewHolder extends RecyclerView.ViewHolder implements GraphRequest.Callb
         if (!imageName.equals("No image")) {
             //byte[] bytes = Base64.decode(base64, Base64.DEFAULT);
             imageView.setVisibility(View.VISIBLE);
-            String imageURL = BU.API_URL + "/imagenes/reviews/" + imageName;
+            String imageURL = Joiin.API_URL + "/imagenes/reviews/" + imageName;
             Glide.with(context).load(imageURL).placeholder(R.drawable.default_image).into(imageView);
         } else {
             imageView.setVisibility(View.GONE);
@@ -309,7 +309,7 @@ class ReviewHolder extends RecyclerView.ViewHolder implements GraphRequest.Callb
         placeType = typeID;
         this.placeID = placeID;
         placeNameLabel.setText(placeName);
-        placeNameLabel.setTextColor(BU.getCategoryColor(context, typeID));
-        bottomLine.setBackgroundColor(BU.getCategoryColor(context, typeID));
+        placeNameLabel.setTextColor(Joiin.getCategoryColor(context, typeID));
+        bottomLine.setBackgroundColor(Joiin.getCategoryColor(context, typeID));
     }
 }

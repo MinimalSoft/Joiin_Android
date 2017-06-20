@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.PlaceData;
 import com.MinimalSoft.Joiin.Responses.PlacesResponse;
@@ -66,22 +66,22 @@ public class PlacesMapActivity extends MappingServices implements Callback<Place
 
             case R.id.map_showList:
                 if (!placesDictionary.isEmpty()) {
-                    int typeID = getIntent().getIntExtra(BU.PLACE_TYPE_KEY, BU.NO_VALUE);
-                    String title = BU.getCategoryName(typeID) + " cerca de ti";
+                    int typeID = getIntent().getIntExtra(Joiin.PLACE_TYPE_KEY, Joiin.NO_VALUE);
+                    String title = Joiin.getCategoryName(typeID) + " cerca de ti";
                     String json = new Gson().toJson(placesDictionary.values());
 
                     Bundle bundle = new Bundle();
-                    bundle.putString(BU.JSON_DATA_KEY, json);
-                    bundle.putString(BU.ACTIVITY_TITLE_KEY, title);
-                    bundle.putInt(BU.PLACE_TYPE_KEY, typeID);
-                    bundle.putInt(BU.RESOURCE_KEY, R.layout.item_place);
+                    bundle.putString(Joiin.JSON_DATA_KEY, json);
+                    bundle.putString(Joiin.ACTIVITY_TITLE_KEY, title);
+                    bundle.putInt(Joiin.PLACE_TYPE_KEY, typeID);
+                    bundle.putInt(Joiin.RESOURCE_KEY, R.layout.item_place);
 
                     Intent intent = new Intent(this, ListViewerActivity.class);
                     intent.putExtras(bundle);
 
                     startActivity(intent);
                 } else {
-                    //String mensaje = "Aún no se han encontrado " + BU.getCategoryName(placeTypeID);
+                    //String mensaje = "Aún no se han encontrado " + Joiin.getCategoryName(placeTypeID);
                     Toast.makeText(this, "No se han encotrado establecimientos", Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -110,13 +110,13 @@ public class PlacesMapActivity extends MappingServices implements Callback<Place
         super.onCurrentLocationFired(view);
         Toast.makeText(this, "Buscando establecimientos...", Toast.LENGTH_SHORT).show();
         //Snackbar.make(getCurrentFocus(), "Buscando establecimientos...", Snackbar.LENGTH_SHORT).show();
-        int typeID = getIntent().getIntExtra(BU.PLACE_TYPE_KEY, BU.NO_VALUE);
+        int typeID = getIntent().getIntExtra(Joiin.PLACE_TYPE_KEY, Joiin.NO_VALUE);
 
         String radio = String.valueOf(map.getCameraPosition().zoom);
         String latitude = String.valueOf(map.getCameraPosition().target.latitude);
         String longitude = String.valueOf(map.getCameraPosition().target.longitude);
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(BU.API_URL)
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Joiin.API_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
         api.getPlaces("places", String.valueOf(typeID), latitude, longitude, radio).enqueue(this);
@@ -226,7 +226,7 @@ public class PlacesMapActivity extends MappingServices implements Callback<Place
     }
 
     private void setCustomMarkers() {
-        int typeID = getIntent().getIntExtra(BU.PLACE_TYPE_KEY, BU.NO_VALUE);
+        int typeID = getIntent().getIntExtra(Joiin.PLACE_TYPE_KEY, Joiin.NO_VALUE);
         Bitmap bitmap;
 
         switch (typeID) {

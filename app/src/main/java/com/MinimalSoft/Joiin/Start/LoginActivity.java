@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Facebook.LoginCallback;
 import com.MinimalSoft.Joiin.Main.MainActivity;
 import com.MinimalSoft.Joiin.R;
@@ -86,6 +86,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Cal
         switch (view.getId()) {
             case R.id.login_facebookButton:
                 List<String> facebookPermissions = Arrays.asList("public_profile", "email", "user_birthday");
+                //List<String> facebookPermissions = Arrays.asList("public_profile", "email");
                 LoginManager.getInstance().logInWithReadPermissions(this, facebookPermissions);
                 break;
 
@@ -127,10 +128,10 @@ public class LoginActivity extends Activity implements View.OnClickListener, Cal
             } else {
                 String fullName = response.body().getData().getName() + ' ' + response.body().getData().getLastName();
 
-                SharedPreferences.Editor preferencesEditor = getSharedPreferences(BU.PREFERENCES, Context.MODE_PRIVATE).edit();
-                preferencesEditor.putInt(BU.USER_ID, response.body().getData().getIdUser());
-                preferencesEditor.putString(BU.USER_EMAIL, emailField.getText().toString());
-                preferencesEditor.putString(BU.USER_NAME, fullName);
+                SharedPreferences.Editor preferencesEditor = getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE).edit();
+                preferencesEditor.putInt(Joiin.USER_ID, response.body().getData().getIdUser());
+                preferencesEditor.putString(Joiin.USER_EMAIL, emailField.getText().toString());
+                preferencesEditor.putString(Joiin.USER_NAME, fullName);
                 preferencesEditor.apply();
 
                 Intent intent = new Intent(this, MainActivity.class);
@@ -167,7 +168,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Cal
             passwordField.setError("Inserte la contraseña");
         } else {
             progressDialog.show();
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(BU.API_URL)
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(Joiin.API_URL)
                     .addConverterFactory(GsonConverterFactory.create()).build();
             MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
             api.logIn("login", email, password, "", "").enqueue(this);

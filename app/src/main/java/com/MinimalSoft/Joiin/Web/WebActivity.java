@@ -8,7 +8,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
 
 public class WebActivity extends AppCompatActivity implements View.OnClickListener {
@@ -23,8 +23,8 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         WebView webView = (WebView) findViewById(R.id.web_webView);
 
         LoadIndicator loadIndicator = new LoadIndicator(progressBar, webView);
-        toolbar.setTitle(getIntent().getStringExtra(BU.ACTIVITY_TITLE_KEY));
-        String link = getIntent().getStringExtra(BU.WP_URL);
+        toolbar.setTitle(getIntent().getStringExtra(Joiin.ACTIVITY_TITLE_KEY));
+        String link = getIntent().getStringExtra(Joiin.WP_URL);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

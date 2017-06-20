@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Details.DetailsActivity;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.PlaceData;
@@ -29,7 +29,7 @@ public class SummaryFragment extends Fragment implements View.OnClickListener {
         String json = new Gson().toJson(data);
         Bundle bundle = new Bundle();
 
-        bundle.putString(BU.JSON_DATA_KEY, json);
+        bundle.putString(Joiin.JSON_DATA_KEY, json);
         instance.setArguments(bundle);
         return instance;
     }
@@ -49,13 +49,13 @@ public class SummaryFragment extends Fragment implements View.OnClickListener {
 
         PlacesMapActivity activity = (PlacesMapActivity) getActivity();
 
-        String json = getArguments().getString(BU.JSON_DATA_KEY);
+        String json = getArguments().getString(Joiin.JSON_DATA_KEY);
         Type type = new TypeToken<PlaceData>() {
         }.getType();
         PlaceData data = new Gson().fromJson(json, type);
 
         String address = data.getStreet() + ' ' + data.getNumber() + ", " + data.getNeighborhood();
-        String imageURL = BU.API_URL + "/imagenes/places/" + data.getImage();
+        String imageURL = Joiin.API_URL + "/imagenes/places/" + data.getImage();
         float meters = activity.getDistanceRelativeTo(data.getLatitude(), data.getLongitude());
         String[] distance = UnitFormatterUtility.getFormattedDistance(meters);
 
@@ -78,16 +78,16 @@ public class SummaryFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         PlacesMapActivity activity = (PlacesMapActivity) getActivity();
 
-        int typeID = activity.getIntent().getIntExtra(BU.PLACE_TYPE_KEY, BU.NO_VALUE);
-        String json = getArguments().getString(BU.JSON_DATA_KEY);
+        int typeID = activity.getIntent().getIntExtra(Joiin.PLACE_TYPE_KEY, Joiin.NO_VALUE);
+        String json = getArguments().getString(Joiin.JSON_DATA_KEY);
         Type type = new TypeToken<PlaceData>() {
         }.getType();
         PlaceData data = new Gson().fromJson(json, type);
 
         Bundle bundle = new Bundle();
-        bundle.putInt(BU.PLACE_TYPE_KEY, typeID);
-        bundle.putInt(BU.PLACE_ID_KEY, data.getIdPlace());
-        bundle.putString(BU.PLACE_NAME_KEY, data.getPlaceName());
+        bundle.putInt(Joiin.PLACE_TYPE_KEY, typeID);
+        bundle.putInt(Joiin.PLACE_ID_KEY, data.getIdPlace());
+        bundle.putString(Joiin.PLACE_NAME_KEY, data.getPlaceName());
 
         Intent intent = new Intent(activity, DetailsActivity.class);
         intent.putExtras(bundle);

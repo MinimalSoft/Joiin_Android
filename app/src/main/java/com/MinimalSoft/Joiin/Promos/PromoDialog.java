@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Main.MainActivity;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.PromoData;
@@ -41,7 +41,7 @@ class PromoDialog implements SlideView.OnFinishListener, Callback<TransactionRes
 
         //descriptionText.setMovementMethod(new ScrollingMovementMethod());
 
-        String imageURL = BU.API_URL + "/imagenes/promos/" + promo.getBanner();
+        String imageURL = Joiin.API_URL + "/imagenes/promos/" + promo.getBanner();
         Glide.with(context).load(imageURL).placeholder(R.drawable.default_image).into(imageView);
 
         placeLabel.setText(promo.getPlaceName() + " te ofrece:");
@@ -88,7 +88,7 @@ class PromoDialog implements SlideView.OnFinishListener, Callback<TransactionRes
 
     @Override
     public void onFinish() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(BU.API_URL)
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Joiin.API_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
         //api.withdraw("withdraw", String.valueOf(userID), String.valueOf(promoData.getCode()))

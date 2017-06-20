@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.PromoData;
 import com.MinimalSoft.Joiin.Responses.PromosResponse;
@@ -65,22 +65,22 @@ public class PromosFragment extends Fragment implements View.OnClickListener, Di
 
         switch (v.getId()) {
             case R.id.promo_barsButton:
-                chosenCategoryType = BU.BARS_ID;
+                chosenCategoryType = Joiin.BARS_ID;
                 break;
 
             case R.id.promo_foodButton:
-                chosenCategoryType = BU.FOOD_ID;
+                chosenCategoryType = Joiin.FOOD_ID;
                 break;
 
             case R.id.promo_gymsButton:
-                chosenCategoryType = BU.GYMS_ID;
+                chosenCategoryType = Joiin.GYMS_ID;
                 break;
 
             default:
-                chosenCategoryType = BU.NO_VALUE;
+                chosenCategoryType = Joiin.NO_VALUE;
         }
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(BU.API_URL)
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Joiin.API_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
         serviceCall = api.getPromos("getPromos", String.valueOf(chosenCategoryType));
@@ -107,10 +107,10 @@ public class PromosFragment extends Fragment implements View.OnClickListener, Di
                 String json = new Gson().toJson(promosList);
 
                 Bundle bundle = new Bundle();
-                bundle.putString(BU.JSON_DATA_KEY, json);
-                bundle.putInt(BU.RESOURCE_KEY, R.layout.item_promo);
-                //extras.putInt(BU.PLACE_TYPE_KEY, chosenCategoryType);
-                bundle.putString(BU.ACTIVITY_TITLE_KEY, "Promociones");
+                bundle.putString(Joiin.JSON_DATA_KEY, json);
+                bundle.putInt(Joiin.RESOURCE_KEY, R.layout.item_promo);
+                //extras.putInt(Joiin.PLACE_TYPE_KEY, chosenCategoryType);
+                bundle.putString(Joiin.ACTIVITY_TITLE_KEY, "Promociones");
 
                 Intent intent = new Intent(getActivity(), ListViewerActivity.class);
                 intent.putExtras(bundle);

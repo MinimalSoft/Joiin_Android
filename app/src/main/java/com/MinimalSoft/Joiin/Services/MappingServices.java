@@ -21,7 +21,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Utilities.UnitFormatterUtility;
 import com.google.android.gms.common.ConnectionResult;
@@ -90,7 +90,7 @@ public class MappingServices extends AppCompatActivity implements OnMapReadyCall
         summaryFragment.setEnabled(false);
         mapFragment.getMapAsync(this);
 
-        String title = getIntent().getStringExtra(BU.ACTIVITY_TITLE_KEY);
+        String title = getIntent().getStringExtra(Joiin.ACTIVITY_TITLE_KEY);
         Toolbar toolbar = (Toolbar) findViewById(R.id.map_toolbar);
 
         toolbar.setTitle(title);
@@ -273,7 +273,7 @@ public class MappingServices extends AppCompatActivity implements OnMapReadyCall
 
             return knownLocation.distanceTo(desiredLocation);
         } else {
-            return BU.NO_VALUE;
+            return Joiin.NO_VALUE;
         }
     }
 

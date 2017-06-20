@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.ReviewsData;
 import com.MinimalSoft.Joiin.Responses.ReviewsResponse;
@@ -37,9 +37,9 @@ public class ReviewsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         ReviewsFragment instance = new ReviewsFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putInt(BU.USER_ID, userID);
-        bundle.putInt(BU.PLACE_ID_KEY, placeID);
-        bundle.putInt(BU.PLACE_TYPE_KEY, typeID);
+        bundle.putInt(Joiin.USER_ID, userID);
+        bundle.putInt(Joiin.PLACE_ID_KEY, placeID);
+        bundle.putInt(Joiin.PLACE_TYPE_KEY, typeID);
 
         instance.setArguments(bundle);
         return instance;
@@ -58,16 +58,16 @@ public class ReviewsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         Bundle arguments = getArguments();
 
         if (arguments != null) {
-            userID = arguments.getInt(BU.USER_ID);
-            int placeID = arguments.getInt(BU.PLACE_ID_KEY);
-            int typeID = arguments.getInt(BU.PLACE_TYPE_KEY);
+            userID = arguments.getInt(Joiin.USER_ID);
+            int placeID = arguments.getInt(Joiin.PLACE_ID_KEY);
+            int typeID = arguments.getInt(Joiin.PLACE_TYPE_KEY);
 
             reviewsAdapter = new ReviewsAdapter(placeID, userID);
-            swipeRefresh.setColorSchemeColors(BU.getCategoryColor(getContext(), typeID));
+            swipeRefresh.setColorSchemeColors(Joiin.getCategoryColor(getContext(), typeID));
         } else {
             swipeRefresh.setColorSchemeResources(R.color.bars, R.color.food, R.color.gyms, R.color.residences);
-            userID = getContext().getSharedPreferences(BU.PREFERENCES, Context.MODE_PRIVATE)
-                    .getInt(BU.USER_ID, BU.NO_VALUE);
+            userID = getContext().getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE)
+                    .getInt(Joiin.USER_ID, Joiin.NO_VALUE);
             reviewsAdapter = new ReviewsAdapter(userID);
         }
 
@@ -134,13 +134,13 @@ public class ReviewsFragment extends Fragment implements SwipeRefreshLayout.OnRe
     /* OnRefreshListener Methods */
     @Override
     public void onRefresh() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(BU.API_URL)
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Joiin.API_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
         Bundle arguments = getArguments();
 
         if (arguments != null) {
-            int placeID = arguments.getInt(BU.PLACE_ID_KEY);
+            int placeID = arguments.getInt(Joiin.PLACE_ID_KEY);
             apiCall = api.getReviews("reviews", String.valueOf(userID), String.valueOf(placeID));
         } else {
             int count = 25; // Default fetching amount.

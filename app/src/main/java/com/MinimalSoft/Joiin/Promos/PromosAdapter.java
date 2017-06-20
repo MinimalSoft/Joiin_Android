@@ -15,7 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.MinimalSoft.Joiin.BU;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.PromoData;
 import com.MinimalSoft.Joiin.Responses.TransactionResponse;
@@ -45,10 +45,10 @@ public class PromosAdapter extends ArrayAdapter<PromoData> implements AdapterVie
     public PromosAdapter(@NonNull Activity context, @LayoutRes int resource, @NonNull PromoData[] objects) {
         super(context, resource, objects);
 
-        SharedPreferences settings = getContext().getSharedPreferences(BU.PREFERENCES, Context.MODE_PRIVATE);
-        userID = settings.getInt(BU.USER_ID, BU.NO_VALUE);
+        SharedPreferences settings = getContext().getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE);
+        userID = settings.getInt(Joiin.USER_ID, Joiin.NO_VALUE);
         toolbarLabel = (TextView) context.findViewById(R.id.list_toolText);
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(BU.API_URL)
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Joiin.API_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
         api.getCoins("getCoins", String.valueOf(userID)).enqueue(this);
@@ -69,7 +69,7 @@ public class PromosAdapter extends ArrayAdapter<PromoData> implements AdapterVie
         if (getCount() > 0) {
             PromoData data = getItem(position);
 
-            String imageURL = BU.API_URL + "/imagenes/promos/" + data.getBanner();
+            String imageURL = Joiin.API_URL + "/imagenes/promos/" + data.getBanner();
             String price = String.format(UnitFormatterUtility.MEXICAN_LOCALE, "%,d", data.getPrice());
 
             Glide.with(getContext()).load(imageURL).placeholder(R.drawable.default_image).into(imageView);
