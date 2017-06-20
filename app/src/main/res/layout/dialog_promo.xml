@@ -87,7 +87,7 @@
         android:layout_margin="5dp"
         android:background="@color/iron" />
 
-    <com.MinimalSoft.JOIIN.Widgets.SlideView
+    <com.MinimalSoft.Joiin.Widgets.SlideView
         android:id="@+id/promo_slideButton"
         android:layout_width="match_parent"
         android:layout_height="48dp"

@@ -1,13 +1,13 @@
 <resources>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-        AIzaSyDDOZZncOabdW7RRGamwFvOVgi8xHTlpko
+        AIzaSyAZi45vkeCb8pqHGPLdz9sdTC6n2dsAIh4
     </string>
 
     <string name="facebook_app_id" templateMergeStrategy="preserve" translatable="false">
-        916058378464973
+        1715942298703931
     </string>
 
     <string name="fb_login_protocol_scheme" templateMergeStrategy="preserve" translatable="false">
-        fb916058378464973
+        fb1715942298703931
     </string>
 </resources>
