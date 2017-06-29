@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:text="Información de Contacto"
-        android:textColor="@color/accent" />
+        android:textColor="@color/accent_light" />
 
     <View
         android:layout_width="match_parent"
@@ -99,7 +99,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="15dp"
         android:text="Información de Contacto"
-        android:textColor="@color/accent" />
+        android:textColor="@color/accent_light" />
 
     <View
         android:layout_width="match_parent"

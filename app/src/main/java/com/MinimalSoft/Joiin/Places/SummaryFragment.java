@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Details.DetailsActivity;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.PlaceData;
 import com.MinimalSoft.Joiin.Utilities.UnitFormatterUtility;
@@ -59,7 +59,7 @@ public class SummaryFragment extends Fragment implements View.OnClickListener {
         float meters = activity.getDistanceRelativeTo(data.getLatitude(), data.getLongitude());
         String[] distance = UnitFormatterUtility.getFormattedDistance(meters);
 
-        Glide.with(activity).load(imageURL).placeholder(R.drawable.default_image).into(imageView);
+        Glide.with(activity).load(imageURL).placeholder(R.drawable.image_loading).into(imageView);
         ratingLabel.setText(String.valueOf(data.getStars()));
         nameLabel.setText(data.getPlaceName());
         distanceLabel.setText(distance[0]);

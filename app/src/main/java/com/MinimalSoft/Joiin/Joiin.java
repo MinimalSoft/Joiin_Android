@@ -47,6 +47,10 @@ public class Joiin {
     /* Arbitrary values for multiple requests */
     public static final int NO_VALUE = 0;
     public static final int IMAGE_PICKER_REQUEST = 3;
+    /* Arbitrary values for data revisions */
+    public static final int MIN_PASSWORD_LENGHT = 8;
+    public static final String NAME_REGEX = "^[\\p{L} .'-]+$";
+
     private static final SparseArray<String> CATEGORIES_NAMES = new SparseArray<>();
     private static final HashMap<String, String> TRANSPORT_NAMES = new HashMap<>();
 

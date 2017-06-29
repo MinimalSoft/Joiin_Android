@@ -15,8 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Details.DetailsActivity;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.PlaceData;
 import com.bumptech.glide.Glide;
@@ -69,7 +69,7 @@ public class PlacesListAdapter extends ArrayAdapter<PlaceData> implements Adapte
             String imageURL = Joiin.API_URL + "/imagenes/places/" + data.getImage();
             String address = data.getStreet() + " # " + data.getNumber() + ", " + data.getNeighborhood();
 
-            Glide.with(getContext()).load(imageURL).placeholder(R.drawable.default_image).into(imageView);
+            Glide.with(getContext()).load(imageURL).placeholder(R.drawable.image_loading).into(imageView);
             ratingLabel.setText(String.valueOf(data.getStars()));
             nameLabel.setText(data.getPlaceName());
             addressLabel.setText(address);

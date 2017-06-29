@@ -13,7 +13,7 @@
         android:layout_margin="1dp"
         android:layout_weight="1"
         android:scaleType="centerCrop"
-        android:src="@drawable/promo_bar" />
+        android:src="@drawable/image_promo_bar" />
 
     <ImageButton
         android:id="@+id/promo_foodButton"
@@ -23,7 +23,7 @@
         android:layout_margin="1dp"
         android:layout_weight="1"
         android:scaleType="centerCrop"
-        android:src="@drawable/promo_food" />
+        android:src="@drawable/image_promo_food" />
 
     <ImageButton
         android:id="@+id/promo_gymsButton"
@@ -33,5 +33,5 @@
         android:layout_margin="1dp"
         android:layout_weight="1"
         android:scaleType="centerCrop"
-        android:src="@drawable/promo_gym" />
+        android:src="@drawable/image_promo_gym" />
 </LinearLayout>

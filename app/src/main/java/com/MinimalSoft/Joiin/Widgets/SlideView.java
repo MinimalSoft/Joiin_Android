@@ -45,24 +45,24 @@ public class SlideView extends RelativeLayout implements View.OnTouchListener {
     public SlideView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SlideView, 0, 0);
+        TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SlideView, 0, 0);
 
         try {
-            mSlideImage = a.getDrawable(R.styleable.SlideView_slideSrc);
-            slideSrcMargin = a.getDimensionPixelSize(R.styleable.SlideView_slideSrcMargin, 0);
-            slideSrcMarginLeft = a.getDimensionPixelSize(R.styleable.SlideView_slideSrcMarginLeft, 0);
-            slideSrcMarginTop = a.getDimensionPixelSize(R.styleable.SlideView_slideSrcMarginTop, 0);
-            slideSrcMarginBottom = a.getDimensionPixelSize(R.styleable.SlideView_slideSrcMarginBottom, 0);
-            slideSrcMarginRight = a.getDimensionPixelSize(R.styleable.SlideView_slideSrcMarginRight, 0);
-            slideSuccessPercent = a.getInteger(R.styleable.SlideView_slideSuccessPercent, 0);
-            mSlideBackground = a.getDrawable(R.styleable.SlideView_slideBackground);
-            duration = a.getInteger(R.styleable.SlideView_duration, 200);
+            mSlideImage = array.getDrawable(R.styleable.SlideView_slideSrc);
+            slideSrcMargin = array.getDimensionPixelSize(R.styleable.SlideView_slideSrcMargin, 0);
+            slideSrcMarginLeft = array.getDimensionPixelSize(R.styleable.SlideView_slideSrcMarginLeft, 0);
+            slideSrcMarginTop = array.getDimensionPixelSize(R.styleable.SlideView_slideSrcMarginTop, 0);
+            slideSrcMarginBottom = array.getDimensionPixelSize(R.styleable.SlideView_slideSrcMarginBottom, 0);
+            slideSrcMarginRight = array.getDimensionPixelSize(R.styleable.SlideView_slideSrcMarginRight, 0);
+            slideSuccessPercent = array.getInteger(R.styleable.SlideView_slideSuccessPercent, 0);
+            mSlideBackground = array.getDrawable(R.styleable.SlideView_slideBackground);
+            duration = array.getInteger(R.styleable.SlideView_duration, 200);
 
-            slideText = a.getString(R.styleable.SlideView_slideText);
-            slideTextSize = a.getDimensionPixelSize(R.styleable.SlideView_slideTextSize, 20);
-            slideTextColor = a.getColor(R.styleable.SlideView_slideTextColor, Color.BLACK);
+            slideText = array.getString(R.styleable.SlideView_slideText);
+            slideTextSize = array.getDimensionPixelSize(R.styleable.SlideView_slideTextSize, 16);
+            slideTextColor = array.getColor(R.styleable.SlideView_slideTextColor, Color.WHITE);
         } finally {
-            a.recycle();
+            array.recycle();
         }
 
         if (mSlideBackground != null) {

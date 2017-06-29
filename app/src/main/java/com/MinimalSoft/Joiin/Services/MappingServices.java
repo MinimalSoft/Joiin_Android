@@ -91,6 +91,7 @@ public class MappingServices extends AppCompatActivity implements OnMapReadyCall
         mapFragment.getMapAsync(this);
 
         String title = getIntent().getStringExtra(Joiin.ACTIVITY_TITLE_KEY);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.map_toolbar);
 
         toolbar.setTitle(title);

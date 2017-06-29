@@ -17,8 +17,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.MinimalSoft.Joiin.Joiin;
+import com.MinimalSoft.Joiin.BuildConfig;
 import com.MinimalSoft.Joiin.Facebook.FacebookData;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.TransactionResponse;
 import com.MinimalSoft.Joiin.Start.LoginActivity;
@@ -59,12 +60,15 @@ public class ProfileFragment extends Fragment implements GraphRequest.GraphJSONO
         profilePicture = (CircleImageView) inflatedView.findViewById(R.id.preferences_profileImage);
         coverPicture = (ImageView) inflatedView.findViewById(R.id.preferences_coverImage);
 
+        TextView versionLabel = (TextView) inflatedView.findViewById(R.id.preferences_versionLabel);
         TextView emailLabel = (TextView) inflatedView.findViewById(R.id.preferences_emailLabel);
         TextView nameLabel = (TextView) inflatedView.findViewById(R.id.preferences_nameLabel);
 
         SharedPreferences settings = getContext().getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE);
         emailLabel.setText(settings.getString(Joiin.USER_EMAIL, "loading..."));
         nameLabel.setText(settings.getString(Joiin.USER_NAME, "loading..."));
+
+        versionLabel.setText(BuildConfig.VERSION_NAME);
 
         disclaimerButton.setOnClickListener(this);
         settingsButton.setOnClickListener(this);
@@ -207,7 +211,7 @@ public class ProfileFragment extends Fragment implements GraphRequest.GraphJSONO
                 String imageURL = (facebookData.getPicture() != null) ? (facebookData.getPicture().getData().getUrl()) : "";
 
                 new PicturesCollector(this, imageURL, coverURL).execute(coverPicture.getWidth(), coverPicture.getHeight());
-                //Glide.with(fragment).load(coverURL).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).error(R.drawable.default_cover).transform(this).into(imageView);
+                //Glide.with(fragment).load(coverURL).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).error(R.drawable.image_cover).transform(this).into(imageView);
             } else {
                 // todo: java.lang.NullPointerException: Attempt to invoke virtual method 'com.facebook.FacebookException com.facebook.FacebookRequestError.getException()' on a null object reference
                 response.getError().getException().printStackTrace();

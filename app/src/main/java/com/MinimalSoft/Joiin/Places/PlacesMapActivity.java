@@ -252,7 +252,7 @@ public class PlacesMapActivity extends MappingServices implements Callback<Place
                 bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.marker_jobs);
                 break;
             default:
-                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.location);
+                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.marker_location);
         }
 
         Bitmap bitmapSmall = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2, false);

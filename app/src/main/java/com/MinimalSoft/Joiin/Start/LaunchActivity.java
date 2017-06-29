@@ -2,85 +2,75 @@ package com.MinimalSoft.Joiin.Start;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.view.View;
-import android.widget.VideoView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Main.MainActivity;
 import com.MinimalSoft.Joiin.R;
 
-public class LaunchActivity extends Activity implements Runnable {
-
-    private VideoView mVideoView;
+public class LaunchActivity extends Activity implements Animation.AnimationListener {
+    private int id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
 
-        /*
-        String videoPath;
+        id = getSharedPreferences(Joiin.PREFERENCES, MODE_PRIVATE).getInt(Joiin.USER_ID, Joiin.NO_VALUE);
+        int src = (id == Joiin.NO_VALUE ? R.anim.login_animation : R.anim.launch_animation);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            videoPath = "android.resource://" + getPackageName() + '/' + R.raw.vid_welcome_v5;
-        } else {
-            videoPath = "android.resource://" + getPackageName() + '/' + R.raw.vid_welcome;
-        }
+        ImageView imageView = (ImageView) findViewById(R.id.launch_imageView);
+        Animation animation = AnimationUtils.loadAnimation(this, src);
 
-        VideoView videoView = (VideoView) findViewById(R.id.launch_videoView);
-        videoView.setVideoURI(Uri.parse(videoPath));
-        videoView.start();
+        animation.setAnimationListener(this);
+        imageView.startAnimation(animation);
 
-        videoView.setVisibility(View.VISIBLE);
-        new Handler().postDelayed(this, 2500);
-*/
+        /*ImageView imageView = (ImageView) findViewById(R.id.launch_imageView);
+        AlphaAnimation alpha = new AlphaAnimation(0.0f, 1.0f);
+        alpha.setDuration(3000);
+        alpha.setFillAfter(true);
+        imageView.startAnimation(alpha);*/
+    }
 
-        mVideoView = (VideoView) findViewById(R.id.launch_videoView);
+    /**
+     * <p>Notifies the end of the animation. This callback is not invoked
+     * for animations with repeat count set to INFINITE.</p>
+     *
+     * @param animation The animation which reached its end.
+     */
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        Class start = (id == Joiin.NO_VALUE ? LoginActivity.class : MainActivity.class);
 
-        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.splash);
+        Intent intent = new Intent(this, start);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
 
-        mVideoView.setVideoURI(uri);
-        mVideoView.start();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        finish();
+    }
 
-        mVideoView.setVisibility(View.VISIBLE);
-        new Handler().postDelayed(this, 2500);
-
-
-
+    /**
+     * <p>Notifies the start of the animation.</p>
+     *
+     * @param animation The started animation.
+     */
+    @Override
+    public void onAnimationStart(Animation animation) {
 
     }
 
     /**
-     * When an object implementing interface <code>Runnable</code> is used
-     * to create a thread, starting the thread causes the object's
-     * <code>run</code> method to be called in that separately executing
-     * thread.
-     * <p>
-     * The general contract of the method <code>run</code> is that it may
-     * take any action whatsoever.
+     * <p>Notifies the repetition of the animation.</p>
      *
-     * @see Thread#run()
+     * @param animation The animation which was repeated.
      */
     @Override
-    public void run() {
-        Intent intent;
-        int id = getSharedPreferences(Joiin.PREFERENCES, MODE_PRIVATE)
-                .getInt(Joiin.USER_ID, Joiin.NO_VALUE);
+    public void onAnimationRepeat(Animation animation) {
 
-        if (id == Joiin.NO_VALUE) {
-            intent = new Intent(this, LoginActivity.class);
-        } else {
-            intent = new Intent(this, MainActivity.class);
-        }
-
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
     }
 }

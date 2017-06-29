@@ -25,7 +25,6 @@ public class MenuViewerActivity extends AppCompatActivity {
 
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
-        //toolbar.setNavigationOnClickListener(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();

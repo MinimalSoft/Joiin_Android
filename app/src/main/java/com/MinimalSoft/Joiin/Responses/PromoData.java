@@ -1,6 +1,7 @@
 package com.MinimalSoft.Joiin.Responses;
 
 public class PromoData {
+    private int idPromo;
     private String startDate;
     private String finishDate;
     private String description;
@@ -8,6 +9,10 @@ public class PromoData {
     private String banner;
     private int price;
     private String placeName;
+
+    public int getIdPromo() {
+        return idPromo;
+    }
 
     public String getStartDate() {
         return startDate;

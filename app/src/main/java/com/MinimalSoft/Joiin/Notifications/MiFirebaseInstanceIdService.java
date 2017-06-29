@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Responses.TransactionResponse;
-import com.MinimalSoft.Joiin.Responses.UserResponse;
 import com.MinimalSoft.Joiin.Services.MinimalSoftServices;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;

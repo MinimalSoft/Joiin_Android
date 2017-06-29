@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">JOIIN</string>
+    <string name="app_name" translatable="false">Joiin</string>
     <string name="bu_slogan" translatable="false">¡Apuntando en la dirección correcta!</string>
 
     <string name="user_name_hint">User Name</string>

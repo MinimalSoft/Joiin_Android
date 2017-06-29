@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Main.MainActivity;
@@ -42,7 +43,7 @@ class PromoDialog implements SlideView.OnFinishListener, Callback<TransactionRes
         //descriptionText.setMovementMethod(new ScrollingMovementMethod());
 
         String imageURL = Joiin.API_URL + "/imagenes/promos/" + promo.getBanner();
-        Glide.with(context).load(imageURL).placeholder(R.drawable.default_image).into(imageView);
+        Glide.with(context).load(imageURL).placeholder(R.drawable.image_loading).into(imageView);
 
         placeLabel.setText(promo.getPlaceName() + " te ofrece:");
         coinsLabel.setText(String.valueOf(promo.getPrice()));
@@ -71,6 +72,11 @@ class PromoDialog implements SlideView.OnFinishListener, Callback<TransactionRes
     @Override
     public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
         if (response.isSuccessful()) {
+            Context context = dialog.getContext();
+
+            Toast.makeText(context, "Promoción canjeada", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, MainActivity.class);
+            context.startActivity(intent);
         }
     }
 
@@ -91,12 +97,8 @@ class PromoDialog implements SlideView.OnFinishListener, Callback<TransactionRes
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Joiin.API_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
-        //api.withdraw("withdraw", String.valueOf(userID), String.valueOf(promoData.getCode()))
-        //progressDialog.show();
-
-        Context context = dialog.getContext();
-        Intent intent = new Intent(context, MainActivity.class);
-        context.startActivity(intent);
+        api.withdraw("withdraw", String.valueOf(userID), String.valueOf(promoData.getIdPromo())).enqueue(this);
+        progressDialog.show();
     }
 
     protected void display() {

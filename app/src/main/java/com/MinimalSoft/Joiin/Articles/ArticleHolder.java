@@ -30,7 +30,7 @@ class ArticleHolder extends RecyclerView.ViewHolder implements View.OnClickListe
     }
 
     public void setData(Article article) {
-        Glide.with(context).load(article.getImage()).placeholder(R.drawable.default_image).into(imageView);
+        Glide.with(context).load(article.getImage()).placeholder(R.drawable.image_loading).into(imageView);
         textView.setText(article.getTitle().getRendered());
 
         imageButton.setOnClickListener(this);

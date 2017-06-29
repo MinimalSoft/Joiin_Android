@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/default_image" />
+        android:src="@drawable/image_loading" />
 
     <View
         android:layout_width="match_parent"
@@ -68,7 +68,7 @@
             android:id="@+id/promo_coin"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/coin" />
+            android:src="@drawable/image_coin" />
     </LinearLayout>
 
     <!--TextView
@@ -93,10 +93,8 @@
         android:layout_height="48dp"
         android:layout_marginEnd="6dp"
         android:layout_marginStart="6dp"
-        android:background="@drawable/round_rect_bordered"
-        app:slideSrc="@drawable/arrow_box"
+        android:background="@drawable/round_rectangle_borderless"
+        app:slideSrc="@drawable/icon_arrow"
         app:slideSuccessPercent="90"
-        app:slideText="Desliza para canjear"
-        app:slideTextColor="@color/white"
-        app:slideTextSize="10sp" />
+        app:slideText="Desliza para canjear" />
 </LinearLayout>

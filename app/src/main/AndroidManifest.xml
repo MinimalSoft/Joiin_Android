@@ -31,7 +31,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/BU">
+        android:theme="@style/Joiin">
 
         <uses-library android:name="com.google.android.maps" />
 
@@ -61,7 +61,8 @@
         <activity
             android:name=".Start.LaunchActivity"
             android:noHistory="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Joiin.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -71,7 +72,6 @@
         <activity
             android:name=".Start.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BU.NoActionBar"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -84,68 +84,58 @@
         </activity>
 
         <activity
-            android:name=".Start.RegisterActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/BU.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.MinimalSoft.Joiin.Start.LoginActivity" />
-        </activity>
-
-        <activity
             android:name=".Main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/BU.NoActionBar" />
-
-        <activity
-            android:name=".Places.PlacesMapActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/BU.NoActionBar" />
-
-        <activity
-            android:name=".Web.WebActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/BU.NoActionBar" />
+            android:theme="@style/Joiin.Light" />
 
         <activity
             android:name=".Details.DetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BU.NoActionBar" />
+            android:theme="@style/Joiin.Light" />
+
+        <activity
+            android:name=".Places.PlacesMapActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".Viewer.ListViewerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BU.NoActionBar" />
+            android:theme="@style/Joiin.Light" />
+
+        <activity
+            android:name=".Viewer.FormViewerActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
         <activity
             android:name=".Viewer.MenuViewerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BU.NoActionBar" />
+            android:theme="@style/Joiin.Light" />
+
+        <activity
+            android:name=".Web.WebActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".Transport.Routes"
             android:label="Líneas"
             android:screenOrientation="portrait"
-            android:theme="@style/BU.NoActionBar" />
+            android:theme="@style/Joiin.Light" />
 
         <activity
             android:name=".Transport.TransportMap"
-            android:screenOrientation="portrait"
-            android:theme="@style/BU.NoActionBar" />
+            android:screenOrientation="portrait" />
 
-        <service
-            android:name=".Notifications.MiFirebaseInstanceIdService">
+        <service android:name=".Notifications.MiFirebaseInstanceIdService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <service
-            android:name=".Notifications.MiFirebaseMessagingService">
+        <service android:name=".Notifications.MiFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 

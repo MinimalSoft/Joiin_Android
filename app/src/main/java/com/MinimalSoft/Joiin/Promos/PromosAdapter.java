@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
@@ -48,6 +49,8 @@ public class PromosAdapter extends ArrayAdapter<PromoData> implements AdapterVie
         SharedPreferences settings = getContext().getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE);
         userID = settings.getInt(Joiin.USER_ID, Joiin.NO_VALUE);
         toolbarLabel = (TextView) context.findViewById(R.id.list_toolText);
+        toolbarLabel.setVisibility(View.VISIBLE);
+
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Joiin.API_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
@@ -72,7 +75,7 @@ public class PromosAdapter extends ArrayAdapter<PromoData> implements AdapterVie
             String imageURL = Joiin.API_URL + "/imagenes/promos/" + data.getBanner();
             String price = String.format(UnitFormatterUtility.MEXICAN_LOCALE, "%,d", data.getPrice());
 
-            Glide.with(getContext()).load(imageURL).placeholder(R.drawable.default_image).into(imageView);
+            Glide.with(getContext()).load(imageURL).placeholder(R.drawable.image_loading).into(imageView);
 
             promoLabel.setText(data.getDescription());
             coinsLabel.setText(price);
@@ -124,11 +127,12 @@ public class PromosAdapter extends ArrayAdapter<PromoData> implements AdapterVie
             coins = response.body().getData().getCoins();
 
             toolbarLabel.setText(String.format(UnitFormatterUtility.MEXICAN_LOCALE, "%,d", coins));
-            toolbarLabel.setVisibility(View.VISIBLE);
 
             if (!isEmpty()) {
                 notifyDataSetChanged();
             }
+        } else {
+            Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -101,10 +101,16 @@ public interface MinimalSoftServices {
                                        @Field("idUser") String userID);
 
     @FormUrlEncoded
-    @POST("controllers/coins/coin.php")
+    @POST("controllers/coins/image_coin.php")
     Call<TransactionResponse> updateToken(@Field("action") String action,
                                           @Field("idUser") String userID,
                                           @Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("controllers/coins/coin.php")
+    Call<TransactionResponse> withdraw(@Field("action") String action,
+                                       @Field("idUser") String userID,
+                                       @Field("idPromo") String promoID);
     /*@FormUrlEncoded
     @POST("/controllers/reviews/review.php")
     Call<ReactionResponse> reaction(@Field("action") String action,

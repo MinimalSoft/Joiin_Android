@@ -13,9 +13,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/map_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppBarOverlay"
-            app:title="Lugares cerca de ti" />
+            android:layout_height="?attr/actionBarSize" />
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
@@ -41,7 +39,7 @@
             android:layout_margin="10dp"
             android:onClick="onCurrentLocationFired"
             android:scaleType="fitXY"
-            android:src="@drawable/location" />
+            android:src="@drawable/marker_location" />
 
         <FrameLayout
             android:id="@+id/map_summaryFragment"

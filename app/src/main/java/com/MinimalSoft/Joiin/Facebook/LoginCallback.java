@@ -64,7 +64,7 @@ public class LoginCallback implements FacebookCallback<LoginResult>, GraphReques
 
     @Override
     public void onCancel() {
-        //LoginManager.getInstance().logOut();
+
     }
 
     @Override

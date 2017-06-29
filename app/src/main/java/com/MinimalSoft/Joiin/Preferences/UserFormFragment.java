@@ -1,6 +1,7 @@
-package com.MinimalSoft.Joiin.Start;
+package com.MinimalSoft.Joiin.Preferences;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,11 +9,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Patterns;
-import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -26,7 +26,6 @@ import com.MinimalSoft.Joiin.Responses.UserResponse;
 import com.MinimalSoft.Joiin.Services.MinimalSoftServices;
 import com.MinimalSoft.Joiin.Utilities.UnitFormatterUtility;
 import com.MinimalSoft.Joiin.Web.WebActivity;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,7 +33,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RegisterActivity extends AppCompatActivity implements DialogInterface.OnClickListener, View.OnClickListener, Callback<UserResponse> {
+public class UserFormFragment extends Fragment implements DialogInterface.OnClickListener, View.OnClickListener, Callback<UserResponse> {
     private ProgressDialog progressDialog;
     private DatePicker datePicker;
     private Spinner genderSpinner;
@@ -46,43 +45,30 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
     private EditText phoneField;
     private EditText nameField;
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        View inflatedView = inflater.inflate(R.layout.fragment_user_form, container, false);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.register_toolbar);
+        Button button = (Button) inflatedView.findViewById(R.id.form_button);
+        datePicker = (DatePicker) inflatedView.findViewById(R.id.form_datePicker);
+        genderSpinner = (Spinner) inflatedView.findViewById(R.id.form_genderSpinner);
 
-        Button button = (Button) findViewById(R.id.register_button);
-        nameField = (EditText) findViewById(R.id.register_nameField);
-        phoneField = (EditText) findViewById(R.id.register_phoneField);
-        emailField = (EditText) findViewById(R.id.register_emailField);
-        datePicker = (DatePicker) findViewById(R.id.register_datePicker);
-        genderSpinner = (Spinner) findViewById(R.id.register_genderSpinner);
-        passwordField = (EditText) findViewById(R.id.register_passwordField);
-        lastNameField = (EditText) findViewById(R.id.register_lastNameField);
-        confirmField = (EditText) findViewById(R.id.register_confirmationField);
+        emailField = (EditText) inflatedView.findViewById(R.id.form_emailField);
+        nameField = (EditText) inflatedView.findViewById(R.id.form_userNameField);
+        phoneField = (EditText) inflatedView.findViewById(R.id.form_cellphoneField);
+        confirmField = (EditText) inflatedView.findViewById(R.id.form_confirmField);
+        passwordField = (EditText) inflatedView.findViewById(R.id.form_passwordField);
+        lastNameField = (EditText) inflatedView.findViewById(R.id.form_lastNameField);
 
-        progressDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
+        progressDialog = new ProgressDialog(getActivity(), ProgressDialog.STYLE_SPINNER);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Autenticando...");
         progressDialog.setIndeterminate(true);
 
         button.setOnClickListener(this);
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        boolean b = super.onKeyUp(keyCode, event);
-
-        if (keyCode == KeyEvent.KEYCODE_ENTER) {
-            onClick(null);
-        }
-
-        return b;
+        return inflatedView;
     }
 
     /**
@@ -93,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
     @Override
     public void onClick(View v) {
         if (verifyRequiredData()) {
-            new AlertDialog.Builder(this)
+            new AlertDialog.Builder(getActivity())
                     .setMessage("Al crear esta cuenta, estas aceptando los Términos de Privacidad de "
                             + getResources().getString(R.string.app_name)
                             + ".\nRecomendamos leer dichos términos antes continuar.")
@@ -133,17 +119,15 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
                 String date = String.format(UnitFormatterUtility.MEXICAN_LOCALE, "%d-%d-%d", year, month, day);
                 String gender = (gen != 0) ? (String.valueOf(genderSpinner.getSelectedItem()).substring(0, 1)) : "O";
 
-                String deviceToken = FirebaseInstanceId.getInstance().getToken();
-
                 Retrofit retrofit = new Retrofit.Builder().baseUrl(Joiin.API_URL)
                         .addConverterFactory(GsonConverterFactory.create()).build();
                 MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
-                api.registerUser("register", name, lastName, gender.toUpperCase(), date, phone, email, password, "", "", deviceToken).enqueue(this);
+                api.registerUser("register", name, lastName, gender.toUpperCase(), date, phone, email, password, "", "", "").enqueue(this);
                 break;
 
             case DialogInterface.BUTTON_NEUTRAL:
                 String link = Joiin.WP_URL + "/aviso-de-privacidad/";
-                Intent intent = new Intent(this, WebActivity.class);
+                Intent intent = new Intent(getActivity(), WebActivity.class);
 
                 intent.putExtra(Joiin.ACTIVITY_TITLE_KEY, "Aviso de privacidad");
                 intent.putExtra(Joiin.WP_URL, link);
@@ -167,7 +151,7 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
 
         if (response.isSuccessful()) {
             if (response.body().getResponse().equals("alert")) {
-                new AlertDialog.Builder(this)
+                new AlertDialog.Builder(getActivity())
                         .setMessage("Ya existe un usuario con la misma información.")
                         .setTitle("Verifique los datos.")
                         .setPositiveButton("Ok", null)
@@ -176,7 +160,7 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
             } else {
                 String fullName = nameField.getText().toString() + ' ' + lastNameField.getText().toString();
 
-                SharedPreferences.Editor preferencesEditor = getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE).edit();
+                SharedPreferences.Editor preferencesEditor = getActivity().getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE).edit();
                 preferencesEditor.putInt(Joiin.USER_ID, response.body().getData().getIdUser());
                 preferencesEditor.putString(Joiin.USER_EMAIL, emailField.getText().toString());
                 preferencesEditor.putString(Joiin.USER_NAME, fullName);
@@ -184,13 +168,13 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
                 //preferencesEditor.putString("FACEBOOK_ID", facebookData.getId());
                 preferencesEditor.apply();
 
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(getActivity(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-                finish();
+                getActivity().finish();
             }
         } else {
-            Toast.makeText(this, response.message(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -204,13 +188,11 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
     @Override
     public void onFailure(Call<UserResponse> call, Throwable t) {
         progressDialog.dismiss();
-        Toast.makeText(this, t.getMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
         t.printStackTrace();
     }
 
     private boolean verifyRequiredData() {
-        String NAME_REGEX = "^[\\p{L} .'-]+$";
-
         String name = nameField.getText().toString().trim();
         String phone = phoneField.getText().toString().trim();
         String email = emailField.getText().toString().trim();
@@ -221,13 +203,13 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
         if (name.isEmpty()) {
             nameField.setError("Este campo es obligatorio");
             nameField.requestFocus();
-        } else if (!name.matches(NAME_REGEX)) {
+        } else if (!name.matches(Joiin.NAME_REGEX)) {
             nameField.setError("Nombre no aceptado");
             nameField.requestFocus();
         } else if (lastName.isEmpty()) {
             lastNameField.setError("Este campo es obligatorio");
             lastNameField.requestFocus();
-        } else if (!lastName.matches(NAME_REGEX)) {
+        } else if (!lastName.matches(Joiin.NAME_REGEX)) {
             lastNameField.setError("Apellido no aceptado");
             lastNameField.requestFocus();
         } else if (!phone.isEmpty() && !phone.matches(Patterns.PHONE.toString())) {

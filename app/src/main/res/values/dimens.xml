@@ -5,7 +5,6 @@
     <dimen name="default_card_margin">1dp</dimen>
     <dimen name="default_start_size">16dp</dimen>
     <dimen name="profile_image_size">120dp</dimen>
-    <dimen name="menu_drawable_padding">5dp</dimen>
     <dimen name="social_button_margin">3dp</dimen>
     <dimen name="review_profile_thumb_size">50dp</dimen>
 

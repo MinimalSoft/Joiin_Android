@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/round_rectangle_colorless" />
+
+    <item
+        android:bottom="4dp"
+        android:drawable="@drawable/round_rectangle"
+        android:top="4dp" />
+</layer-list>

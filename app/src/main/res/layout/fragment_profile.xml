@@ -22,7 +22,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
-                    android:src="@drawable/default_cover" />
+                    android:src="@drawable/image_cover" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                         android:layout_width="@dimen/profile_image_size"
                         android:layout_height="@dimen/profile_image_size"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/default_profile"
+                        android:src="@drawable/image_profile"
                         app:civ_border_color="@color/white"
                         app:civ_border_overlay="true"
                         app:civ_border_width="2dp" />
@@ -48,7 +48,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text="@string/user_name_hint"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textColor="@color/white"
                         android:textSize="22sp"
                         android:textStyle="bold" />
@@ -132,10 +131,11 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                     <TextView
+                        android:id="@+id/preferences_versionLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
-                        android:text="BU 2.0" />
+                        android:text="@string/app_name" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 

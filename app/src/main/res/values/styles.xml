@@ -1,26 +1,33 @@
 <resources>
-    <style name="BU" parent="Theme.AppCompat.Light">
+
+    <style name="Joiin" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
+        <item name="colorAccent">@color/accent_dark</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="android:navigationBarColor">@color/primary_dark</item>
-        <item name="android:colorBackground">@color/primary_background</item>
-        <!--
-        * The android colorAccent matches the desire Joiin color accent.
-        * Uncomment when don't.
-        <item name="colorAccent">@color/accent</item>
-        -->
+        <item name="android:navigationBarColor">?android:attr/colorPrimaryDark</item>
     </style>
 
-    <style name="BU.NoActionBar" parent="@style/BU">
+    <style name="Joiin.Light" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorAccent">@color/accent_light</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:navigationBarColor">?android:attr/colorPrimaryDark</item>
         <!--item name="android:windowContentOverlay">@null</item-->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="BU.InputLayout" parent="@style/BU">
+    <style name="Joiin.Widget.DatePicker" parent="@style/Joiin">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="BU.InputLayout" parent="@style/Joiin.Light">
         <item name="colorControlNormal">@color/grey</item>
         <item name="colorControlActivated">@color/white</item>
-        <item name="colorControlHighlight">@color/accent</item>
+        <item name="colorControlHighlight">@color/accent_light</item>
+    </style>
+
+    <style name="BU.FormHint" parent="TextAppearance.Design.Hint">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

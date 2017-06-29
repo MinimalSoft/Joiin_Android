@@ -190,7 +190,7 @@ public class DetailsActivity extends AppCompatActivity implements TabLayout.OnTa
 
     protected void loadImage(String source) {
         String imageURL = Joiin.API_URL + "/imagenes/places/" + source;
-        Glide.with(this).load(imageURL).placeholder(R.drawable.default_image).into(imageView);
-        //Picasso.with(this).load(imageURL).resize(imageView.getWidth(), imageView.getHeight()).placeholder(R.drawable.default_image).into(imageView);
+        Glide.with(this).load(imageURL).placeholder(R.drawable.image_loading).into(imageView);
+        //Picasso.with(this).load(imageURL).resize(imageView.getWidth(), imageView.getHeight()).placeholder(R.drawable.image_loading).into(imageView);
     }
 }

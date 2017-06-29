@@ -48,7 +48,7 @@
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/location"
+                android:src="@drawable/marker_location"
                 android:visibility="visible" />
         </RelativeLayout>
     </FrameLayout>

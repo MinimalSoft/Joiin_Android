@@ -15,15 +15,18 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Details.DetailsActivity;
 import com.MinimalSoft.Joiin.Facebook.FacebookData;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.ReviewsResponse;
 import com.MinimalSoft.Joiin.Services.MinimalSoftServices;
 import com.MinimalSoft.Joiin.Utilities.UnitFormatterUtility;
 import com.MinimalSoft.Joiin.Widgets.CircleImageView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.google.gson.Gson;
@@ -216,7 +219,7 @@ class ReviewHolder extends RecyclerView.ViewHolder implements GraphRequest.Callb
             }.getType();
             FacebookData.Picture picture = new Gson().fromJson(response.getJSONObject().toString(), type);
             String url = (picture.getData() != null) ? picture.getData().getUrl() : "";
-            Glide.with(context).load(url).placeholder(R.drawable.default_profile).into(profileImage);
+            Glide.with(context).load(url).placeholder(R.drawable.image_profile).into(profileImage);
         } else {
             Toast.makeText(context, response.getError().getErrorMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -227,7 +230,7 @@ class ReviewHolder extends RecyclerView.ViewHolder implements GraphRequest.Callb
 
         //if (facebookID != null) {
         //    url = "http://graph.facebook.com/" + facebookID + "/picture?width=" + size + "&height=" + size;
-        //    Glide.with(context).load(url).placeholder(R.drawable.default_profile).into(profileImage);
+        //    Glide.with(context).load(url).placeholder(R.drawable.image_profile).into(profileImage);
         //} else {
             /* This code shouldn't exist! */
         String[] chunks = facebookURL.split(String.valueOf('/'));
@@ -235,14 +238,27 @@ class ReviewHolder extends RecyclerView.ViewHolder implements GraphRequest.Callb
             facebookURL = "http://graph.facebook.com/" + chunks[3] + "/picture?width=" + size + "&height=" + size;
         }
 
-        Glide.with(context).load(facebookURL).placeholder(R.drawable.default_profile).into(profileImage);
+        final String m = facebookURL;
+
+        Glide.with(context).load(facebookURL).listener(new RequestListener<String, GlideDrawable>() {
+            @Override
+            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                e.printStackTrace();
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                profileImage.setImageDrawable(resource);
+                return false;
+            }
+        }).placeholder(R.drawable.image_profile).into(profileImage);
         //}
 
         if (!imageName.equals("No image")) {
-            //byte[] bytes = Base64.decode(base64, Base64.DEFAULT);
             imageView.setVisibility(View.VISIBLE);
             String imageURL = Joiin.API_URL + "/imagenes/reviews/" + imageName;
-            Glide.with(context).load(imageURL).placeholder(R.drawable.default_image).into(imageView);
+            Glide.with(context).load(imageURL).placeholder(R.drawable.image_loading).into(imageView);
         } else {
             imageView.setVisibility(View.GONE);
         }

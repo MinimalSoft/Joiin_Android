@@ -4,19 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/window_background"
     tools:context=".Details.DetailsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppBarOverlay">
+        android:theme="@style/Joiin">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/details_collapsingToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentScrim="@color/primary"
-            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
                 android:id="@+id/details_imageView"
@@ -24,10 +25,9 @@
                 android:layout_height="230dp"
                 android:foreground="@drawable/gradient"
                 android:scaleType="fitXY"
-                android:src="@drawable/default_image"
+                android:src="@drawable/image_loading"
                 app:layout_collapseMode="parallax" />
 
-            <!-- Foreground doesn't seem to work well on API < 23 -->
             <android.support.v7.widget.Toolbar
                 android:id="@+id/details_toolbar"
                 android:layout_width="match_parent"
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
+        android:layout_margin="10dp"
         android:src="@drawable/ic_uber"
         app:fab_colorNormal="@color/black" />
 </android.support.design.widget.CoordinatorLayout>

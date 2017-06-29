@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- BU Colors -->
-    <color name="primary_background">#E0E0E0</color>
+    <color name="window_background">#E0E0E0</color>
+    <color name="accent_light">#2196F3</color>
     <color name="primary_dark">#AD1414</color>
+    <color name="accent_dark">#00ACEC</color>
     <color name="primary">#CA2128</color>
-
     <color name="indicator">#FFEA00</color>
-    <color name="accent">#2C9E98</color>
+
+    <!--color name="accent">#26A69A</color-->
 
     <color name="dark">#2F2F2F</color>
 
@@ -67,7 +69,6 @@
     <color name="iron">#CCCCCC</color>
     <color name="grey">#FAFAFA</color>
     <color name="red">#DE1D26</color>
-
 
     <color name="grey_300">#FAFAFA</color>
 </resources>
