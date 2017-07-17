@@ -46,7 +46,7 @@ public class PromosAdapter extends ArrayAdapter<PromoData> implements AdapterVie
     public PromosAdapter(@NonNull Activity context, @LayoutRes int resource, @NonNull PromoData[] objects) {
         super(context, resource, objects);
 
-        SharedPreferences settings = getContext().getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences settings = getContext().getSharedPreferences(Joiin.USER_PREFERENCES, Context.MODE_PRIVATE);
         userID = settings.getInt(Joiin.USER_ID, Joiin.NO_VALUE);
         toolbarLabel = (TextView) context.findViewById(R.id.list_toolText);
         toolbarLabel.setVisibility(View.VISIBLE);

@@ -33,11 +33,11 @@ public class MiFirebaseInstanceIdService extends FirebaseInstanceIdService imple
     private void sendTokenToServer(String token) {
         Log.d(TAG, "SendToken called!");
 
-        String idUser = this.getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE)
+        String idUser = this.getSharedPreferences(Joiin.USER_PREFERENCES, Context.MODE_PRIVATE)
                 .getInt(Joiin.USER_ID, Joiin.NO_VALUE)+"";
         if(idUser.equals(Joiin.NO_VALUE))
         {
-            SharedPreferences.Editor preferencesEditor = getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE).edit();
+            SharedPreferences.Editor preferencesEditor = getSharedPreferences(Joiin.USER_PREFERENCES, Context.MODE_PRIVATE).edit();
             preferencesEditor.putString(Joiin.USER_FCM_TOKEN, token);
             preferencesEditor.apply();
         }

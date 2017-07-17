@@ -4,7 +4,9 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.util.SparseArray;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class Joiin {
     /* URL's for Wordpress and API servers. */
@@ -12,13 +14,15 @@ public class Joiin {
     public static final String API_URL = "http://api.buniversitaria.com";
     /* Name for the SQLite database. */
     public static final String TRANSPORT_DATABASE = "transporte.db";
+    /* Facebook login permissions */
+    public static final List<String> LOGIN_PERMISSIONS = Arrays.asList("public_profile", "user_birthday", "email");
     /* Shared preferences keys. */
-    public static final String PREFERENCES = "JOIIN_PREFERENCES";
-    public static final String USER_PHOTO = "PROFILE IMAGE";
-    public static final String USER_COVER = "COVER IMAGE";
-    public static final String USER_EMAIL = "USER EMAIL";
-    public static final String USER_NAME = "USER NAME";
-    public static final String USER_ID = "USER ID";
+    public static final String USER_PREFERENCES = BuildConfig.APPLICATION_ID + ".user_prefs";
+    public static final String USER_PHOTO = "profile image";
+    public static final String USER_COVER = "cover image";
+    public static final String USER_EMAIL = "user email";
+    public static final String USER_NAME = "user name";
+    public static final String USER_ID = "user id";
     public static final String USER_FCM_TOKEN = "FCM TOKEN";
     /* Activities extras and bundles keys. */
     public static final String PLACE_ID_KEY = "ID";
@@ -27,8 +31,9 @@ public class Joiin {
     public static final String PLACE_NAME_KEY = "NAME";
     public static final String MAP_MARKER_KEY = "MARKER";
     public static final String RESOURCE_KEY = "RESOURCE";
-    public static final String TRANSPORT_TYPE_KEY = "TRANSPORT";
+    public static final String USER_DATA_KEY = "PARCELABLE";
     public static final String ACTIVITY_TITLE_KEY = "TITLE";
+    public static final String TRANSPORT_TYPE_KEY = "TRANSPORT";
     /* Default id's for all categories. */
     public static final int FEATURED_ID = 1;
     public static final int BARS_ID = 2;
@@ -48,7 +53,7 @@ public class Joiin {
     public static final int NO_VALUE = 0;
     public static final int IMAGE_PICKER_REQUEST = 3;
     /* Arbitrary values for data revisions */
-    public static final int MIN_PASSWORD_LENGHT = 8;
+    public static final int MIN_PASSWORD_LENGTH = 6;
     public static final String NAME_REGEX = "^[\\p{L} .'-]+$";
 
     private static final SparseArray<String> CATEGORIES_NAMES = new SparseArray<>();

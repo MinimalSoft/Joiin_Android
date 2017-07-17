@@ -16,9 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.MinimalSoft.Joiin.Details.DetailsActivity;
-import com.MinimalSoft.Joiin.Facebook.FacebookData;
 import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
+import com.MinimalSoft.Joiin.Responses.FacebookData;
 import com.MinimalSoft.Joiin.Responses.ReviewsResponse;
 import com.MinimalSoft.Joiin.Services.MinimalSoftServices;
 import com.MinimalSoft.Joiin.Utilities.UnitFormatterUtility;

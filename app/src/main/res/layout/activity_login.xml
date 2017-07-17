@@ -64,6 +64,7 @@
                 android:layout_marginTop="25dp"
                 android:background="@drawable/round_rectangle_colorless"
                 android:backgroundTint="@color/primary"
+                android:onClick="onLoginActionFired"
                 android:text="Iniciar Sesión"
                 android:textAllCaps="false"
                 android:textSize="15sp" />
@@ -103,6 +104,7 @@
                 android:background="@drawable/round_rectangle_colorless"
                 android:backgroundTint="@color/facebook"
                 android:drawableStart="@drawable/logo_facebook"
+                android:onClick="onLoginActionFired"
                 android:padding="10dp"
                 android:text="Continuar con Facebook"
                 android:textAllCaps="false"
@@ -116,6 +118,7 @@
                 android:layout_margin="12dp"
                 android:background="@drawable/round_rectangle_colorless"
                 android:backgroundTint="#30FFFFFF"
+                android:onClick="onLoginActionFired"
                 android:text="Regístrate"
                 android:textAllCaps="false" />
         </LinearLayout>

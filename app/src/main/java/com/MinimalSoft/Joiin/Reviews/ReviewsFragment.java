@@ -66,7 +66,7 @@ public class ReviewsFragment extends Fragment implements SwipeRefreshLayout.OnRe
             swipeRefresh.setColorSchemeColors(Joiin.getCategoryColor(getContext(), typeID));
         } else {
             swipeRefresh.setColorSchemeResources(R.color.bars, R.color.food, R.color.gyms, R.color.residences);
-            userID = getContext().getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE)
+            userID = getContext().getSharedPreferences(Joiin.USER_PREFERENCES, Context.MODE_PRIVATE)
                     .getInt(Joiin.USER_ID, Joiin.NO_VALUE);
             reviewsAdapter = new ReviewsAdapter(userID);
         }

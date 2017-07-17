@@ -20,7 +20,7 @@ public class LaunchActivity extends Activity implements Animation.AnimationListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
 
-        id = getSharedPreferences(Joiin.PREFERENCES, MODE_PRIVATE).getInt(Joiin.USER_ID, Joiin.NO_VALUE);
+        id = getSharedPreferences(Joiin.USER_PREFERENCES, MODE_PRIVATE).getInt(Joiin.USER_ID, Joiin.NO_VALUE);
         int src = (id == Joiin.NO_VALUE ? R.anim.login_animation : R.anim.launch_animation);
 
         ImageView imageView = (ImageView) findViewById(R.id.launch_imageView);
@@ -36,17 +36,11 @@ public class LaunchActivity extends Activity implements Animation.AnimationListe
         imageView.startAnimation(alpha);*/
     }
 
-    /**
-     * <p>Notifies the end of the animation. This callback is not invoked
-     * for animations with repeat count set to INFINITE.</p>
-     *
-     * @param animation The animation which reached its end.
-     */
     @Override
     public void onAnimationEnd(Animation animation) {
-        Class start = (id == Joiin.NO_VALUE ? LoginActivity.class : MainActivity.class);
+        Class activity = (id == Joiin.NO_VALUE ? LoginActivity.class : MainActivity.class);
 
-        Intent intent = new Intent(this, start);
+        Intent intent = new Intent(this, activity);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
@@ -54,21 +48,11 @@ public class LaunchActivity extends Activity implements Animation.AnimationListe
         finish();
     }
 
-    /**
-     * <p>Notifies the start of the animation.</p>
-     *
-     * @param animation The started animation.
-     */
     @Override
     public void onAnimationStart(Animation animation) {
 
     }
 
-    /**
-     * <p>Notifies the repetition of the animation.</p>
-     *
-     * @param animation The animation which was repeated.
-     */
     @Override
     public void onAnimationRepeat(Animation animation) {
 

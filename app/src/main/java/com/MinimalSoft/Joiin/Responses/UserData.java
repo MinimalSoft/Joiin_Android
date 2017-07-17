@@ -6,8 +6,6 @@ public class UserData {
     private String lastName;
     private String phone;
     private String birthday;
-    // Todo: Verify this API field.
-    private String idFacebook;
 
     public int getIdUser() {
         return idUser;

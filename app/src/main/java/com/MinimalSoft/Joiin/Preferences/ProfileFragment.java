@@ -18,9 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.MinimalSoft.Joiin.BuildConfig;
-import com.MinimalSoft.Joiin.Facebook.FacebookData;
 import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
+import com.MinimalSoft.Joiin.Responses.FacebookData;
 import com.MinimalSoft.Joiin.Responses.TransactionResponse;
 import com.MinimalSoft.Joiin.Start.LoginActivity;
 import com.MinimalSoft.Joiin.Web.WebActivity;
@@ -64,7 +64,7 @@ public class ProfileFragment extends Fragment implements GraphRequest.GraphJSONO
         TextView emailLabel = (TextView) inflatedView.findViewById(R.id.preferences_emailLabel);
         TextView nameLabel = (TextView) inflatedView.findViewById(R.id.preferences_nameLabel);
 
-        SharedPreferences settings = getContext().getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences settings = getContext().getSharedPreferences(Joiin.USER_PREFERENCES, Context.MODE_PRIVATE);
         emailLabel.setText(settings.getString(Joiin.USER_EMAIL, "loading..."));
         nameLabel.setText(settings.getString(Joiin.USER_NAME, "loading..."));
 
@@ -155,7 +155,7 @@ public class ProfileFragment extends Fragment implements GraphRequest.GraphJSONO
         getActivity().deleteFile(Joiin.USER_PHOTO);
         //getActivity().deleteSharedPreferences("BU_PREF"); //Min API v24.
 
-        getActivity().getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE)
+        getActivity().getSharedPreferences(Joiin.USER_PREFERENCES, Context.MODE_PRIVATE)
                 .edit().clear().apply();
 
         Intent intent = new Intent(getActivity(), LoginActivity.class);

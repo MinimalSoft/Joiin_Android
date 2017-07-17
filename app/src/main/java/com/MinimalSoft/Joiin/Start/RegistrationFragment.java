@@ -1,4 +1,4 @@
-package com.MinimalSoft.Joiin.Preferences;
+package com.MinimalSoft.Joiin.Start;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -10,13 +10,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.MinimalSoft.Joiin.Joiin;
@@ -26,6 +28,7 @@ import com.MinimalSoft.Joiin.Responses.UserResponse;
 import com.MinimalSoft.Joiin.Services.MinimalSoftServices;
 import com.MinimalSoft.Joiin.Utilities.UnitFormatterUtility;
 import com.MinimalSoft.Joiin.Web.WebActivity;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,7 +36,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class UserFormFragment extends Fragment implements DialogInterface.OnClickListener, View.OnClickListener, Callback<UserResponse> {
+public class RegistrationFragment extends Fragment implements TextView.OnEditorActionListener,
+        DialogInterface.OnClickListener, View.OnClickListener, Callback<UserResponse> {
     private ProgressDialog progressDialog;
     private DatePicker datePicker;
     private Spinner genderSpinner;
@@ -48,57 +52,56 @@ public class UserFormFragment extends Fragment implements DialogInterface.OnClic
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View inflatedView = inflater.inflate(R.layout.fragment_user_form, container, false);
+        View inflatedView = inflater.inflate(R.layout.fragment_form_registration, container, false);
 
-        Button button = (Button) inflatedView.findViewById(R.id.form_button);
-        datePicker = (DatePicker) inflatedView.findViewById(R.id.form_datePicker);
-        genderSpinner = (Spinner) inflatedView.findViewById(R.id.form_genderSpinner);
-
-        emailField = (EditText) inflatedView.findViewById(R.id.form_emailField);
-        nameField = (EditText) inflatedView.findViewById(R.id.form_userNameField);
-        phoneField = (EditText) inflatedView.findViewById(R.id.form_cellphoneField);
-        confirmField = (EditText) inflatedView.findViewById(R.id.form_confirmField);
-        passwordField = (EditText) inflatedView.findViewById(R.id.form_passwordField);
-        lastNameField = (EditText) inflatedView.findViewById(R.id.form_lastNameField);
+        nameField = (EditText) inflatedView.findViewById(R.id.register_nameField);
+        phoneField = (EditText) inflatedView.findViewById(R.id.register_phoneField);
+        emailField = (EditText) inflatedView.findViewById(R.id.register_emailField);
+        datePicker = (DatePicker) inflatedView.findViewById(R.id.register_datePicker);
+        genderSpinner = (Spinner) inflatedView.findViewById(R.id.register_genderSpinner);
+        passwordField = (EditText) inflatedView.findViewById(R.id.register_passwordField);
+        lastNameField = (EditText) inflatedView.findViewById(R.id.register_lastNameField);
+        confirmField = (EditText) inflatedView.findViewById(R.id.register_confirmationField);
+        TextView textView = (TextView) inflatedView.findViewById(R.id.register_disclaimerButton);
 
         progressDialog = new ProgressDialog(getActivity(), ProgressDialog.STYLE_SPINNER);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Autenticando...");
         progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
 
-        button.setOnClickListener(this);
+        textView.setOnClickListener(this);
+        confirmField.setOnEditorActionListener(this);
 
+        setHasOptionsMenu(true);
         return inflatedView;
     }
 
-    /**
-     * Called when a view has been clicked.
-     *
-     * @param v The view that was clicked.
-     */
     @Override
-    public void onClick(View v) {
-        if (verifyRequiredData()) {
-            new AlertDialog.Builder(getActivity())
-                    .setMessage("Al crear esta cuenta, estas aceptando los Términos de Privacidad de "
-                            + getResources().getString(R.string.app_name)
-                            + ".\nRecomendamos leer dichos términos antes continuar.")
-                    .setNegativeButton("Cancelar", null)
-                    .setPositiveButton("Aceptar", this)
-                    .setNeutralButton("Leer", this)
-                    .setTitle("Algo importante")
-                    .create()
-                    .show();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.form_acceptItem) {
+            confirmationPrompt();
         }
+
+        return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * This method will be invoked when a button in the dialog is clicked.
-     *
-     * @param dialog The dialog that received the click.
-     * @param which  The button that was clicked (e.g.
-     *               {@link DialogInterface#BUTTON1}) or the position
-     */
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        confirmationPrompt();
+        return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        String link = Joiin.WP_URL + "/aviso-de-privacidad/";
+        Intent intent = new Intent(getActivity(), WebActivity.class);
+
+        intent.putExtra(Joiin.ACTIVITY_TITLE_KEY, "Aviso de privacidad");
+        intent.putExtra(Joiin.WP_URL, link);
+        startActivity(intent);
+    }
+
     @Override
     public void onClick(DialogInterface dialog, int which) {
         switch (which) {
@@ -119,32 +122,20 @@ public class UserFormFragment extends Fragment implements DialogInterface.OnClic
                 String date = String.format(UnitFormatterUtility.MEXICAN_LOCALE, "%d-%d-%d", year, month, day);
                 String gender = (gen != 0) ? (String.valueOf(genderSpinner.getSelectedItem()).substring(0, 1)) : "O";
 
+                //TODO: Remove this code. Fix API bug:
+                String deviceToken = FirebaseInstanceId.getInstance().getToken();
                 Retrofit retrofit = new Retrofit.Builder().baseUrl(Joiin.API_URL)
                         .addConverterFactory(GsonConverterFactory.create()).build();
                 MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
-                api.registerUser("register", name, lastName, gender.toUpperCase(), date, phone, email, password, "", "", "").enqueue(this);
+                api.registerUser("register", name, lastName, gender.toUpperCase(), date, phone, email, password, null, "", deviceToken).enqueue(this);
                 break;
 
             case DialogInterface.BUTTON_NEUTRAL:
-                String link = Joiin.WP_URL + "/aviso-de-privacidad/";
-                Intent intent = new Intent(getActivity(), WebActivity.class);
-
-                intent.putExtra(Joiin.ACTIVITY_TITLE_KEY, "Aviso de privacidad");
-                intent.putExtra(Joiin.WP_URL, link);
-                startActivity(intent);
+                onClick(null);
                 break;
         }
     }
 
-    /**
-     * Invoked for a received HTTP response.
-     * <p>
-     * Note: An HTTP response may still indicate an application-level failure such as a 404 or 500.
-     * Call {@link Response#isSuccessful()} to determine if the response indicates success.
-     *
-     * @param call
-     * @param response
-     */
     @Override
     public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
         progressDialog.dismiss();
@@ -160,12 +151,10 @@ public class UserFormFragment extends Fragment implements DialogInterface.OnClic
             } else {
                 String fullName = nameField.getText().toString() + ' ' + lastNameField.getText().toString();
 
-                SharedPreferences.Editor preferencesEditor = getActivity().getSharedPreferences(Joiin.PREFERENCES, Context.MODE_PRIVATE).edit();
+                SharedPreferences.Editor preferencesEditor = getActivity().getSharedPreferences(Joiin.USER_PREFERENCES, Context.MODE_PRIVATE).edit();
                 preferencesEditor.putInt(Joiin.USER_ID, response.body().getData().getIdUser());
                 preferencesEditor.putString(Joiin.USER_EMAIL, emailField.getText().toString());
                 preferencesEditor.putString(Joiin.USER_NAME, fullName);
-
-                //preferencesEditor.putString("FACEBOOK_ID", facebookData.getId());
                 preferencesEditor.apply();
 
                 Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -178,13 +167,6 @@ public class UserFormFragment extends Fragment implements DialogInterface.OnClic
         }
     }
 
-    /**
-     * Invoked when a network exception occurred talking to the server or when an unexpected
-     * exception occurred creating the request or processing the response.
-     *
-     * @param call
-     * @param t
-     */
     @Override
     public void onFailure(Call<UserResponse> call, Throwable t) {
         progressDialog.dismiss();
@@ -201,13 +183,13 @@ public class UserFormFragment extends Fragment implements DialogInterface.OnClic
         String confirmPass = confirmField.getText().toString().trim();
 
         if (name.isEmpty()) {
-            nameField.setError("Este campo es obligatorio");
+            nameField.setError("Este campo es requerido");
             nameField.requestFocus();
         } else if (!name.matches(Joiin.NAME_REGEX)) {
             nameField.setError("Nombre no aceptado");
             nameField.requestFocus();
         } else if (lastName.isEmpty()) {
-            lastNameField.setError("Este campo es obligatorio");
+            lastNameField.setError("Este campo es requerido");
             lastNameField.requestFocus();
         } else if (!lastName.matches(Joiin.NAME_REGEX)) {
             lastNameField.setError("Apellido no aceptado");
@@ -221,9 +203,17 @@ public class UserFormFragment extends Fragment implements DialogInterface.OnClic
         } else if (!email.matches(Patterns.EMAIL_ADDRESS.toString())) {
             emailField.setError("Correo electrónico inválido");
             emailField.requestFocus();
-        } else if (password.length() < 8) {
-            passwordField.setError("La contraseña debe contener al menos 8 caracteres sin espacios en blanco");
+        } else if (password.isEmpty()) {
+            passwordField.setError("Ingrese una contraseña. (Debe tener mínimo " +
+                    +Joiin.MIN_PASSWORD_LENGTH + " caracteres sin espacios en blanco)");
             passwordField.requestFocus();
+        } else if (password.length() < Joiin.MIN_PASSWORD_LENGTH) {
+            passwordField.setError("La contraseña debe contener al menos " +
+                    +Joiin.MIN_PASSWORD_LENGTH + " caracteres sin espacios en blanco");
+            passwordField.requestFocus();
+        } else if (confirmPass.isEmpty()) {
+            confirmField.setError("Confirme la contraseña");
+            confirmField.requestFocus();
         } else if (!confirmPass.equals(password)) {
             confirmField.setError("Las contraseñas no coinciden");
             confirmField.requestFocus();
@@ -238,5 +228,20 @@ public class UserFormFragment extends Fragment implements DialogInterface.OnClic
         }
 
         return false;
+    }
+
+    private void confirmationPrompt() {
+        if (verifyRequiredData()) {
+            new AlertDialog.Builder(getActivity())
+                    .setMessage("Al crear esta cuenta, estas aceptando los Términos de Privacidad de "
+                            + getResources().getString(R.string.app_name)
+                            + ".\nRecomendamos leer dichos términos antes continuar.")
+                    .setNegativeButton("Cancelar", null)
+                    .setPositiveButton("Aceptar", this)
+                    .setNeutralButton("Leer", this)
+                    .setTitle("Algo importante")
+                    .create()
+                    .show();
+        }
     }
 }

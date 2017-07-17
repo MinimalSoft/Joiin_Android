@@ -1,4 +1,4 @@
-package com.MinimalSoft.Joiin.Facebook;
+package com.MinimalSoft.Joiin.Responses;
 
 public class FacebookData {
     private String id;
@@ -37,6 +37,10 @@ public class FacebookData {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Cover getCover() {

@@ -51,7 +51,7 @@ public class DetailsActivity extends AppCompatActivity implements TabLayout.OnTa
         int placeID = extras.getInt(Joiin.PLACE_ID_KEY);
         int typeID = extras.getInt(Joiin.PLACE_TYPE_KEY);
         String title = extras.getString(Joiin.PLACE_NAME_KEY);
-        int userID = getSharedPreferences(Joiin.PREFERENCES, MODE_PRIVATE).getInt(Joiin.USER_ID, Joiin.NO_VALUE);
+        int userID = getSharedPreferences(Joiin.USER_PREFERENCES, MODE_PRIVATE).getInt(Joiin.USER_ID, Joiin.NO_VALUE);
 
         ViewSectionsPagerAdapter pagerAdapter = new ViewSectionsPagerAdapter(getSupportFragmentManager(), true);
 
