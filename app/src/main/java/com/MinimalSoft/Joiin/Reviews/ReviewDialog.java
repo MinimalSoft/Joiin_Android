@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.Details.DetailsActivity;
+import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.ReviewsResponse;
 import com.MinimalSoft.Joiin.Services.MinimalSoftServices;
@@ -146,7 +146,7 @@ public class ReviewDialog implements Callback<ReviewsResponse>, View.OnClickList
 
                     if (bitmap != null) {
                         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteStream);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 67, byteStream);
                         byte[] bytes = byteStream.toByteArray();
                         String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
 

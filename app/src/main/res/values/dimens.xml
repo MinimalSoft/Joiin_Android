@@ -6,6 +6,7 @@
     <dimen name="default_start_size">16dp</dimen>
     <dimen name="default_dialog_padding">24dp</dimen>
     <dimen name="dialog_padding">12dp</dimen>
+    <dimen name="input_layout_hint_size">16dp</dimen>
 
     <dimen name="profile_image_size">120dp</dimen>
     <dimen name="social_button_margin">3dp</dimen>

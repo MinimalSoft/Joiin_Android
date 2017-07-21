@@ -5,4 +5,17 @@
         <item>Femenino</item>
         <item>Masculino</item>
     </string-array>
+
+    <string-array name="phoneOptions">
+        <item>Celular</item>
+        <item>Fijo</item>
+        <item>Fax</item>
+        <item>Radio</item>
+        <item>Otro</item>
+    </string-array>
+
+    <string-array name="attrOptions">
+        <item>Sr.</item>
+        <item>Sra.</item>
+    </string-array>
 </resources>

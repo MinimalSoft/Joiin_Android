@@ -9,11 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.MinimalSoft.Joiin.Places.PlaceFormFragment;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Start.RegistrationFragment;
 
 public class FormViewerActivity extends AppCompatActivity {
     public static final String FORM_TYPE_KEY = "ENUM FORM TYPE";
+    public static final String ADDRESS_KEY = "ADDRESS DATA";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,8 +66,8 @@ public class FormViewerActivity extends AppCompatActivity {
             case USER_REGISTRATION:
                 return new RegistrationFragment();
 
-            //case PLACE_REGISTRATION:
-            //  return new PlaceFormFragment();
+            case PLACE_REGISTRATION:
+                return new PlaceFormFragment();
 
             default:
                 return new Fragment();

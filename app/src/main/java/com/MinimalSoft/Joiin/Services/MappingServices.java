@@ -123,6 +123,7 @@ public class MappingServices extends AppCompatActivity implements OnMapReadyCall
         } else {
             mMap.setMyLocationEnabled(true);
             mMap.setOnMarkerClickListener(this);
+            mMap.setOnInfoWindowClickListener(this);
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
             apiClient = new GoogleApiClient.Builder(this).addApi(LocationServices.API)

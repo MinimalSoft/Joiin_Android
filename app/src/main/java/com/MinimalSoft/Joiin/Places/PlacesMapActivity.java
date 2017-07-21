@@ -3,6 +3,7 @@ package com.MinimalSoft.Joiin.Places;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,8 @@ import com.MinimalSoft.Joiin.Responses.PlaceData;
 import com.MinimalSoft.Joiin.Responses.PlacesResponse;
 import com.MinimalSoft.Joiin.Services.MappingServices;
 import com.MinimalSoft.Joiin.Services.MinimalSoftServices;
+import com.MinimalSoft.Joiin.Utilities.UnitFormatterUtility;
+import com.MinimalSoft.Joiin.Viewer.FormViewerActivity;
 import com.MinimalSoft.Joiin.Viewer.ListViewerActivity;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -179,13 +182,13 @@ public class PlacesMapActivity extends MappingServices implements Callback<Place
             selectedMarker = marker;
             return false;
         } else {
-            String address = getGeolocatedAddress(marker.getPosition());
+            /*String address = getGeolocatedAddress(marker.getPosition());
 
             if (address != null) {
                 marker.setSnippet(address);
             }
 
-            marker.showInfoWindow();
+            marker.showInfoWindow();*/
             return true;
         }
     }
@@ -207,7 +210,7 @@ public class PlacesMapActivity extends MappingServices implements Callback<Place
 
     @Override
     public void onMapLongClick(LatLng latLng) {
-        MarkerOptions options = new MarkerOptions().position(latLng)
+        MarkerOptions options = new MarkerOptions().position(latLng).icon(markerIconSelected)
                 .title("Agregar nuevo establecimiento aqui? Haz click!");
 
         if (newMarker != null) {
@@ -216,13 +219,23 @@ public class PlacesMapActivity extends MappingServices implements Callback<Place
         }
 
         newMarker = map.addMarker(options);
+        newMarker.showInfoWindow();
     }
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Toast.makeText(this, "Adding a place is not yet avalible...", Toast.LENGTH_SHORT).show();
-        //Intent intent = new Intent(this, AddPlaceActivity.class);
-        //startActivity(intent);
+        Address address = new Address(UnitFormatterUtility.MEXICAN_LOCALE);
+        address.setLongitude(marker.getPosition().longitude);
+        address.setLatitude(marker.getPosition().latitude);
+
+        Intent intent = new Intent(this, FormViewerActivity.class);
+        intent.putExtra(FormViewerActivity.FORM_TYPE_KEY,
+                FormViewerActivity.FormType.PLACE_REGISTRATION);
+        intent.putExtra(FormViewerActivity.ADDRESS_KEY, address);
+        intent.putExtra(Joiin.PLACE_TYPE_KEY, getIntent().getIntExtra(Joiin.PLACE_TYPE_KEY, Joiin.NO_VALUE));
+
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void setCustomMarkers() {

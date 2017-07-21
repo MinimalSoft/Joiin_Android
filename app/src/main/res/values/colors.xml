@@ -2,9 +2,9 @@
 <resources>
     <!-- BU Colors -->
     <color name="window_background">#E0E0E0</color>
-    <color name="accent_light">#2196F3</color>
+    <color name="accent_light">#1E88E5</color>
     <color name="primary_dark">#B8111A</color>
-    <color name="accent_dark">#00ACEC</color>
+    <color name="accent_dark">#03A9F4</color>
     <color name="primary">#CA2128</color>
     <color name="indicator">#FFEA00</color>
 
@@ -69,6 +69,6 @@
     <color name="iron">#CCCCCC</color>
     <color name="grey">#FAFAFA</color>
     <color name="red">#DE1D26</color>
-
+    <color name="tea">#009688</color>
     <color name="grey_300">#FAFAFA</color>
 </resources>

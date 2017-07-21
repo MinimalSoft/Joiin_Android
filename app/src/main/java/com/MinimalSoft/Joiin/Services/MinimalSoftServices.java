@@ -111,6 +111,39 @@ public interface MinimalSoftServices {
     Call<TransactionResponse> withdraw(@Field("action") String action,
                                        @Field("idUser") String userID,
                                        @Field("idPromo") String promoID);
+
+    @FormUrlEncoded
+    @POST("/controllers/place/place.php")
+    Call<PlacesResponse> putPlace(@Field("action") String action,
+                                  @Field("idType") String typeID,
+                                  @Field("idUser") String userID,
+                                  @Field("placeName") String name,
+                                  @Field("street") String street,
+                                  @Field("number") String number,
+                                  @Field("neighborhood") String neighborhood,
+                                  @Field("county") String county,
+                                  @Field("state") String state,
+                                  @Field("country") String country,
+                                  @Field("zip") String zip,
+                                  @Field("webPage") String webPage,
+                                  @Field("facebook") String facebook,
+                                  @Field("twitter") String twitter,
+                                  @Field("instagram") String instagram,
+                                  @Field("description") String about,
+                                  @Field("latitude") String latitude,
+                                  @Field("longitude") String longitude,
+                                  @Field("idPackage") String idPackage,
+                                  @Field("name") String managerName,
+                                  @Field("lastName") String lastName,
+                                  @Field("gender") String gender,
+                                  @Field("phone1") String phone,
+                                  @Field("ext1") String phoneExt,
+                                  @Field("phoneType1") String phoneType,
+                                  @Field("email") String managerEmail,
+                                  @Field("position") String position,
+                                  @Field("image") String imageBase64,
+                                  @Field("imageName") String imageName);
+
     /*@FormUrlEncoded
     @POST("/controllers/reviews/review.php")
     Call<ReactionResponse> reaction(@Field("action") String action,
