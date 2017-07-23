@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.MinimalSoft.Joiin.Details.DetailsActivity;
 import com.MinimalSoft.Joiin.Joiin;
@@ -21,6 +22,8 @@ import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.ReviewsResponse;
 import com.MinimalSoft.Joiin.Services.MinimalSoftServices;
 import com.MinimalSoft.Joiin.Utilities.UnitFormatterUtility;
+import com.kcode.bottomlib.BottomDialog;
+import com.wajahatkarim3.longimagecamera.LongImageCameraActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Locale;
@@ -31,7 +34,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ReviewDialog implements Callback<ReviewsResponse>, View.OnClickListener, RatingBar.OnRatingBarChangeListener {
+public class ReviewDialog implements Callback<ReviewsResponse>, View.OnClickListener,
+        RatingBar.OnRatingBarChangeListener, BottomDialog.OnClickListener {
     private ProgressDialog progressDialog;
     private AlertDialog dialog;
 
@@ -168,15 +172,34 @@ public class ReviewDialog implements Callback<ReviewsResponse>, View.OnClickList
                 break;
 
             case R.id.review_imageButton:
-                //dialog.hide();
-
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT).setType("image/*");
-                activity.startActivityForResult(intent, Joiin.IMAGE_PICKER_REQUEST);
-                //activity.startActivityForResult(Intent.createChooser(intent, "Selecciona una imagen"), Joiin.IMAGE_PICKER_REQUEST);
+                String strings[] = {"Cámara", "Galería"};
+                BottomDialog bottomDialog = BottomDialog.newInstance("Elige una opción", "Cancelar", strings);
+                bottomDialog.setListener(this);
+                bottomDialog.show(activity.getSupportFragmentManager(), "BOTTOM_DIALOG");
                 break;
 
             case R.id.review_cancelButton:
                 dialog.dismiss();
+                break;
+        }
+    }
+
+    @Override
+    public void click(int i) {
+        switch (i) {
+            case 0:
+                LongImageCameraActivity.launch(activity);
+                break;
+
+            case 1:
+                /* Image Picker intent */
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT).setType("image/*");
+                if (intent.resolveActivity(activity.getPackageManager()) != null) {
+                    activity.startActivityForResult(intent, Joiin.IMAGE_PICKER_REQUEST);
+                    //activity.startActivityForResult(Intent.createChooser(intent, "Selecciona una imagen"), BU.IMAGE_PICKER_REQUEST);
+                } else {
+                    Toast.makeText(activity, "No se detecto una aplicacion para tomar imagen", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }

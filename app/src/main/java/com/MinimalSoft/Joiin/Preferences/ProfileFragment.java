@@ -22,7 +22,9 @@ import com.MinimalSoft.Joiin.Joiin;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Responses.FacebookData;
 import com.MinimalSoft.Joiin.Responses.TransactionResponse;
+import com.MinimalSoft.Joiin.Services.MinimalSoftServices;
 import com.MinimalSoft.Joiin.Start.LoginActivity;
+import com.MinimalSoft.Joiin.Utilities.UnitFormatterUtility;
 import com.MinimalSoft.Joiin.Web.WebActivity;
 import com.MinimalSoft.Joiin.Widgets.CircleImageView;
 import com.facebook.AccessToken;
@@ -41,11 +43,14 @@ import java.lang.reflect.Type;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProfileFragment extends Fragment implements GraphRequest.GraphJSONObjectCallback, Callback<TransactionResponse>, DialogInterface.OnClickListener, View.OnClickListener {
-    private Call<TransactionResponse> serviceCall;
     private CircleImageView profilePicture;
     private ImageView coverPicture;
+    private TextView textView;
+    private int userID;
 
     @Nullable
     @Override
@@ -59,6 +64,7 @@ public class ProfileFragment extends Fragment implements GraphRequest.GraphJSONO
 
         profilePicture = (CircleImageView) inflatedView.findViewById(R.id.preferences_profileImage);
         coverPicture = (ImageView) inflatedView.findViewById(R.id.preferences_coverImage);
+        textView = (TextView) inflatedView.findViewById(R.id.preferences_coinsLabel);
 
         TextView versionLabel = (TextView) inflatedView.findViewById(R.id.preferences_versionLabel);
         TextView emailLabel = (TextView) inflatedView.findViewById(R.id.preferences_emailLabel);
@@ -67,6 +73,7 @@ public class ProfileFragment extends Fragment implements GraphRequest.GraphJSONO
         SharedPreferences settings = getContext().getSharedPreferences(Joiin.USER_PREFERENCES, Context.MODE_PRIVATE);
         emailLabel.setText(settings.getString(Joiin.USER_EMAIL, "loading..."));
         nameLabel.setText(settings.getString(Joiin.USER_NAME, "loading..."));
+        userID = settings.getInt(Joiin.USER_ID, Joiin.NO_VALUE);
 
         versionLabel.setText(BuildConfig.VERSION_NAME);
 
@@ -81,7 +88,6 @@ public class ProfileFragment extends Fragment implements GraphRequest.GraphJSONO
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //serviceCall.enqueue(this);
 
         try {
             FileInputStream fileInputStream = getContext().openFileInput(Joiin.USER_PHOTO);
@@ -106,12 +112,20 @@ public class ProfileFragment extends Fragment implements GraphRequest.GraphJSONO
         if (AccessToken.getCurrentAccessToken() != null) {
             Bundle parameters = new Bundle();
             int size = (int) getResources().getDimension(R.dimen.profile_image_size);
-            //int size = (int) getResources().getDimensionPixelSize(R.dimen.profile_image_size);
             parameters.putString("fields", "cover,picture.width(" + size + ").height(" + size + ')');
             GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), this);
             request.setParameters(parameters);
             request.executeAsync();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Joiin.API_URL)
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        MinimalSoftServices api = retrofit.create(MinimalSoftServices.class);
+        api.getCoins("getCoins", String.valueOf(userID)).enqueue(this);
     }
 
     @Override
@@ -175,7 +189,9 @@ public class ProfileFragment extends Fragment implements GraphRequest.GraphJSONO
      */
     @Override
     public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
-        if (response.isSuccessful()) {
+        if (response.isSuccessful() && !isDetached()) {
+            textView.setText(String.format(UnitFormatterUtility.MEXICAN_LOCALE, "%,d",
+                    response.body().getData().getCoins()));
         }
     }
 
@@ -188,7 +204,7 @@ public class ProfileFragment extends Fragment implements GraphRequest.GraphJSONO
      */
     @Override
     public void onFailure(Call<TransactionResponse> call, Throwable t) {
-
+        t.printStackTrace();
     }
 
     /*---------------- GraphJSONObjectCallback Methods ----------------*/

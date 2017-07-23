@@ -2,6 +2,7 @@ package com.MinimalSoft.Joiin.Viewer;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +13,12 @@ import android.view.MenuItem;
 import com.MinimalSoft.Joiin.Places.PlaceFormFragment;
 import com.MinimalSoft.Joiin.R;
 import com.MinimalSoft.Joiin.Start.RegistrationFragment;
+import com.wajahatkarim3.longimagecamera.LongImageCameraActivity;
 
 public class FormViewerActivity extends AppCompatActivity {
     public static final String FORM_TYPE_KEY = "ENUM FORM TYPE";
     public static final String ADDRESS_KEY = "ADDRESS DATA";
+    private PlaceFormFragment placeFormFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,6 +41,22 @@ public class FormViewerActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.actions_form, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case LongImageCameraActivity.LONG_IMAGE_RESULT_CODE:
+                    String imageFileName = data.getStringExtra(LongImageCameraActivity.IMAGE_PATH_KEY);
+                    if (imageFileName != null) {
+                        placeFormFragment.setImage(imageFileName);
+                    }
+                    break;
+            }
+        }
     }
 
     @Override
@@ -67,7 +86,8 @@ public class FormViewerActivity extends AppCompatActivity {
                 return new RegistrationFragment();
 
             case PLACE_REGISTRATION:
-                return new PlaceFormFragment();
+                placeFormFragment = new PlaceFormFragment();
+                return placeFormFragment;
 
             default:
                 return new Fragment();

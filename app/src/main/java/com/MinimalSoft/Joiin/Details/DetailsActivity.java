@@ -22,6 +22,7 @@ import com.MinimalSoft.Joiin.Reviews.ReviewsFragment;
 import com.MinimalSoft.Joiin.Utilities.ViewSectionsPagerAdapter;
 import com.bumptech.glide.Glide;
 import com.melnykov.fab.FloatingActionButton;
+import com.wajahatkarim3.longimagecamera.LongImageCameraActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -78,15 +79,26 @@ public class DetailsActivity extends AppCompatActivity implements TabLayout.OnTa
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            try {
-                Uri uri = data.getData();
-                InputStream inputStream = getContentResolver().openInputStream(uri);
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                //String fileName = uri.getLastPathSegment();
-                reviewDialog.setImage(bitmap);
-                inputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            switch (requestCode) {
+                case LongImageCameraActivity.LONG_IMAGE_RESULT_CODE:
+                    String imageFileName = data.getStringExtra(LongImageCameraActivity.IMAGE_PATH_KEY);
+                    Bitmap bitmap = BitmapFactory.decodeFile(imageFileName);
+                    //String fileName = uri.getLastPathSegment();
+                    reviewDialog.setImage(bitmap);
+                    break;
+
+                case Joiin.IMAGE_PICKER_REQUEST:
+                    try {
+                        Uri uri = data.getData();
+                        InputStream inputStream = getContentResolver().openInputStream(uri);
+                        bitmap = BitmapFactory.decodeStream(inputStream);
+                        //String fileName = uri.getLastPathSegment();
+                        reviewDialog.setImage(bitmap);
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
             }
         }
     }

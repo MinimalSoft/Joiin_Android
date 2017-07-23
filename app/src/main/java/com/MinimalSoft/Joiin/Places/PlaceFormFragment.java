@@ -33,6 +33,7 @@ import com.MinimalSoft.Joiin.Services.MinimalSoftServices;
 import com.MinimalSoft.Joiin.Utilities.UnitFormatterUtility;
 import com.MinimalSoft.Joiin.Viewer.FormViewerActivity;
 import com.bumptech.glide.Glide;
+import com.wajahatkarim3.longimagecamera.LongImageCameraActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -46,7 +47,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PlaceFormFragment extends Fragment implements Callback<PlacesResponse>, View.OnClickListener, DialogInterface.OnClickListener {
+public class PlaceFormFragment extends Fragment implements Callback<PlacesResponse>,
+        View.OnClickListener, DialogInterface.OnClickListener {
     private Address address;
     private byte[] bitmapBytes;
 
@@ -198,8 +200,25 @@ public class PlaceFormFragment extends Fragment implements Callback<PlacesRespon
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.form_imageButton:
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT).setType("image/*");
-                startActivityForResult(intent, Joiin.IMAGE_PICKER_REQUEST);
+                CharSequence strings[] = {"Cámara", "Galería"};
+
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Elige Una Opción")
+                        .setItems(strings, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case 0:
+                                        LongImageCameraActivity.launch(getActivity());
+                                        break;
+                                    case 1:
+                                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT).setType("image/*");
+                                        startActivityForResult(intent, Joiin.IMAGE_PICKER_REQUEST);
+                                        break;
+                                }
+                            }
+                        })
+                        .create().show();
                 break;
         }
     }
@@ -328,5 +347,16 @@ public class PlaceFormFragment extends Fragment implements Callback<PlacesRespon
                 .setMessage(message)
                 .setTitle(title)
                 .create().show();
+    }
+
+    public void setImage(String path) {
+        Bitmap bitmap = BitmapFactory.decodeFile(path);
+
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, byteStream);
+        bitmapBytes = byteStream.toByteArray();
+
+        imageButton.setScaleType(ImageView.ScaleType.FIT_XY);
+        Glide.with(getActivity()).load(path).into(imageButton);
     }
 }
